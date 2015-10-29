@@ -1,8 +1,9 @@
-package lb.edu.aub.cmps.grad;
+package lb.edu.aub.cmps.classes;
 
 import java.util.LinkedList;
 
-import enums.Category;
+import lb.edu.aub.cmps.enums.Category;
+
 
 public class Course {
 	private Department department;

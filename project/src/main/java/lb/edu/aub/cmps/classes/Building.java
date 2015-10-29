@@ -1,16 +1,18 @@
-package lb.edu.aub.cmps.grad;
+package lb.edu.aub.cmps.classes;
+import java.util.HashSet;
 import java.util.LinkedList;
 
-import enums.Location;
+import lb.edu.aub.cmps.enums.Location;
+
 
 
 public class Building {
 	private int id;
 	private String name;
 	private Location location;
-	private LinkedList<Room> rooms;
+	private HashSet<Room> rooms;
 	
-	public Building(int id, String name, Location location, LinkedList<Room> rooms){
+	public Building(int id, String name, Location location, HashSet<Room> rooms){
 		this.id= id;
 		this.name= name;
 		this.location= location;
@@ -29,10 +31,14 @@ public class Building {
 		return location;
 	}
 
-	public LinkedList<Room> getRooms() {
+	public HashSet<Room> getRooms() {
 		return rooms;
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public LinkedList<Building> getNearBuildings(){
 		/*
 		 * to find buildings with same locations

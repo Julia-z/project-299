@@ -1,8 +1,9 @@
-package lb.edu.aub.cmps.grad;
+package lb.edu.aub.cmps.classes;
 
 import java.util.HashSet;
 
-import enums.Type;
+import lb.edu.aub.cmps.enums.Type;
+
 
 /*
  *	class_capacity: All sections together
@@ -21,55 +22,41 @@ public abstract class Class {
 	private Type type;
 	
 	public Class(int class_capacity, HashSet<Integer> section_numbers, Room room, Time time, Instructor instructor, Type type){
-		this.setClass_capacity(class_capacity);
-		this.setSection_number(section_numbers);
-		this.setRoom(room);
+		this.class_capacity = class_capacity;
+		this.section_numbers = section_numbers;
+		this.room = room;
 		this.instructor = instructor;
 		this.type = type;
 	}
 
-
-	public int getClass_capacity() {
-		return class_capacity;
-	}
-
-
-	public void setClass_capacity(int class_capacity) {
-		this.class_capacity = class_capacity;
-	}
 
 
 	public HashSet<Integer> getSection_number() {
 		return section_numbers;
 	}
 
-	public void setSection_number(HashSet<Integer> section_number) {
-		this.section_numbers = section_number;
+
+	public boolean scheduleClass(){
+		//find a time slot and a room and set them
+		return true;
 	}
+
+
 
 	public Room getRoom() {
 		return room;
 	}
 
-	public void setRoom(Room room) {
-		this.room = room;
-	}
+
 
 	public Time getTime() {
 		return time;
 	}
 
-	public void setTime(Time time) {
-		this.time = time;
-	}
+
 
 	public Instructor getInstructor() {
 		return instructor;
-	}
-
-
-	public Type getType() {
-		return type;
 	}
 
 }
