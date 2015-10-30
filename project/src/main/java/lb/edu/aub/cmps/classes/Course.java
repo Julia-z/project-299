@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import lb.edu.aub.cmps.enums.Category;
 
-
 public class Course {
 	private Department department;
 	private String course_nbr;
@@ -36,7 +35,7 @@ public class Course {
 	public int getNbr_of_sections() {
 		return nbr_of_sections;
 	}
-	
+
 	public LinkedList<Class> getClasses() {
 		return classes;
 	}

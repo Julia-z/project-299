@@ -41,7 +41,7 @@ public class Room {
 	/**
 	 * returns true if the room is available during the time slots
 	 * i.e. the room is available during each time slot in the array
-	 * ToDO
+	 * TODO
 	 * @param slots
 	 * @return
 	 */
@@ -58,6 +58,14 @@ public class Room {
 	 */
 	public boolean reserveRoom(TimeSlot[] slots){
 		return true;
+	}
+
+	public HashSet<TimeSlot> getReserved() {
+		return reserved;
+	}
+
+	public void addReserved(TimeSlot newReserved) {
+		reserved.add(newReserved);
 	}
 
 }

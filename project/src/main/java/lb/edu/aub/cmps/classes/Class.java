@@ -4,7 +4,6 @@ import java.util.HashSet;
 
 import lb.edu.aub.cmps.enums.Type;
 
-
 /*
  *	class_capacity: All sections together
  *	section_numbers: Set of section numbers
@@ -20,8 +19,9 @@ public abstract class Class {
 	private Time time;
 	private Instructor instructor;
 	private Type type;
-	
-	public Class(int class_capacity, HashSet<Integer> section_numbers, Room room, Time time, Instructor instructor, Type type){
+
+	public Class(int class_capacity, HashSet<Integer> section_numbers,
+			Room room, Time time, Instructor instructor, Type type) {
 		this.class_capacity = class_capacity;
 		this.section_numbers = section_numbers;
 		this.room = room;
@@ -29,34 +29,32 @@ public abstract class Class {
 		this.type = type;
 	}
 
-
+	public int getClass_capacity() {
+		return class_capacity;
+	}
 
 	public HashSet<Integer> getSection_number() {
 		return section_numbers;
 	}
 
-
-	public boolean scheduleClass(){
-		//find a time slot and a room and set them
+	public boolean scheduleClass() {
+		// find a time slot and a room and set them
 		return true;
 	}
-
-
 
 	public Room getRoom() {
 		return room;
 	}
 
-
-
 	public Time getTime() {
 		return time;
 	}
-
-
 
 	public Instructor getInstructor() {
 		return instructor;
 	}
 
+	public Type getType() {
+		return type;
+	}
 }

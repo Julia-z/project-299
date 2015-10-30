@@ -1,6 +1,6 @@
 package lb.edu.aub.cmps.classes;
-import java.util.LinkedList;
 
+import java.util.LinkedList;
 
 public class Department {
 	private int id;
@@ -8,13 +8,14 @@ public class Department {
 	private LinkedList<Course> courses_offered;
 	private Building building;
 	private int priority;
-	
-	public Department(int id, String name, LinkedList<Course> courses_offered, Building building, int priority){
-		this.id= id;
-		this.name= name;
-		this.courses_offered= courses_offered;
-		this.building= building;
-		this.priority= priority;
+
+	public Department(int id, String name, LinkedList<Course> courses_offered,
+			Building building, int priority) {
+		this.id = id;
+		this.name = name;
+		this.courses_offered = courses_offered;
+		this.building = building;
+		this.priority = priority;
 	}
 
 	public int getId() {
