@@ -37,8 +37,12 @@ public abstract class Class {
 		return section_numbers;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public boolean scheduleClass() {
-		// find a time slot and a room and set them
+		// find the best time slot and  room and set them
 		return true;
 	}
 
