@@ -15,7 +15,7 @@ public class MyTest {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
-			DepartmentMapper userMapper = sqlSession.getMapper(DepartmentMapper.class);
+			sqlSession.getMapper(DepartmentMapper.class);
 			//Department d = departmentMapper.(1);
 			//System.out.println(u);
 		} finally {
