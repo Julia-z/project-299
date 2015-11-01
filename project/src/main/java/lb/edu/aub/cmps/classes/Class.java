@@ -8,7 +8,7 @@ import lb.edu.aub.cmps.enums.Type;
  *	class_capacity: All sections together
  *	section_numbers: Set of section numbers
  *	room
- *	instructor
+ *	Professor
  *	type: lecture, computer_lab, none,u_chat, music, art 
  */
 
@@ -17,15 +17,15 @@ public abstract class Class {
 	private HashSet<Integer> section_numbers;
 	private Room room;
 	private Time time;
-	private Instructor instructor;
+	private Professor Professor;
 	private Type type;
 
 	public Class(int class_capacity, HashSet<Integer> section_numbers,
-			Room room, Time time, Instructor instructor, Type type) {
+			Room room, Time time, Professor Professor, Type type) {
 		this.class_capacity = class_capacity;
 		this.section_numbers = section_numbers;
 		this.room = room;
-		this.instructor = instructor;
+		this.Professor = Professor;
 		this.type = type;
 	}
 
@@ -54,8 +54,8 @@ public abstract class Class {
 		return time;
 	}
 
-	public Instructor getInstructor() {
-		return instructor;
+	public Professor getProfessor() {
+		return Professor;
 	}
 
 	public Type getType() {

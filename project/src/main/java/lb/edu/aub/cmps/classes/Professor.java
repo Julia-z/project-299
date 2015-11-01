@@ -2,13 +2,13 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.LinkedList;
 
-public class Instructor {
+public class Professor {
 	private int id;
 	private String name;
 	private LinkedList<Class> classes;
 	private LinkedList<Time> unavailable;
 
-	public Instructor(int id, String name, LinkedList<Class> classes,
+	public Professor(int id, String name, LinkedList<Class> classes,
 			LinkedList<Time> unavailable) {
 		this.id = id;
 		this.name = name;
