@@ -1,38 +1,63 @@
 package lb.edu.aub.cmps.classes;
 
-import java.util.HashSet;
 import java.util.LinkedList;
-
-import lb.edu.aub.cmps.enums.Location;
 
 public class Building {
 	private int id;
 	private String name;
-	private Location location;
-	private HashSet<Room> rooms;
+	private String number;
+	private int location_id;
 
-	public Building(int id, String name, Location location, HashSet<Room> rooms) {
+	
+
+	public Building(int id, String name, String number, int location_id) {
+		super();
 		this.id = id;
 		this.name = name;
-		this.location = location;
-		this.rooms = rooms;
+		this.number = number;
+		this.location_id = location_id;
 	}
 
+	
 	public int getId() {
 		return id;
 	}
+
 
 	public String getName() {
 		return name;
 	}
 
-	public Location getLocation() {
-		return location;
+
+	public String getNumber() {
+		return number;
 	}
 
-	public HashSet<Room> getRooms() {
-		return rooms;
+
+	public int getLocation_id() {
+		return location_id;
 	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+
+	public void setLocation_id(int location_id) {
+		this.location_id = location_id;
+	}
+
 
 	/**
 	 * TODO

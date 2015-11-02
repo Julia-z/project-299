@@ -6,11 +6,13 @@
 	<properties resource='jdbc.properties' />
 	<typeAliases>
 		<typeAlias type='lb.edu.aub.cmps.classes.Building' alias='building'></typeAlias>
-		<typeAlias type='lb.edu.aub.cmps.classes.Course' alias='course'></typeAlias>
+	<!-- 	<typeAlias type='lb.edu.aub.cmps.classes.Course' alias='course'></typeAlias>
 		<typeAlias type='lb.edu.aub.cmps.classes.Department' alias='department'></typeAlias>
 		<typeAlias type='lb.edu.aub.cmps.classes.Professor' alias='professor'></typeAlias>
 		<typeAlias type='lb.edu.aub.cmps.classes.Room' alias='classroom'></typeAlias>
 		<typeAlias type='lb.edu.aub.cmps.classes.TimeSlot' alias='section_time'></typeAlias>
+		
+		-->
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
@@ -23,13 +25,15 @@
 			</dataSource>
 		</environment>
 	</environments>
+<!-- Mappers -->
+
 	<mappers>
 		<mapper resource='lb/edu/aub/cmps/mappers/DepartmentMapper.xml' />
-		<mapper resource='lb/edu/aub/cmps/mappers/BuildingMapper.xml' />
+		<!-- <mapper resource='lb/edu/aub/cmps/mappers/BuildingMapper.xml' />
 		<mapper resource='lb/edu/aub/cmps/mappers/CourseMapper.xml' />
 		<mapper resource='lb/edu/aub/cmps/mappers/ProfessorMapper.xml' />
 		<mapper resource='lb/edu/aub/cmps/mappers/RoomMapper.xml' />
 				<mapper resource='lb/edu/aub/cmps/mappers/TimeSlotMapper.xml' />
-		
+		-->
 	</mappers>
 </configuration>
