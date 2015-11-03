@@ -8,11 +8,7 @@ public class Professor {
 	private LinkedList<Class> classes;
 	private LinkedList<Time> unavailable;
 
-	public Professor(int id, String name) {
-		this.id = id;
-		this.name = name;
-		
-	}
+
 
 	public int getId() {
 		return id;

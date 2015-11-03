@@ -36,17 +36,17 @@ public class MyTest {
 			CourseMapper cm = sqlSession.getMapper(CourseMapper.class);
 
 			List<Course> courses = cm.getAllCourses();
-			System.out.println(courses.size());
+			System.out.println("Courses" + courses.size());
 
 			DepartmentMapper dm = sqlSession.getMapper(DepartmentMapper.class);
 
 			List<Department> departments = dm.getAllDepartments();
-			System.out.println(departments.size());
+			System.out.println("Deps: " + departments.size());
 			
 			ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
 
 			List<Professor> Professors = pm.getAllProfessors();
-			System.out.println(Professors.size());
+			System.out.println("Professors: " + Professors.size());
 			
 			// Department d = departmentMapper.(1);
 			// System.out.println(u);
