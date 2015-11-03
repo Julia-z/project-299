@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Set;
 
 import lb.edu.aub.cmps.classes.Class;
-import lb.edu.aub.cmps.classes.Department;
 
 public class Runner {
 
@@ -12,7 +11,7 @@ public class Runner {
 		SetUp setup = new SetUp();
 		
 		//get the requests of all the departments
-		HashMap<Department, Set<Class>> allrequests = setup.getRequests();
+		HashMap<Integer, Set<Class>> allrequests = setup.getDep_classes_map();
 		
 		//schedule all the classes
 		ScheduleAllClasses sched = new ScheduleAllClasses(allrequests);

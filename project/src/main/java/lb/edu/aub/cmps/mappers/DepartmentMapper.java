@@ -1,10 +1,10 @@
 package lb.edu.aub.cmps.mappers;
 
-import java.util.List;
+import java.util.Set;
 
 import lb.edu.aub.cmps.classes.Department;
 
 public interface DepartmentMapper {
 
-	public List<Department> getAllDepartments();
+	public Set<Department> getAllDepartments();
 }

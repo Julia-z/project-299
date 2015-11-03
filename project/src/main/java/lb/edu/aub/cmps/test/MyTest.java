@@ -1,13 +1,11 @@
 package lb.edu.aub.cmps.test;
 
-import java.util.List;
+import java.util.Set;
 
-import lb.edu.aub.cmps.classes.Building;
 import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
-import lb.edu.aub.cmps.mappers.BuildingMapper;
 import lb.edu.aub.cmps.mappers.CourseMapper;
 import lb.edu.aub.cmps.mappers.DepartmentMapper;
 import lb.edu.aub.cmps.mappers.ProfessorMapper;
@@ -27,22 +25,22 @@ public class MyTest {
 
 			RoomMapper rm = sqlSession.getMapper(RoomMapper.class);
 
-			List<Room> rooms = rm.getAllRooms();
+			Set<Room> rooms = rm.getAllRooms();
 			System.out.println(rooms.size());
 			
 			CourseMapper cm = sqlSession.getMapper(CourseMapper.class);
 
-			List<Course> courses = cm.getAllCourses();
+			Set<Course> courses = cm.getAllCourses();
 			System.out.println("Courses" + courses.size());
 
 			DepartmentMapper dm = sqlSession.getMapper(DepartmentMapper.class);
 
-			List<Department> departments = dm.getAllDepartments();
+			Set<Department> departments = dm.getAllDepartments();
 			System.out.println("Deps: " + departments.size());
 			
 			ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
 
-			List<Professor> Professors = pm.getAllProfessors();
+			Set<Professor> Professors = pm.getAllProfessors();
 			System.out.println("Professors: " + Professors.size());
 			
 			// Department d = departmentMapper.(1);

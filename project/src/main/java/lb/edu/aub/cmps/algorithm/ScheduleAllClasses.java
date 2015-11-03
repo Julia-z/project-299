@@ -3,16 +3,15 @@ package lb.edu.aub.cmps.algorithm;
 import java.util.HashMap;
 import java.util.Set;
 
-import lb.edu.aub.cmps.classes.Department;
-import lb.edu.aub.cmps.classes.Class;;
+import lb.edu.aub.cmps.classes.Class;
 
 
 public class ScheduleAllClasses {
 
-	HashMap<Department, Set<Class>> requests;
+	HashMap<Integer, Set<Class>> requests;
 	double[] weights;
 	
-	public ScheduleAllClasses(HashMap<Department, Set<Class>> requests){
+	public ScheduleAllClasses(HashMap<Integer, Set<Class>> requests){
 		this.requests = requests;
 		
 		//normalize and get the weights

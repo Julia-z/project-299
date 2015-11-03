@@ -1,10 +1,10 @@
 package lb.edu.aub.cmps.mappers;
 
-import java.util.List;
+import java.util.Set;
 
 import lb.edu.aub.cmps.classes.Professor;
 
 public interface ProfessorMapper {
 
-	public List<Professor> getAllProfessors();
+	public Set<Professor> getAllProfessors();
 }
