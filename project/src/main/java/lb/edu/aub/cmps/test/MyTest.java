@@ -30,7 +30,10 @@ public class MyTest {
 			List<Room> rooms = rm.getAllRooms();
 			System.out.println(rooms.size());
 			
-			
+			CourseMapper cm = sqlSession.getMapper(CourseMapper.class);
+
+			List<Course> courses = cm.getAllCourses();
+			System.out.println("Courses" + courses.size());
 
 			DepartmentMapper dm = sqlSession.getMapper(DepartmentMapper.class);
 
@@ -47,7 +50,7 @@ public class MyTest {
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
-			sqlSession.close();
+			// sqlSession.close();
 		}
 
 	}
