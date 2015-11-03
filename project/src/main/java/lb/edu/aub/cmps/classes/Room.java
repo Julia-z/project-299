@@ -4,28 +4,52 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Room {
-	private int room_number;
+	private int id;
+	private String number;
 	private int room_capacity;
 	private int building_id;
 	private HashSet<TimeSlot> reserved;
 
-	public Room(int room_number, int room_capacity, int building_id) {
-		this.room_number = room_number;
+	public Room(int id, String number, int room_capacity, int building_id) {
+		super();
+		this.id = id;
+		this.number = number;
 		this.room_capacity = room_capacity;
 		this.building_id = building_id;
 	}
+	public int getId() {
+		return id;
+	}
 
-	public int getRoom_number() {
-		return room_number;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	public int getRoom_capacity() {
 		return room_capacity;
 	}
 
-	public int getBuilding() {
+	public void setRoom_capacity(int room_capacity) {
+		this.room_capacity = room_capacity;
+	}
+
+	public int getBuilding_id() {
 		return building_id;
 	}
+
+	public void setBuilding_id(int building_id) {
+		this.building_id = building_id;
+	}
+
+
 
 	/**
 	 * TODO
@@ -62,10 +86,6 @@ public class Room {
 
 	public HashSet<TimeSlot> getReserved() {
 		return reserved;
-	}
-
-	public void addReserved(TimeSlot newReserved) {
-		reserved.add(newReserved);
 	}
 
 }

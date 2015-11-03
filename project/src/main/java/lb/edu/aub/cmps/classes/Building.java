@@ -5,16 +5,14 @@ import java.util.LinkedList;
 public class Building {
 	private int id;
 	private String name;
-	private String number;
 	private int location_id;
 
 	
 
-	public Building(int id, String name, String number, int location_id) {
+	public Building(int id, String name,  int location_id) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.number = number;
 		this.location_id = location_id;
 	}
 
@@ -26,11 +24,6 @@ public class Building {
 
 	public String getName() {
 		return name;
-	}
-
-
-	public String getNumber() {
-		return number;
 	}
 
 
@@ -47,12 +40,6 @@ public class Building {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
 
 	public void setLocation_id(int location_id) {
 		this.location_id = location_id;

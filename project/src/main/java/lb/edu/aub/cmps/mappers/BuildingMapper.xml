@@ -4,8 +4,17 @@
 
 <mapper namespace='lb.edu.aub.cmps.mappers.BuildingMapper'>
 
-	<select id="getNearByBuildings" parameterType="int" 
-	resultType="List<lb.edu.aub.cmps.classes.Building">
-		SELECT 
+	
+	
+	<resultMap type="lb.edu.aub.cmps.classes.Building" id="BuildingResult">
+		<id property="building_id" column="Building_ID"></id>
+		<result property="name" column="Building_Name"></result>
+		<result property="location_id" column="Sector_ID"></result>
+		
+	</resultMap>
+	
+	
+	<select id="getAllBuildings"  resultMap="BuildingResult">
+			SELECT * from building 
 	</select>
 </mapper>

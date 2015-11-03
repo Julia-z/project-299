@@ -2,34 +2,35 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.LinkedList;
 
-import lb.edu.aub.cmps.enums.Category;
-
 public class Course {
-	private Department department;
-	private String course_nbr;
-	private Category category;
+	private int department_id;
+	private String course_name;
+	private int category_id;
 	private int nbr_of_sections;
 	private LinkedList<Class> classes;
 
-	public Course(Department department, String course_nbr, Category category,
-			int nbr_of_sections, LinkedList<Class> classes) {
-		this.department = department;
-		this.course_nbr = course_nbr;
-		this.category = category;
+
+
+	public Course(int department_id, String course_name, int category_id,
+			int nbr_of_sections) {
+		super();
+		this.department_id = department_id;
+		this.course_name = course_name;
+		this.category_id = category_id;
 		this.nbr_of_sections = nbr_of_sections;
-		this.classes = classes;
+		this.classes = new LinkedList<Class>();
 	}
 
-	public Department getDepartment() {
-		return department;
+	public int getDepartment() {
+		return department_id;
 	}
 
-	public String getCourse_nbr() {
-		return course_nbr;
+	public String getCourse_name() {
+		return course_name;
 	}
 
-	public Category getCategory() {
-		return category;
+	public int getCategory_id() {
+		return category_id;
 	}
 
 	public int getNbr_of_sections() {
@@ -38,5 +39,9 @@ public class Course {
 
 	public LinkedList<Class> getClasses() {
 		return classes;
+	}
+	
+	public void addClass(Class c){
+		this.classes.add(c);
 	}
 }

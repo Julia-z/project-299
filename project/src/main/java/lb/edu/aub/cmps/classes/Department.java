@@ -6,16 +6,16 @@ public class Department {
 	private int id;
 	private String name;
 	private LinkedList<Course> courses_offered;
-	private Building building;
+	private int building_id;
 	private int priority;
 
-	public Department(int id, String name, LinkedList<Course> courses_offered,
-			Building building, int priority) {
+
+
+	public Department(int id, String name, int building_id) {
+		super();
 		this.id = id;
 		this.name = name;
-		this.courses_offered = courses_offered;
-		this.building = building;
-		this.priority = priority;
+		this.building_id = building_id;
 	}
 
 	public int getId() {
@@ -30,10 +30,13 @@ public class Department {
 		return courses_offered;
 	}
 
-	public Building getBuilding() {
-		return building;
+	public int getBuilding_id() {
+		return building_id;
 	}
 
+	public void setPriority(int p){
+		this.priority = p;
+	}
 	public int getPriority() {
 		return priority;
 	}

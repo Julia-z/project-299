@@ -8,12 +8,10 @@ public class Professor {
 	private LinkedList<Class> classes;
 	private LinkedList<Time> unavailable;
 
-	public Professor(int id, String name, LinkedList<Class> classes,
-			LinkedList<Time> unavailable) {
+	public Professor(int id, String name) {
 		this.id = id;
 		this.name = name;
-		this.classes = classes;
-		this.unavailable = unavailable;
+		
 	}
 
 	public int getId() {
@@ -36,4 +34,18 @@ public class Professor {
 	public LinkedList<Time> getUnavailable() {
 		return unavailable;
 	}
+	
+	public void addUnavailable(Time t){
+		this.unavailable.add(t);
+	}
+	/**
+	 * TODO
+	 * @param slots
+	 * @return
+	 */
+	public boolean isAvailable(Time  slots){
+		return false;
+	}
+	
+	
 }

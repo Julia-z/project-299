@@ -3,7 +3,6 @@ package lb.edu.aub.cmps.classes;
 import java.util.Arrays;
 
 public class Time {
-	//starting time
 	private TimeSlot[] timeSlots;
 	
 	public Time(TimeSlot[] timeSlots){
