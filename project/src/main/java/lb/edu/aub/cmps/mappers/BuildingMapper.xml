@@ -3,18 +3,14 @@
   'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 
 <mapper namespace='lb.edu.aub.cmps.mappers.BuildingMapper'>
-
-	
-	
-	<resultMap type="lb.edu.aub.cmps.classes.Building" id="BuildingResult">
-		<id property="building_id" column="Building_ID"></id>
-		<result property="name" column="Building_Name"></result>
-		<result property="location_id" column="Sector_ID"></result>
-		
+	<resultMap type='lb.edu.aub.cmps.classes.Building' id='BuildingResult'>
+		<id property='id' column='Building_ID'></id>
+		<result property='name' column='Building_Name'></result>
+		<result property='location_id' column='Sector_ID'></result>	
 	</resultMap>
 	
 	
-	<select id="getAllBuildings"  resultMap="BuildingResult">
-			SELECT * from building 
+	<select id='getAllBuildings' resultMap='BuildingResult'>
+			SELECT Building_ID, Building_Name, Sector_ID from building 
 	</select>
 </mapper>

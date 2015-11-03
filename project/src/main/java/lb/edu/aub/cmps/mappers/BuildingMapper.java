@@ -1,11 +1,11 @@
 package lb.edu.aub.cmps.mappers;
 
-import java.util.HashSet;
+import java.util.List;
 
 import lb.edu.aub.cmps.classes.Building;
 
 public interface BuildingMapper {
 
 
-	public HashSet<Building> getAllBuildings();
+	public List<Building> getAllBuildings();
 }

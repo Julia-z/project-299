@@ -6,15 +6,7 @@ public class Building {
 	private int id;
 	private String name;
 	private int location_id;
-
 	
-
-	public Building(int id, String name,  int location_id) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.location_id = location_id;
-	}
 
 	
 	public int getId() {

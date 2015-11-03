@@ -1,6 +1,6 @@
 package lb.edu.aub.cmps.test;
 
-import java.util.HashSet;
+import java.util.List;
 
 import lb.edu.aub.cmps.classes.Building;
 import lb.edu.aub.cmps.mappers.BuildingMapper;
@@ -12,19 +12,25 @@ import org.apache.ibatis.session.SqlSession;
 
 public class MyTest {
 	public static void main(String[] args) {
-		new BuildingService();
-
-		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
-				.openSession();
+	//	new BuildingService();
 		try {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
 			BuildingMapper bm = sqlSession.getMapper(BuildingMapper.class);
-			HashSet<Building> bldgs = bm.getAllBuildings();
-			System.out.println(bldgs.size());
+			
+			List<Building> bldgs = bm.getAllBuildings();
+			System.out.println(bldgs.get(0).getName());
 			//Department d = departmentMapper.(1);
 			//System.out.println(u);
-		} finally {
-			sqlSession.close();
 		}
-
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		finally {
+		//	sqlSession.close();
+		}
+		
+		
 	}
 }
