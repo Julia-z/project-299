@@ -3,20 +3,17 @@ package lb.edu.aub.cmps.classes;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import lb.edu.aub.cmps.enums.Accessory;
+
 public class Room {
 	private int id;
 	private String number;
 	private int room_capacity;
 	private int building_id;
+	private HashSet<Accessory> accessories;
 	private HashSet<TimeSlot> reserved;
 
-	public Room(int id, String number, int room_capacity, int building_id) {
-		super();
-		this.id = id;
-		this.number = number;
-		this.room_capacity = room_capacity;
-		this.building_id = building_id;
-	}
+	
 	public int getId() {
 		return id;
 	}
@@ -86,6 +83,14 @@ public class Room {
 
 	public HashSet<TimeSlot> getReserved() {
 		return reserved;
+	}
+
+	public HashSet<Accessory> getAccessories() {
+		return accessories;
+	}
+
+	public void setAccessories(HashSet<Accessory> accessories) {
+		this.accessories = accessories;
 	}
 
 }

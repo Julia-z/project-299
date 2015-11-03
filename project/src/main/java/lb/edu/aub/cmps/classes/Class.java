@@ -20,14 +20,6 @@ public abstract class Class {
 	private Professor Professor;
 	private Type type;
 
-	public Class(int class_capacity, HashSet<Integer> section_numbers,
-			Room room, Time time, Professor Professor, Type type) {
-		this.class_capacity = class_capacity;
-		this.section_numbers = section_numbers;
-		this.room = room;
-		this.Professor = Professor;
-		this.type = type;
-	}
 
 	public int getClass_capacity() {
 		return class_capacity;

@@ -9,15 +9,6 @@ public class Department {
 	private int building_id;
 	private int priority;
 
-
-
-	public Department(int id, String name, int building_id) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.building_id = building_id;
-	}
-
 	public int getId() {
 		return id;
 	}
