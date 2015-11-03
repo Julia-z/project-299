@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='lb.edu.aub.cmps.mappers.ProfessorMapper'>
+	<resultMap type='lb.edu.aub.cmps.classes.Professor' id='ProfessorResult'>
+		<id property='id' column='Professor_ID'></id>
+		<result property='name' column='Professor_Name'></result>
+	</resultMap>
+
+
+	<select id='getAllProfessors' resultMap='ProfessorResult'>
+		SELECT Professor_ID, Professor_Name from professor
+	</select>
+</mapper>

@@ -22,6 +22,7 @@ public class Room {
 		this.id = id;
 	}
 
+	
 	public String getNumber() {
 		return number;
 	}

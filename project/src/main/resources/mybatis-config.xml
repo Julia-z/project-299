@@ -15,9 +15,13 @@
 			</dataSource>
 		</environment>
 	</environments>
-<!-- Mappers -->
+	<!-- Mappers -->
 
 	<mappers>
 		<mapper resource='lb/edu/aub/cmps/mappers/BuildingMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/mappers/RoomMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/mappers/CourseMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/mappers/DepartmentMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/mappers/ProfessorMapper.xml' />
 	</mappers>
 </configuration>

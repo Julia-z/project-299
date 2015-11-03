@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='lb.edu.aub.cmps.mappers.RoomMapper'>
+	<resultMap type='lb.edu.aub.cmps.classes.Room' id='RoomResult'>
+		<id property='id' column='Classroom_ID'></id>
+		<result property='number' column='Classroom_Number'></result>
+		<result property='room_capacity' column='Classroom_Capacity'></result>
+		<result property='building_id' column='Building_ID'></result>
+	</resultMap>
+
+
+	<select id='getAllRooms' resultMap='RoomResult'>
+		SELECT * from classroom
+	</select>
+</mapper>
