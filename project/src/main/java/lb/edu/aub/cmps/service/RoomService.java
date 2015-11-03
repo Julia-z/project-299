@@ -5,12 +5,23 @@ import java.util.List;
 import lb.edu.aub.cmps.classes.Room;
 import lb.edu.aub.cmps.mappers.RoomMapper;
 
-public class RoomService implements RoomMapper{
+import org.apache.ibatis.session.SqlSession;
 
-
+public class RoomService implements RoomMapper {
 
 	public List<Room> getAllRooms() {
-		// TODO 
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+
+			RoomMapper rm = sqlSession.getMapper(RoomMapper.class);
+			List<Room> rooms = rm.getAllRooms();
+			return rooms;
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			sqlSession.close();
+		}
 		return null;
 	}
 
