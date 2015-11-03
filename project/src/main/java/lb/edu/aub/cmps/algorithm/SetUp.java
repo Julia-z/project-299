@@ -4,18 +4,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import lb.edu.aub.cmps.classes.Building;
+import lb.edu.aub.cmps.classes.*;
 import lb.edu.aub.cmps.classes.Class;
-import lb.edu.aub.cmps.classes.Course;
-import lb.edu.aub.cmps.classes.Department;
-import lb.edu.aub.cmps.classes.Professor;
-import lb.edu.aub.cmps.classes.Room;
-import lb.edu.aub.cmps.service.BuildingService;
-import lb.edu.aub.cmps.service.ClassService;
-import lb.edu.aub.cmps.service.CourseService;
-import lb.edu.aub.cmps.service.DepartmentService;
-import lb.edu.aub.cmps.service.ProfessorService;
-import lb.edu.aub.cmps.service.RoomService;
+import lb.edu.aub.cmps.service.*;
 
 public class SetUp {
 	private HashSet<Building> bldgs;
