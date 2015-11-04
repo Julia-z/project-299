@@ -1,6 +1,7 @@
 package lb.edu.aub.cmps.classes;
 
 import java.util.LinkedList;
+import java.util.Set;
 
 public class Building {
 	private int id;
@@ -40,13 +41,15 @@ public class Building {
 
 	/**
 	 * TODO
-	 * 
+	 * returns the bldgs with the same location
 	 * @return
 	 */
-	public LinkedList<Building> getNearBuildings() {
+	public LinkedList<Building> getNearBuildings(Set<Building> bldgs) {
 		/*
 		 * to find buildings with same locations
 		 */
 		return null;
 	}
+	
+	
 }
