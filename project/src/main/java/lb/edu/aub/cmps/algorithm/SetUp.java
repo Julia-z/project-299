@@ -6,7 +6,7 @@ import java.util.Set;
 
 import lb.edu.aub.cmps.classes.*;
 import lb.edu.aub.cmps.classes.Class;
-import lb.edu.aub.cmps.service.*;
+import lb.edu.aub.cmps.services.*;
 
 public class SetUp {
 	private HashSet<Building> bldgs;

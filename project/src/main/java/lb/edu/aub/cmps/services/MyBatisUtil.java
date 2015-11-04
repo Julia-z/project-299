@@ -1,4 +1,4 @@
-package lb.edu.aub.cmps.service;
+package lb.edu.aub.cmps.services;
 
 import java.io.IOException;
 import java.io.Reader;

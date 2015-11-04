@@ -10,7 +10,7 @@ import lb.edu.aub.cmps.mappers.CourseMapper;
 import lb.edu.aub.cmps.mappers.DepartmentMapper;
 import lb.edu.aub.cmps.mappers.ProfessorMapper;
 import lb.edu.aub.cmps.mappers.RoomMapper;
-import lb.edu.aub.cmps.service.MyBatisUtil;
+import lb.edu.aub.cmps.services.MyBatisUtil;
 
 import org.apache.ibatis.session.SqlSession;
 
