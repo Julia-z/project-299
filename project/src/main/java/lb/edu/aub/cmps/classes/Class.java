@@ -13,6 +13,7 @@ import lb.edu.aub.cmps.enums.Type;
  */
 
 public abstract class Class {
+	private int course_id;
 	private int class_capacity;
 	private HashSet<Integer> section_numbers;
 	private Room room;
@@ -20,6 +21,14 @@ public abstract class Class {
 	private Professor Professor;
 	private Type type;
 
+
+	public int getCourse_id() {
+		return course_id;
+	}
+
+	public void setCourse_id(int course_id) {
+		this.course_id = course_id;
+	}
 
 	public int getClass_capacity() {
 		return class_capacity;
