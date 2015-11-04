@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='lb.edu.aub.cmps.mappers.AccessoryMapper'>
+	<resultMap type='lb.edu.aub.cmps.classes.Accessory' id='AccessoryResult'>
+		<id property='id' column='Accessory_ID'></id>
+		<result property='name' column='Accessory_Name'></result>
+	</resultMap>
+	
+	
+	<select id='getAllAccessories' resultMap='AccessoryResult'>
+			SELECT * from accessory_enum 
+	</select>
+</mapper>

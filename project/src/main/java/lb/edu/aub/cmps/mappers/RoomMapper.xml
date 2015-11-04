@@ -10,8 +10,15 @@
 		<result property='building_id' column='Building_ID'></result>
 	</resultMap>
 
-
 	<select id='getAllRooms' resultMap='RoomResult'>
 		SELECT * from classroom
+	</select>
+	
+	<resultMap type='lb.edu.aub.cmps.classes.Accessory' id='AccessoriesInRoom'>
+		<id property='id' column='Accessory_ID'></id>
+	</resultMap>
+
+	<select id='getAccessoriesInRoom' parameterType="int" resultMap='AccessoriesInRoom'>
+		SELECT Accessory_ID from classroom_accessory where Classroom_ID= #{id}
 	</select>
 </mapper>

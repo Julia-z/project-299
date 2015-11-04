@@ -11,6 +11,15 @@
 
 
 	<select id='getAllDepartments' resultMap='DepartmentResult'>
-		SELECT * from department
+		SELECT * from
+		department
+	</select>
+
+	<resultMap type='lb.edu.aub.cmps.classes.Course' id='coursesGivenResult'>
+		<id property='course_id' column='Course_ID'></id>
+	</resultMap>
+
+	<select id='getGivenCourse' parameterType="int" resultMap='coursesGivenResult'>
+		SELECT Course_Id from course where Department_ID = #{id}
 	</select>
 </mapper>

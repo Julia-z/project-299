@@ -3,8 +3,6 @@ package lb.edu.aub.cmps.classes;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import lb.edu.aub.cmps.enums.Accessory;
-
 public class Room {
 	private int id;
 	private String number;

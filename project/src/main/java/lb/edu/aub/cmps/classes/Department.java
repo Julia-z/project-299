@@ -21,6 +21,10 @@ public class Department {
 		return courses_offered;
 	}
 
+	public void setCourses_offered(LinkedList<Course> courses_offered) {
+		this.courses_offered = courses_offered;
+	}
+
 	public int getBuilding_id() {
 		return building_id;
 	}

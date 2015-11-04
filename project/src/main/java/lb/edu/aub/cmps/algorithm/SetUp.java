@@ -15,6 +15,7 @@ public class SetUp {
 	private HashSet<Department> deps;
 	private HashSet<Professor> profs;
 	private HashSet<Room> rooms;
+	private HashSet<Accessory> accessories;
 	
 	private HashMap<Integer, Set<Class>> dep_classes_map;
 	
@@ -29,7 +30,14 @@ public class SetUp {
 					.getAllDepartments();
 			profs = (HashSet<Professor>) new ProfessorService().getAllProfessors();
 			rooms = (HashSet<Room>) new RoomService().getAllRooms();
-
+			accessories= (HashSet<Accessory>) new AccessoryService().getAllAccessories();
+			
+			/**
+			 * TODO
+			 * build HashSet<Room, Set<Accessory>) to assign accessories for the room
+			 * Same for every section
+			 * build HashSet<Department, Set<Courses>) to assign courses given by departments
+			 */
 		}
 		
 	public HashSet<Building> getBldgs() {
@@ -60,8 +68,7 @@ public class SetUp {
 		return dep_classes_map;
 	}
 
-	
-
-	
-
+	public HashSet<Accessory> getAccessories() {
+		return accessories;
+	}
 }

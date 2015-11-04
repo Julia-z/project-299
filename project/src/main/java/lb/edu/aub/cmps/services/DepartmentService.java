@@ -2,6 +2,7 @@ package lb.edu.aub.cmps.services;
 
 import java.util.Set;
 
+import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.mappers.DepartmentMapper;
 
@@ -16,6 +17,22 @@ public class DepartmentService implements DepartmentMapper {
 
 			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
 			Set<Department> deps = pm.getAllDepartments();
+			return deps;
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			sqlSession.close();
+		}
+		return null;
+	}
+
+	public Set<Course> getGivenCourse(int id) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+
+			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
+			Set<Course> deps = pm.getGivenCourse(id);
 			return deps;
 		} catch (Exception e) {
 			System.out.println(e);
