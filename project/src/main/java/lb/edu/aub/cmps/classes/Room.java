@@ -3,6 +3,8 @@ package lb.edu.aub.cmps.classes;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import lb.edu.aub.cmps.enums.Day;
+
 public class Room {
 	private int id;
 	private String number;
@@ -59,25 +61,39 @@ public class Room {
 	}
 
 	/**
-	 * returns true if the room is available during the time slots
+	 * Checks if the room is available during the time slots
 	 * i.e. the room is available during each time slot in the array
-	 * TODO
 	 * @param slots
-	 * @return
+	 * @return true if room is available during slots
+	 * returns false otherwise
 	 */
 	public boolean is_available(TimeSlot[] slots) {
+		boolean available = true;
 		//we should loop over all the time slots and see if any time slot conflicts
-		return true;
+		for(TimeSlot reservedTimeSlot : this.reserved){
+            for(int i=0; i<slots.length; i++){
+            	if(reservedTimeSlot.conflicts(slots[i]))
+            		available = false;
+            }
+        }
+		return available;
 	}
 
 	/**
-	 * TODO
-	 * modifies the timeSlots[]
+	 * Checks if Room is available during TimeSlot[] slots
+	 * if available modifies the reserved timeSlots[] and returns true
 	 * @param slots
-	 * @return
+	 * @return if available returns true, if not available returns false
 	 */
 	public boolean reserveRoom(TimeSlot[] slots){
-		return true;
+		if(this.is_available(slots)){
+			for(int i=0; i<slots.length; i++){
+				this.reserved.add(slots[i]);
+			}
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public HashSet<TimeSlot> getReserved() {

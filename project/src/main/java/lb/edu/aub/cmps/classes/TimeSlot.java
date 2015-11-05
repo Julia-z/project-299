@@ -57,6 +57,27 @@ public class TimeSlot {
 	public String toString(){
 		return day+": "+start.substring(0, 2) +":"+ start.substring(2,4) +" -> "+ end.substring(0, 2) +":"+ end.substring(2, 4);
 	}
+	public boolean conflicts(TimeSlot time2) {
+		boolean conflict = false;
+		if (this.getDay() == time2.getDay()) {
+			if (Integer.parseInt(this.getStart()) == Integer
+					.parseInt(time2.getStart())) {
+				conflict = true;
+			} else if (Integer.parseInt(this.getStart()) > Integer
+					.parseInt(time2.getStart())
+					&& (Integer.parseInt(this.getStart()) <= Integer
+							.parseInt(time2.getEnd()))) {
+				conflict = true;
+			} else if (Integer.parseInt(this.getStart()) < Integer
+					.parseInt(time2.getStart())
+					&& (Integer.parseInt(this.getEnd()) >= Integer
+							.parseInt(time2.getStart()))) {
+
+				conflict = true;
+			}
+		}
+		return conflict;
+	}
 	/*
 	public static void main(String[] args){
 		TimeSlot t = new TimeSlot(Day.M, "1100", "1150");
