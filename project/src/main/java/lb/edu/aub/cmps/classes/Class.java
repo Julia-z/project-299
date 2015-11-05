@@ -46,7 +46,24 @@ public abstract class Class {
 		// find the best time slot and  room and set them
 		return true;
 	}
-
+	
+	/**
+	 * TODO
+	 * @return
+	 */
+	public boolean bestScheduleClass() {
+		// find the best time slot and  room and set them
+		return true;
+	}
+	
+	/**
+	 * TODO
+	 * @return
+	 */
+	public boolean secondScheduleClass() {
+		// find the best time slot and  room and set them
+		return true;
+	}
 	public Room getRoom() {
 		return room;
 	}
