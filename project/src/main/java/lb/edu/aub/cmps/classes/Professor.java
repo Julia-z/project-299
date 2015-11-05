@@ -1,14 +1,17 @@
 package lb.edu.aub.cmps.classes;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+
+import lb.edu.aub.cmps.enums.Day;
 
 public class Professor {
 	private int id;
 	private String name;
 	private LinkedList<Class> classes;
-	private LinkedList<Time> unavailable;
+	private HashSet<TimeSlot> unavailable;
 
-
+	
 
 	public int getId() {
 		return id;
@@ -24,23 +27,36 @@ public class Professor {
 
 	public void addClass(Class c) {
 		classes.add(c);
-		unavailable.add(c.getTime());
+		for(int i=0; i <c.getTime().getTimeSlots().length; i++){
+			unavailable.add(c.getTime().getTimeSlots()[i]);
+		}
+		
 	}
 
-	public LinkedList<Time> getUnavailable() {
+	public HashSet<TimeSlot> getUnavailable() {
 		return unavailable;
 	}
 	
 	public void addUnavailable(Time t){
-		this.unavailable.add(t);
+		for(int i=0; i <t.getTimeSlots().length; i++){
+			unavailable.add(t.getTimeSlots()[i]);
+		}
 	}
 	/**
-	 * TODO
+	 * Checks if Professor is Available during Slots
 	 * @param slots
-	 * @return
+	 * @return true if Professor is available 
+	 * false if professor already has a class during that time
 	 */
-	public boolean isAvailable(Time  slots){
-		return false;
+	public boolean isAvailable(Time slots){
+		boolean available = true;
+		for(TimeSlot unavailableTimes : this.unavailable){
+            for(int i=0; i<slots.getTimeSlots().length; i++){
+            	if(unavailableTimes.conflicts(slots.getTimeSlots()[i]))
+            		available = false;
+            }
+        }
+		return available;
 	}
 	
 	

@@ -56,7 +56,7 @@ public class Room {
 	 * second priority is to rooms in the same building
 	 * third priority is to rooms in the nearby buildings
 	 */
-	public ArrayList<Room> getSimilar_available_rooms(TimeSlot[] t) {
+	public Room getSimilar_available_rooms(HashSet<Room> rooms, TimeSlot[] t) {
 		return null;
 	}
 

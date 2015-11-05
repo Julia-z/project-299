@@ -11,7 +11,9 @@ public class Time {
 		this.timeSlots = timeSlots;
 	}
 	
-
+	public TimeSlot[] getTimeSlots(){
+		return timeSlots;
+	}
 	public String toString() {
 		return Arrays.toString(timeSlots);
 	}
