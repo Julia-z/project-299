@@ -2,8 +2,6 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.Arrays;
 
-import lb.edu.aub.cmps.enums.Day;
-
 public class Time {
 	private TimeSlot[] timeSlots;
 
@@ -25,19 +23,19 @@ public class Time {
 		boolean conflict = false;
 		for (int i = 0; i < this.timeSlots.length; i++) {
 			for (int j = 0; j < time2.timeSlots.length; j++) {
-				if (this.timeSlots[i].day == time2.timeSlots[j].day) {
-					if (Integer.parseInt(this.timeSlots[i].start) == Integer
-							.parseInt(time2.timeSlots[j].start)) {
+				if (this.timeSlots[i].getDay() == time2.timeSlots[j].getDay()) {
+					if (Integer.parseInt(this.timeSlots[i].getStart()) == Integer
+							.parseInt(time2.timeSlots[j].getStart())) {
 						conflict = true;
-					} else if (Integer.parseInt(this.timeSlots[i].start) > Integer
-							.parseInt(time2.timeSlots[j].start)
-							&& (Integer.parseInt(this.timeSlots[i].start) <= Integer
-									.parseInt(time2.timeSlots[j].end))) {
+					} else if (Integer.parseInt(this.timeSlots[i].getStart()) > Integer
+							.parseInt(time2.timeSlots[j].getStart())
+							&& (Integer.parseInt(this.timeSlots[i].getStart()) <= Integer
+									.parseInt(time2.timeSlots[j].getEnd()))) {
 						conflict = true;
-					} else if (Integer.parseInt(this.timeSlots[i].start) < Integer
-							.parseInt(time2.timeSlots[j].start)
-							&& (Integer.parseInt(this.timeSlots[i].end) >= Integer
-									.parseInt(time2.timeSlots[j].start))) {
+					} else if (Integer.parseInt(this.timeSlots[i].getStart()) < Integer
+							.parseInt(time2.timeSlots[j].getStart())
+							&& (Integer.parseInt(this.timeSlots[i].getEnd()) >= Integer
+									.parseInt(time2.timeSlots[j].getStart()))) {
 
 						conflict = true;
 					}

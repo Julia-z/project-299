@@ -24,5 +24,6 @@
 		<mapper resource='lb/edu/aub/cmps/mappers/DepartmentMapper.xml' />
 		<mapper resource='lb/edu/aub/cmps/mappers/ProfessorMapper.xml' />
 		<mapper resource='lb/edu/aub/cmps/mappers/AccessoryMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/mappers/ClassMapper.xml' />
 	</mappers>
 </configuration>

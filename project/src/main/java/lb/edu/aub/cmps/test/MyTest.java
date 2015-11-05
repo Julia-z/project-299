@@ -3,11 +3,15 @@ package lb.edu.aub.cmps.test;
 import java.util.Set;
 
 import lb.edu.aub.cmps.classes.Accessory;
+import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
+import lb.edu.aub.cmps.classes.Time;
+import lb.edu.aub.cmps.classes.TimeSlot;
 import lb.edu.aub.cmps.mappers.AccessoryMapper;
+import lb.edu.aub.cmps.mappers.ClassMapper;
 import lb.edu.aub.cmps.mappers.CourseMapper;
 import lb.edu.aub.cmps.mappers.DepartmentMapper;
 import lb.edu.aub.cmps.mappers.ProfessorMapper;
@@ -55,8 +59,18 @@ public class MyTest {
 			Set<Accessory> Accessories = am.getAllAccessories();
 			System.out.println("Accessories: " + Accessories.size());
 
-			// Department d = departmentMapper.(1);
-			// System.out.println(u);
+			ClassMapper clm = sqlSession.getMapper(ClassMapper.class);
+
+			Set<Class> classes = clm.getAllClasses();
+			System.out.println("Classes: " + classes.size());
+			
+			TimeSlot[] timeSlots= clm.getClassTimes(1);
+			Time T= new Time(timeSlots);
+			System.out.println(T.toString());
+			
+			Professor professor= clm.getProfessor(1);
+			System.out.println(professor.getName());
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
