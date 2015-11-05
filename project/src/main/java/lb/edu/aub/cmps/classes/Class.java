@@ -2,8 +2,6 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.HashSet;
 
-import lb.edu.aub.cmps.enums.Type;
-
 /*
  *	class_capacity: All sections together
  *	section_numbers: Set of section numbers
@@ -20,7 +18,8 @@ public class Class {
 	private Room room;
 	private Time time;
 	private Professor Professor;
-	private Type type;
+	private String type;
+	private int type_id;
 
 
 	public int getClass_id() {
@@ -89,7 +88,31 @@ public class Class {
 		return Professor;
 	}
 
-	public Type getType() {
+	public String getType() {
 		return type;
+	}
+
+	public int getType_id() {
+		return type_id;
+	}
+
+	public void setType_id(int type_id) {
+		this.type_id = type_id;
+	}
+	
+	/**
+	 * For the sake of testing
+	 * private int class_id;
+	private int course_id;
+	private int class_capacity;
+	private HashSet<Integer> section_numbers;
+	private Room room;
+	private Time time;
+	private Professor Professor;
+	private String type;
+	private int type_id;
+	 */
+	public String toString(){
+		return "Class id: "+class_id+", Course id: "+course_id+", Type :"+type;
 	}
 }

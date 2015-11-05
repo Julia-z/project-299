@@ -16,9 +16,10 @@
 	
 	<resultMap type='lb.edu.aub.cmps.classes.Accessory' id='AccessoriesInRoom'>
 		<id property='id' column='Accessory_ID'></id>
+		<result property='name' column='Accessory_Name'></result>
 	</resultMap>
 
 	<select id='getAccessoriesInRoom' parameterType="int" resultMap='AccessoriesInRoom'>
-		SELECT Accessory_ID from classroom_accessory where Classroom_ID= #{id}
+		SELECT a.Accessory_ID, a.Accessory_Name from classroom_accessory c join accessory_enum a where c.Classroom_ID= #{id}
 	</select>
 </mapper>

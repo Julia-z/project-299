@@ -57,12 +57,12 @@ public class MyTest {
 			AccessoryMapper am = sqlSession.getMapper(AccessoryMapper.class);
 
 			Set<Accessory> Accessories = am.getAllAccessories();
-			System.out.println("Accessories: " + Accessories.size());
+			System.out.println("Accessories in room: " + Accessories.toString());
 
 			ClassMapper clm = sqlSession.getMapper(ClassMapper.class);
 
 			Set<Class> classes = clm.getAllClasses();
-			System.out.println("Classes: " + classes.size());
+			System.out.println("Classes: " + classes.toString());
 			
 			TimeSlot[] timeSlots= clm.getClassTimes(1);
 			Time T= new Time(timeSlots);
@@ -71,6 +71,11 @@ public class MyTest {
 			Professor professor= clm.getProfessor(1);
 			System.out.println(professor.getName());
 			
+			Set<Accessory> accessoriesInClass= clm.getAccessoriesInClass(1);
+			System.out.println("Accessories in class: "+accessoriesInClass.toString());
+			
+			Room room= clm.getClassroom(1);
+			System.out.println("Room: "+ room.getNumber());
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {

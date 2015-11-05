@@ -7,28 +7,31 @@
 	<resultMap type='lb.edu.aub.cmps.classes.Class' id='ClassResult'>
 		<id property='class_id' column='Class_ID'></id>
 		<result property='course_id' column='Course_ID'></result>
-		<result property='class_capacity' column='Class_Capacity'></result>	
+		<result property='class_capacity' column='Class_Capacity'></result>
+		<result property='type' column='Lecture_Type'></result>
 	</resultMap>
-	
-	
+
+
 	<select id='getAllClasses' resultMap='ClassResult'>
-			SELECT Class_ID, Course_ID, Class_Capacity from class 
+		SELECT c.Class_ID,
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type from class c join
+		type_enum t where c.Type_id = t.Type_id
 	</select>
-	
+
 	<!-- write a method to get sections after creating a class section -->
 
 	<resultMap type='lb.edu.aub.cmps.classes.TimeSlot' id='ClassTimeResult'>
-		<!-- id property='class_id' column='Class_ID'></id-->
+		<!-- id property='class_id' column='Class_ID'></id -->
 		<id property='day_id' column='Day_ID'></id>
 		<result property='start' column='Start'></result>
 		<result property='end' column='End'></result>
 	</resultMap>
 
-
 	<select id='getClassTimes' parameterType="int" resultMap='ClassTimeResult'>
-		SELECT Day_ID, Start, End from class_time where Class_ID= #{id}
+		SELECT
+		Day_ID, Start, End from class_time where Class_ID= #{id}
 	</select>
-	
+
 	<resultMap type='lb.edu.aub.cmps.classes.Professor' id='ProfessorsResult'>
 		<id property='id' column='Professor_ID'></id>
 		<result property='name' column='Professor_Name'></result>
@@ -36,6 +39,34 @@
 
 
 	<select id='getProfessor' parameterType="int" resultMap='ProfessorsResult'>
-		SELECT c.Professor_ID, p.Professor_name from class_professor c join professor p where c.Class_ID= #{id}
+		SELECT
+		c.Professor_ID, p.Professor_name from class_professor c join professor
+		p where c.Class_ID= #{id}
+	</select>
+
+	<resultMap type='lb.edu.aub.cmps.classes.Accessory' id='AccessoriesResult'>
+		<id property='id' column='Accessory_ID'></id>
+		<result property='name' column='Accessory_Name'></result>
+	</resultMap>
+
+
+	<select id='getAccessoriesInClass' parameterType="int"
+		resultMap='AccessoriesResult'>
+		SELECT a.Accessory_ID, a.Accessory_Name from class_accessory
+		c join accessory_enum a where c.Class_ID= #{id}
+	</select>
+
+	<resultMap type='lb.edu.aub.cmps.classes.Room' id='RoomResult'>
+		<id property='id' column='Classroom_ID'></id>
+		<result property='number' column='Classroom_Number'></result>
+		<result property='room_capacity' column='Classroom_Capacity'></result>
+		<result property='building_id' column='Building_ID'></result>
+	</resultMap>
+
+	<select id='getClassroom' parameterType="int" resultMap='RoomResult'>
+		SELECT
+		r.Classroom_ID, r.Classroom_Number, r.Classroom_Capacity,
+		r.Building_ID from
+		classroom r join class c where c.Class_ID= #{id}
 	</select>
 </mapper>
