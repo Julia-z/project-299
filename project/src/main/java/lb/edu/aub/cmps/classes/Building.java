@@ -8,6 +8,30 @@ public class Building {
 	private String name;
 	private int location_id;
 	
+	/*public static void main(String[] args){
+		Building first = new Building();
+		first.id = 1;
+		first.name = "Nicely";
+		first.location_id = 1;
+		Building second = new Building();
+		second.id = 2;
+		second.name = "Bliss";
+		second.location_id = 1;
+		Building third = new Building();
+		third.id = 3;
+		third.name = "Fisk";
+		third.location_id = 1;
+		Building fourth = new Building();
+		fourth.id = 4;
+		fourth.name = "Phys";
+		fourth.location_id = 2;
+		HashSet<Building> buildings = new HashSet<Building>();
+		buildings.add(first);
+		buildings.add(second);
+		buildings.add(third);
+		buildings.add(fourth);
+		System.out.println(first.getNearBuildings(buildings));
+	}*/
 	public int getId() {
 		return id;
 	}

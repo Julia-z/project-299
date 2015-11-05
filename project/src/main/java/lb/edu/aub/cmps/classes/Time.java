@@ -6,7 +6,39 @@ import lb.edu.aub.cmps.enums.Day;
 
 public class Time {
 	private TimeSlot[] timeSlots;
+	/*TESTING
+	 * public static void main(String[] args) {
+		TimeSlot[] times = new TimeSlot[3];
+		times[0] = new TimeSlot();
+		times[0].setDay(Day.M);
+		times[0].setStart("0500");
+		times[0].setEnd("0600");
+		times[1] = new TimeSlot();
+		times[1].setDay(Day.T);
+		times[1].setStart("700");
+		times[1].setEnd("730");
+		times[2] = new TimeSlot();
+		times[2].setDay(Day.F);
+		times[2].setStart("731");
+		times[2].setEnd("1930");
+		Time checking1 = new Time(times);
 
+		TimeSlot[] times2 = new TimeSlot[3];
+		times2[0] = new TimeSlot();
+		times2[0].setDay(Day.M);
+		times2[0].setStart("700");
+		times2[0].setEnd("800");
+		times2[1] = new TimeSlot();
+		times2[1].setDay(Day.W);
+		times2[1].setStart("700");
+		times2[1].setEnd("730");
+		times2[2] = new TimeSlot();
+		times2[2].setDay(Day.F);
+		times2[2].setStart("1531");
+		times2[2].setEnd("1630");
+		Time checking2 = new Time(times2);
+		System.out.println("testing conflicts method "+checking1.conflicts(checking2));
+	}*/
 	public Time(TimeSlot[] timeSlots) {
 		this.timeSlots = timeSlots;
 	}
