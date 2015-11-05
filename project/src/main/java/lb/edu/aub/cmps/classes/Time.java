@@ -33,4 +33,18 @@ public class Time {
 		}
 		return conflict;
 	}
+	/*
+	public static void main(String[] args){
+		TimeSlot t1 = new TimeSlot(Day.M, "1400", "1450");
+		TimeSlot t2 = new TimeSlot(Day.W, "1400", "1450");
+		TimeSlot t3 = new TimeSlot(Day.F, "1400", "1450");
+		TimeSlot t4 = new TimeSlot(Day.W, "1000", "1100");
+		//TimeSlot t2 = new TimeSlot(Day.F, "1400", "1450");
+
+		TimeSlot[] t = {t1, t2, t3};
+		Time time1 = new Time(t);
+		TimeSlot[] tt = {t4};
+		Time time2 = new Time(tt);
+		System.out.println(time1.conflicts(time2));
+	}*/
 }
