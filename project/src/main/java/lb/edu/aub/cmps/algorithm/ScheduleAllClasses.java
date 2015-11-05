@@ -14,6 +14,7 @@ public class ScheduleAllClasses {
 	private int count_all_classes;
 	//department id -> set of class
 	private HashMap<Integer, Set<Class>> requests_by_dep;
+	private Set<Class> all_classes;
 	private TreeMap<Integer, Double> weights;
 	//weight -> set of class
 
@@ -25,11 +26,13 @@ public class ScheduleAllClasses {
 		 * TODO what if a weight is duplicated!!
 		 */
 		weights = new TreeMap<Integer, Double>();
+		all_classes = new HashSet<Class>();
 		//normalize and get the weights
 		for(Integer d:requests_by_dep.keySet()) {
 			double counter = requests_by_dep.get(d).size();
 			weights.put(d, counter);
 			count_all_classes += counter;
+			all_classes.addAll(requests_by_dep.get(d));
 		}
 		
 		//normalize
@@ -50,7 +53,7 @@ public class ScheduleAllClasses {
 		//this boolean tells if there is more classes
 		boolean b = true;
 		//for number of iterations
-		while(b){
+		while(!all_classes.isEmpty()){
 			for(Integer d: requests_by_dep.keySet()){
 				//get the num of courses to schedule at this iteration
 				int num_of_classes = (int)Math.ceil(weights.get(d)* num_of_iterations);
@@ -62,6 +65,7 @@ public class ScheduleAllClasses {
 						if(!to_sched.secondScheduleClass())
 							not_sched.add(to_sched);
 					requests_by_dep.get(d).remove(to_sched);
+					all_classes.remove(to_sched);
 					requests_by_dep.put(d, requests_by_dep.get(d));
 				}
 			}
