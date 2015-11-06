@@ -2,8 +2,6 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.Arrays;
 
-import lb.edu.aub.cmps.enums.Day;
-
 public class Time {
 	private TimeSlot[] timeSlots;
 	/*TESTING

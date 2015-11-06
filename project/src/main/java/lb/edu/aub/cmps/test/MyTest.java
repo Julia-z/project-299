@@ -54,6 +54,9 @@ public class MyTest {
 			Set<Professor> Professors = pm.getAllProfessors();
 			System.out.println("Professors: " + Professors.size());
 			
+			Set<Class> coursesByProfessor= pm.getClassesGiven(1);
+			System.out.println("Classes by p: "+ coursesByProfessor.toString());
+			
 			AccessoryMapper am = sqlSession.getMapper(AccessoryMapper.class);
 
 			Set<Accessory> Accessories = am.getAllAccessories();
