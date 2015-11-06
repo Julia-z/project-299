@@ -51,7 +51,7 @@ public class ScheduleAllClasses {
 		Set<Class> not_sched = new HashSet<Class>();
 		/**TODO**/
 		//this boolean tells if there is more classes
-		boolean b = true;
+		//boolean b = true;
 		//for number of iterations
 		while(!all_classes.isEmpty()){
 			for(Integer d: requests_by_dep.keySet()){

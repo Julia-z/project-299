@@ -3,8 +3,6 @@ package lb.edu.aub.cmps.classes;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import lb.edu.aub.cmps.enums.Day;
-
 public class Professor {
 	private int id;
 	private String name;
