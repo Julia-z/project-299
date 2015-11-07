@@ -18,6 +18,7 @@ public class ClassService implements ClassMapper{
 	public Set<Class> getAllClasses() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
+		
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
 			return cm.getAllClasses();
