@@ -31,4 +31,14 @@ public class Course {
 	public int getNbr_of_sections() {
 		return nbr_of_sections;
 	}
+	/**
+	 * 	private int course_id;
+	private int department_id;
+	private String course_name;
+	private int category_id;
+	private int nbr_of_sections;
+	 */
+	public String toString(){
+		return "course id: "+course_id+", course name: "+course_name;
+	}
 }

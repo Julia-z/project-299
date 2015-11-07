@@ -8,5 +8,5 @@ import lb.edu.aub.cmps.classes.Department;
 public interface DepartmentMapper {
 
 	public Set<Department> getAllDepartments();
-	public Set<Course> getGivenCourse(int id);
+	public Set<Course> getGivenCourses(int id);
 }

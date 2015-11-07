@@ -14,9 +14,11 @@ public class DepartmentService implements DepartmentMapper {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
-
 			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
 			Set<Department> deps = pm.getAllDepartments();
+			for(Department dep: deps){
+				dep.setCourses_offered(pm.getGivenCourses(dep.getId()));
+			}
 			return deps;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -26,13 +28,13 @@ public class DepartmentService implements DepartmentMapper {
 		return null;
 	}
 
-	public Set<Course> getGivenCourse(int id) {
+	public Set<Course> getGivenCourses(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
 
 			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
-			Set<Course> deps = pm.getGivenCourse(id);
+			Set<Course> deps = pm.getGivenCourses(id);
 			return deps;
 		} catch (Exception e) {
 			System.out.println(e);

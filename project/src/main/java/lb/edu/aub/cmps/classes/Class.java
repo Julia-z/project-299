@@ -21,7 +21,6 @@ public class Class {
 	private String type;
 	private int type_id;
 
-
 	public int getClass_id() {
 		return class_id;
 	}
@@ -52,30 +51,34 @@ public class Class {
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public boolean scheduleClass() {
-		// find the best time slot and  room and set them
+		// find the best time slot and room and set them
 		return true;
 	}
-	
+
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public boolean bestScheduleClass() {
-		// find the best time slot and  room and set them
+		// find the best time slot and room and set them
 		return true;
 	}
-	
+
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public boolean secondScheduleClass() {
-		// find the best time slot and  room and set them
+		// find the best time slot and room and set them
 		return true;
 	}
+
 	public Room getRoom() {
 		return room;
 	}
@@ -99,20 +102,28 @@ public class Class {
 	public void setType_id(int type_id) {
 		this.type_id = type_id;
 	}
-	
+
 	/**
-	 * For the sake of testing
-	 * private int class_id;
-	private int course_id;
-	private int class_capacity;
-	private HashSet<Integer> section_numbers;
-	private Room room;
-	private Time time;
-	private Professor Professor;
-	private String type;
-	private int type_id;
+	 * For the sake of testing private int class_id; private int course_id;
+	 * private int class_capacity; private HashSet<Integer> section_numbers;
+	 * private Room room; private Time time; private Professor Professor;
+	 * private String type; private int type_id;
 	 */
-	public String toString(){
-		return "Class id: "+class_id+", Course id: "+course_id+", Type :"+type;
+	public String toString() {
+		return "Class id: " + class_id + ", Course id: " + course_id
+				+ ", Type :" + type;//+", Room: " +room.getNumber()+", Time: "+time.toString()+", Professor: "+Professor.getName();
 	}
+
+	public void setProfessor(Professor Professor) {
+		this.Professor = Professor;
+	}
+
+	public void setTime(Time classTime) {
+		this.time = classTime;
+	}
+
+	public void setRoom(Room classroom) {
+		this.room = classroom;
+	}
+
 }

@@ -17,6 +17,9 @@ public class RoomService implements RoomMapper {
 
 			RoomMapper rm = sqlSession.getMapper(RoomMapper.class);
 			Set<Room> rooms = rm.getAllRooms();
+			for(Room room: rooms){
+				room.setAccessories(rm.getAccessoriesInRoom(room.getId()));
+			}
 			return rooms;
 		} catch (Exception e) {
 			System.out.println(e);

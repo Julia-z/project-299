@@ -1,11 +1,11 @@
 package lb.edu.aub.cmps.classes;
 
-import java.util.LinkedList;
+import java.util.Set;
 
 public class Department {
 	private int id;
 	private String name;
-	private LinkedList<Course> courses_offered;
+	private Set<Course> courses_offered;
 	private int building_id;
 	private int priority;
 
@@ -17,11 +17,11 @@ public class Department {
 		return name;
 	}
 
-	public LinkedList<Course> getCourses_offered() {
+	public Set<Course> getCourses_offered() {
 		return courses_offered;
 	}
 
-	public void setCourses_offered(LinkedList<Course> courses_offered) {
+	public void setCourses_offered(Set<Course> courses_offered) {
 		this.courses_offered = courses_offered;
 	}
 
@@ -34,5 +34,9 @@ public class Department {
 	}
 	public int getPriority() {
 		return priority;
+	}
+	
+	public String toString(){
+		return "id: "+id+" name: "+name+", courses offered: "+ courses_offered.toString();
 	}
 }

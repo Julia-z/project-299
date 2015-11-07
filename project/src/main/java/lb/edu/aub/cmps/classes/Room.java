@@ -1,13 +1,14 @@
 package lb.edu.aub.cmps.classes;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class Room {
 	private int id;
 	private String number;
 	private int room_capacity;
 	private int building_id;
-	private HashSet<Accessory> accessories;
+	private Set<Accessory> accessories;
 	private HashSet<TimeSlot> reserved;
 
 	/*TESTING
@@ -159,12 +160,15 @@ public class Room {
 		return reserved;
 	}
 
-	public HashSet<Accessory> getAccessories() {
+	public Set<Accessory> getAccessories() {
 		return accessories;
 	}
 
-	public void setAccessories(HashSet<Accessory> accessories) {
+	public void setAccessories(Set<Accessory> accessories) {
 		this.accessories = accessories;
 	}
 
+	public String toString(){
+		return "id "+id+" ,number "+number+" ,accessories: "+accessories;
+	}
 }

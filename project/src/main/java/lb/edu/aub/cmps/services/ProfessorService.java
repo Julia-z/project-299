@@ -17,6 +17,9 @@ public class ProfessorService implements ProfessorMapper {
 
 			ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
 			Set<Professor> profs = pm.getAllProfessors();
+			for(Professor prof: profs){
+				prof.setClasses(pm.getClassesGiven(prof.getId()));
+			}
 			return profs;
 		} catch (Exception e) {
 			System.out.println(e);
