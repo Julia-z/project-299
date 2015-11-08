@@ -54,7 +54,7 @@ public class Building {
 		this.location_id = location_id;
 	}
 	public String toString(){
-		return "Building Id:"+id+" Building Name: "+name+" Location Id:"+location_id;
+		return "(Building Id:"+id+" Building Name: "+name+" Location Id:"+location_id+ ")";
 	}
 
 }

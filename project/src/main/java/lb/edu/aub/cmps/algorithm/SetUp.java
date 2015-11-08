@@ -13,6 +13,7 @@ import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
 import lb.edu.aub.cmps.classes.Time;
 import lb.edu.aub.cmps.classes.TimeSlot;
+import lb.edu.aub.cmps.enums.Day;
 import lb.edu.aub.cmps.services.AccessoryService;
 import lb.edu.aub.cmps.services.BuildingService;
 import lb.edu.aub.cmps.services.ClassService;
@@ -66,6 +67,39 @@ public class SetUp {
 		 * TODO populate the dep_rooms map
 		 */
 		populateBldgs_rooms();
+	}
+
+	public static void main(String[] args) {
+		SetUp s = new SetUp();
+		TimeSlot[] times = new TimeSlot[3];
+		times[0] = new TimeSlot();
+		times[0].setDay(Day.M);
+		times[0].setStart("0500");
+		times[0].setEnd("0600");
+		times[1] = new TimeSlot();
+		times[1].setDay(Day.T);
+		times[1].setStart("0700");
+		times[1].setEnd("0730");
+		times[2] = new TimeSlot();
+		times[2].setDay(Day.F);
+		times[2].setStart("0731");
+		times[2].setEnd("0830");
+		Room myRoom = new Room();
+		myRoom.setId(2);
+		myRoom.setNumber("322");
+		myRoom.setRoom_capacity(25);
+		myRoom.setBuilding_id(3);
+		s.rooms.add(myRoom);
+		Room myRoom2 = new Room();
+		myRoom2.setId(3);
+		myRoom2.setNumber("3211111");
+		myRoom2.setRoom_capacity(10);
+		myRoom2.setBuilding_id(10);
+		s.rooms.add(myRoom2);
+		System.out.println(s.bldgs);
+		for (Room r : s.rooms) {
+			System.out.println(s.get_all_rooms(r, times));
+		}
 	}
 
 	public HashSet<Building> getBldgs() {
@@ -163,41 +197,99 @@ public class SetUp {
 	 *         room, Time time)
 	 */
 	public Room getSimilar_available_rooms(Room room, TimeSlot[] times) {
-
+		Set<Room> sameBuilding = get_all_rooms_in_same_building(room, times);
+		Set<Room> nearBuilding = get_all_rooms_in_all_near_buildings(room, times);
+		Set<Room> allRooms = get_all_rooms(room,times);
+		/*if(!sameBuilding.isEmpty()){
+			for(Room r : sameBuilding){
+				if(Math.abs(r.getRoom_capacity()-room.getRoom_capacity())<5){
+					return r;
+				}else if(Math.abs(r.getRoom_capacity()-room.getRoom_capacity())<10){
+					return r;
+				}
+			}
+			
+		}else if(!nearBuilding.isEmpty()){
+			for(Room r : nearBuilding){
+				if(Math.abs(r.getRoom_capacity()-room.getRoom_capacity())<5){
+					return r;
+				}else if(Math.abs(r.getRoom_capacity()-room.getRoom_capacity())<10){
+					return r;
+				}
+			}
+		}else if(!allRooms.isEmpty()){
+			for(Room r : allRooms){
+				if(Math.abs(r.getRoom_capacity()-room.getRoom_capacity())<5){
+					return r;
+				}else if(Math.abs(r.getRoom_capacity()-room.getRoom_capacity())<10){
+					return r;
+				}
+			}
+		}*/
 		return null;
 	}
 
 	/**
-	 * TODO yasmin
-	 * return all the rooms in the same building
-	 * SHOULD respect the capacity and the type of the room
+	 * TODO yasmin return all the rooms in the same building SHOULD respect the
+	 * capacity and the type of the room
 	 */
-	public Set<Room> get_all_rooms_in_same_building(Room room, TimeSlot[] times){
-		return null;
+	public Set<Room> get_all_rooms_in_same_building(Room room, TimeSlot[] times) {
+		Set<Room> sameBuilding = new HashSet<Room>();
+		System.out.println(room);
+		for (Room r : rooms) {
+			if (r.getId() != room.getId()
+					&& r.getRoom_capacity() >= room.getRoom_capacity()
+					&& r.getBuilding_id() == room.getBuilding_id()
+					&& r.getType() == room.getType()
+					&& room.is_available(times))
+				sameBuilding.add(r);
+		}
+		return sameBuilding;
 	}
-	
+
 	/**
-	 * TODO yasmin
-	 * return all rooms in near buildings 
-	 * SHOULD respect capacity and type
-	 * SHOULD NOT return the rooms in the same building as the passes room
+	 * TODO yasmin return all rooms in near buildings SHOULD respect capacity
+	 * and type SHOULD NOT return the rooms in the same building as the passes
+	 * room
 	 */
-	public Set<Room> get_all_rooms_in_all_near_buildings(Room room, TimeSlot[] times){
-		return null;
+	public Set<Room> get_all_rooms_in_all_near_buildings(Room room,
+			TimeSlot[] times) {
+		Set<Room> nearBuildings = new HashSet<Room>();
+		System.out.println(room);
+		for (Room r : rooms) {
+			if (r.getId() != room.getId()
+					&& r.getType() == room.getType()
+					&& r.getRoom_capacity() >= room.getRoom_capacity()
+					&& r.getBuilding(bldgs).getLocation_id()==room.getBuilding(bldgs).getLocation_id()
+					&& room.is_available(times))
+				nearBuildings.add(r);
+		}
+		return nearBuildings;
 	}
-	
+
 	/**
-	 * TODO yasmin
-	 * SHOULD respect capacity and type
-	 * SHOULD NOT return the rooms in the same building as the passes room neither the rooms in the nearby buildings
+	 * TODO yasmin SHOULD respect capacity and type SHOULD NOT return the rooms
+	 * in the same building as the passes room neither the rooms in the nearby
+	 * buildings
 	 */
-	public Set<Room> get_all_rooms(Room room, TimeSlot[] times){
-		return null;
+	public Set<Room> get_all_rooms(Room room, TimeSlot[] times) {
+		Set<Room> allRooms = new HashSet<Room>();
+		System.out.println(room);
+		for (Room r : rooms) {
+			if (r.getId() != room.getId()
+					&& r.getType() == room.getType()
+					&& r.getRoom_capacity() >= room.getRoom_capacity()
+					&& r.getBuilding(bldgs).getLocation_id()!=room.getBuilding(bldgs).getLocation_id()
+					&& r.getBuilding_id()!=room.getBuilding_id()
+					&& room.is_available(times))
+				allRooms.add(r);
+		}
+		return allRooms;
 	}
+
 	/**
-	 * TODO julia
-	 * returns 1 in case of success -1 in case of unavailable prof -2 in case of
-	 * unavailable room
+	 * TODO julia returns 1 in case of success -1 in case of unavailable prof -2
+	 * in case of unavailable room
 	 * 
 	 * @param c
 	 * @return
