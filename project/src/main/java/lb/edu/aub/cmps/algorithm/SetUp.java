@@ -4,10 +4,24 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import lb.edu.aub.cmps.classes.*;
+import lb.edu.aub.cmps.classes.Accessory;
+import lb.edu.aub.cmps.classes.Building;
 import lb.edu.aub.cmps.classes.Class;
-import lb.edu.aub.cmps.services.*;
+import lb.edu.aub.cmps.classes.Course;
+import lb.edu.aub.cmps.classes.Department;
+import lb.edu.aub.cmps.classes.Professor;
+import lb.edu.aub.cmps.classes.Room;
+import lb.edu.aub.cmps.classes.Time;
+import lb.edu.aub.cmps.classes.TimeSlot;
+import lb.edu.aub.cmps.services.AccessoryService;
+import lb.edu.aub.cmps.services.BuildingService;
+import lb.edu.aub.cmps.services.ClassService;
+import lb.edu.aub.cmps.services.CourseService;
+import lb.edu.aub.cmps.services.DepartmentService;
+import lb.edu.aub.cmps.services.ProfessorService;
+import lb.edu.aub.cmps.services.RoomService;
 
+// calls on all the services and initialize all the data members
 public class SetUp {
 	private HashSet<Building> bldgs;
 	private HashSet<Class> classes;
@@ -26,6 +40,11 @@ public class SetUp {
 
 	// fills in the needed sets before starting the computation
 	public SetUp() {
+
+		/**
+		 * I assume here that all the sets contain full objects i.e. : all data
+		 * members are not null
+		 */
 
 		bldgs = (HashSet<Building>) new BuildingService().getAllBuildings();
 		classes = (HashSet<Class>) new ClassService().getAllClasses();
@@ -103,7 +122,7 @@ public class SetUp {
 		return nearBuildings;
 	}
 
-	public Building getBuildingById(int id) {
+	private Building getBuildingById(int id) {
 		for (Building b : bldgs)
 			if (b.getId() == id)
 				return b;
@@ -111,7 +130,8 @@ public class SetUp {
 	}
 
 	/**
-	 * private methods needed to populate a map of building as a key and a set of rooms as a value
+	 * private methods needed to populate a map of building as a key and a set
+	 * of rooms as a value
 	 */
 	private void populateBldgs_rooms() {
 		bldg_rooms = new HashMap<Building, Set<Room>>();
@@ -124,4 +144,111 @@ public class SetUp {
 			bldg_rooms.put(b, rooms);
 		}
 	}
+
+	/**
+	 * TODO by Yasmin
+	 * 
+	 * @return a room object that is available during the passes time slot
+	 * @return NULL if no rooms are left during a certain time slot
+	 * 
+	 *         the choice of the room SHOULD respect the capacity i.e. the room
+	 *         returned should be of capacity >= to the capacity of the passed
+	 *         room
+	 * 
+	 *         should first check for available rooms in the same bldg if there
+	 *         no rooms left check for the other buildings that have the same
+	 *         location else check in other buildings
+	 * 
+	 *         You can change the params to getSimilar_available_rooms(Room
+	 *         room, Time time)
+	 */
+	public Room getSimilar_available_rooms(Room room, TimeSlot[] times) {
+
+		return null;
+	}
+
+	/**
+	 * TODO yasmin
+	 * return all the rooms in the same building
+	 * SHOULD respect the capacity and the type of the room
+	 */
+	public Set<Room> get_all_rooms_in_same_building(Room room, TimeSlot[] times){
+		return null;
+	}
+	
+	/**
+	 * TODO yasmin
+	 * return all rooms in near buildings 
+	 * SHOULD respect capacity and type
+	 * SHOULD NOT return the rooms in the same building as the passes room
+	 */
+	public Set<Room> get_all_rooms_in_all_near_buildings(Room room, TimeSlot[] times){
+		return null;
+	}
+	
+	/**
+	 * TODO yasmin
+	 * SHOULD respect capacity and type
+	 * SHOULD NOT return the rooms in the same building as the passes room neither the rooms in the nearby buildings
+	 */
+	public Set<Room> get_all_rooms(Room room, TimeSlot[] times){
+		return null;
+	}
+	/**
+	 * TODO julia
+	 * returns 1 in case of success -1 in case of unavailable prof -2 in case of
+	 * unavailable room
+	 * 
+	 * @param c
+	 * @return
+	 */
+	public int bestScheduleClass2(Class c) {
+		Room r = c.getRoom();
+		Time t = c.getTime();
+		Professor p = c.getProfessor();
+
+		boolean av_room = r.is_available(t.getTimeSlots());
+		boolean av_prof = p.isAvailable(t);
+
+		if (av_room && av_prof) {
+			r.reserveRoom(t.getTimeSlots());
+			p.addUnavailable(t);
+			return 1;
+		} else if (!av_prof) {
+			return -1;
+		} else
+			return -2;
+	}
+
+	public boolean bestScheduleClass(Class cl) {
+		Room r = cl.getRoom();
+		Time t = cl.getTime();
+		if (cl.getProfessor().isAvailable(t)
+				&& r.is_available(t.getTimeSlots())) {
+			r.reserveRoom(t.getTimeSlots());
+			return true;
+		} else
+			return false;
+	}
+
+	/**
+	 * TODO julia
+	 * 
+	 * @return
+	 */
+	public boolean secondScheduleClass(Class cl) {
+		Room r = cl.getRoom();
+		Time t = cl.getTime();
+		Room r2 = getSimilar_available_rooms(r, t.getTimeSlots());
+		if (r2 != null) {
+			if (cl.getProfessor().isAvailable(t))
+				r2.reserveRoom(t.getTimeSlots());
+			cl.setRoom(r2);
+			return true;
+		} else {// no rooms are left during this time slot
+
+		}
+		return true;
+	}
+
 }

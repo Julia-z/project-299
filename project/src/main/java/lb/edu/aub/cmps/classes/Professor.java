@@ -83,7 +83,8 @@ public class Professor {
 		}
 		return available;
 	}
-	public String toString(){
-		return "id: "+id+", name: "+name+", classes: "+classes.toString();
+
+	public String toString() {
+		return "id: " + id + ", name: " + name + ", classes: " + classes;
 	}
 }

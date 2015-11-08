@@ -110,17 +110,6 @@ public class Room {
 
 
 	/**
-	 * TODO
-	 * @return array list of rooms
-	 * priority to less or equal capacity 
-	 * second priority is to rooms in the same building
-	 * third priority is to rooms in the nearby buildings
-	 */
-	public Room getSimilar_available_rooms(HashSet<Room> rooms, TimeSlot[] t) {
-		return null;
-	}
-
-	/**
 	 * Checks if the room is available during the time slots
 	 * i.e. the room is available during each time slot in the array
 	 * @param slots

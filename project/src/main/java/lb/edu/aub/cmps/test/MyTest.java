@@ -2,10 +2,17 @@ package lb.edu.aub.cmps.test;
 
 import java.util.Set;
 
+import lb.edu.aub.cmps.classes.Accessory;
 import lb.edu.aub.cmps.classes.Class;
+import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
+import lb.edu.aub.cmps.mappers.AccessoryMapper;
+import lb.edu.aub.cmps.mappers.CourseMapper;
+import lb.edu.aub.cmps.mappers.DepartmentMapper;
+import lb.edu.aub.cmps.mappers.ProfessorMapper;
+import lb.edu.aub.cmps.mappers.RoomMapper;
 import lb.edu.aub.cmps.services.ClassService;
 import lb.edu.aub.cmps.services.DepartmentService;
 import lb.edu.aub.cmps.services.MyBatisUtil;
@@ -21,43 +28,39 @@ public class MyTest {
 			SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 					.openSession();
 
-			/*
-			 * RoomMapper rm = sqlSession.getMapper(RoomMapper.class);
-			 * 
-			 * Set<Room> rooms = rm.getAllRooms(); Set<Accessory>
-			 * accessoriesInRoom = rm.getAccessoriesInRoom(1);
-			 * System.out.println(rooms.size());
-			 * System.out.println("Accessories: "+accessoriesInRoom.size());
-			 * 
-			 * CourseMapper cm = sqlSession.getMapper(CourseMapper.class);
-			 * 
-			 * Set<Course> courses = cm.getAllCourses();
-			 * System.out.println("Courses: " + courses.size());
-			 * 
-			 * DepartmentMapper dm =
-			 * sqlSession.getMapper(DepartmentMapper.class);
-			 * 
-			 * Set<Department> departments = dm.getAllDepartments();
-			 * System.out.println("Deps: " + departments.size()); Set<Course>
-			 * coursesGiven= dm.getGivenCourse(1);
-			 * System.out.println("Courses given: " + coursesGiven.size());
-			 * 
-			 * 
-			 * ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
-			 * 
-			 * Set<Professor> Professors = pm.getAllProfessors();
-			 * System.out.println("Professors: " + Professors.size());
-			 * 
-			 * Set<Class> coursesByProfessor= pm.getClassesGiven(1);
-			 * System.out.println("Classes by p: "+
-			 * coursesByProfessor.toString());
-			 * 
-			 * AccessoryMapper am = sqlSession.getMapper(AccessoryMapper.class);
-			 * 
-			 * Set<Accessory> Accessories = am.getAllAccessories();
-			 * System.out.println("Accessories in room: " +
-			 * Accessories.toString());
-			 */
+			RoomMapper rm = sqlSession.getMapper(RoomMapper.class);
+
+			Set<Room> rooms = rm.getAllRooms();
+			Set<Accessory> accessoriesInRoom = rm.getAccessoriesInRoom(1);
+			System.out.println(rooms.size());
+			System.out.println("Accessories: " + accessoriesInRoom.size());
+
+			CourseMapper cm = sqlSession.getMapper(CourseMapper.class);
+
+			Set<Course> courses = cm.getAllCourses();
+			System.out.println("Courses: " + courses.size());
+
+			DepartmentMapper dm = sqlSession.getMapper(DepartmentMapper.class);
+
+			/*Set<Department> departments = dm.getAllDepartments();
+			System.out.println("Deps: " + departments.size());
+			Set<Course> coursesGiven = dm.getGivenCourse(1);
+			System.out.println("Courses given: " + coursesGiven.size());
+*/
+			ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
+
+			Set<Professor> Professors = pm.getAllProfessors();
+			System.out.println("Professors: " + Professors.size());
+
+			Set<Class> coursesByProfessor = pm.getClassesGiven(1);
+			System.out
+					.println("Classes by p: " + coursesByProfessor.toString());
+
+			AccessoryMapper am = sqlSession.getMapper(AccessoryMapper.class);
+
+			Set<Accessory> Accessories = am.getAllAccessories();
+			System.out
+					.println("Accessories in room: " + Accessories.toString());
 
 			ClassService c = new ClassService();
 			Set<Class> cs = c.getAllClasses();
@@ -70,9 +73,9 @@ public class MyTest {
 			ProfessorService p = new ProfessorService();
 			Set<Professor> ps = p.getAllProfessors();
 			System.out.println(ps.toString());
-			
+
 			RoomService r = new RoomService();
-			Set<Room> rs= r.getAllRooms();
+			Set<Room> rs = r.getAllRooms();
 			System.out.println(rs.toString());
 			/*
 			 * TimeSlot[] timeSlots= clm.getClassTimes(1); Time T= new
