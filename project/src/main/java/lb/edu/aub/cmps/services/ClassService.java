@@ -6,6 +6,7 @@ import lb.edu.aub.cmps.classes.Accessory;
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
+import lb.edu.aub.cmps.classes.Time;
 import lb.edu.aub.cmps.classes.TimeSlot;
 import lb.edu.aub.cmps.mappers.ClassMapper;
 
@@ -22,7 +23,23 @@ public class ClassService implements ClassMapper{
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
 			Set<Class> allClasses= cm.getAllClasses();
+			for(Class c: allClasses){
+				int id = c.getClass_id();
+				TimeSlot[] times= cm.getClassTimes(id);
+				c.setTime(new Time(times));
+				c.setProfessor(cm.getProfessor(id));
+				c.setRoom(cm.getClassroom(id));
+			}
+			/**
+			 * In case we wana loop over all professors and such
+			ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
+			Set<Professor> allProfessors= pm.getAllProfessors();
+			RoomMapper rm = sqlSession.getMapper(RoomMapper.class);
+			Set<Room> allRooms= rm.getAllRooms();
 			
+			for(Professor p: allProfessors){
+				if(p.getC)
+			}**/
 			return allClasses;
 		} finally {
 			sqlSession.close();
