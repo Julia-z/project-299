@@ -69,7 +69,7 @@ public class SetUp {
 		populateBldgs_rooms();
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		SetUp s = new SetUp();
 		TimeSlot[] times = new TimeSlot[3];
 		times[0] = new TimeSlot();
@@ -84,10 +84,11 @@ public class SetUp {
 		times[2].setDay(Day.F);
 		times[2].setStart("0731");
 		times[2].setEnd("0830");
+		System.out.println(s.rooms);
 		Room myRoom = new Room();
 		myRoom.setId(2);
 		myRoom.setNumber("322");
-		myRoom.setRoom_capacity(25);
+		myRoom.setRoom_capacity(30);
 		myRoom.setBuilding_id(3);
 		s.rooms.add(myRoom);
 		Room myRoom2 = new Room();
@@ -96,11 +97,12 @@ public class SetUp {
 		myRoom2.setRoom_capacity(10);
 		myRoom2.setBuilding_id(10);
 		s.rooms.add(myRoom2);
-		System.out.println(s.bldgs);
+		System.out.println("BUILDINGS"+s.bldgs);
 		for (Room r : s.rooms) {
-			System.out.println(s.get_all_rooms(r, times));
+			System.out.println("Similar Available ROOM for "+r+":\n "+s.getSimilar_available_rooms(r, times));
 		}
-	}
+		
+	}*/
 
 	public HashSet<Building> getBldgs() {
 		return bldgs;
@@ -200,7 +202,7 @@ public class SetUp {
 		Set<Room> sameBuilding = get_all_rooms_in_same_building(room, times);
 		Set<Room> nearBuilding = get_all_rooms_in_all_near_buildings(room, times);
 		Set<Room> allRooms = get_all_rooms(room,times);
-		/*if(!sameBuilding.isEmpty()){
+		if(!sameBuilding.isEmpty()){
 			for(Room r : sameBuilding){
 				if(Math.abs(r.getRoom_capacity()-room.getRoom_capacity())<5){
 					return r;
@@ -225,7 +227,22 @@ public class SetUp {
 					return r;
 				}
 			}
-		}*/
+		}
+		if(!sameBuilding.isEmpty()){
+			for(Room r : sameBuilding){
+				return r;
+			}
+			
+		}else if(!nearBuilding.isEmpty()){
+			for(Room r : nearBuilding){
+				return r;
+			}
+		}else if(!allRooms.isEmpty()){
+			for(Room r : allRooms){
+				return r;
+			}
+		}
+		
 		return null;
 	}
 
@@ -235,7 +252,6 @@ public class SetUp {
 	 */
 	public Set<Room> get_all_rooms_in_same_building(Room room, TimeSlot[] times) {
 		Set<Room> sameBuilding = new HashSet<Room>();
-		System.out.println(room);
 		for (Room r : rooms) {
 			if (r.getId() != room.getId()
 					&& r.getRoom_capacity() >= room.getRoom_capacity()
@@ -255,7 +271,6 @@ public class SetUp {
 	public Set<Room> get_all_rooms_in_all_near_buildings(Room room,
 			TimeSlot[] times) {
 		Set<Room> nearBuildings = new HashSet<Room>();
-		System.out.println(room);
 		for (Room r : rooms) {
 			if (r.getId() != room.getId()
 					&& r.getType() == room.getType()
@@ -274,7 +289,6 @@ public class SetUp {
 	 */
 	public Set<Room> get_all_rooms(Room room, TimeSlot[] times) {
 		Set<Room> allRooms = new HashSet<Room>();
-		System.out.println(room);
 		for (Room r : rooms) {
 			if (r.getId() != room.getId()
 					&& r.getType() == room.getType()

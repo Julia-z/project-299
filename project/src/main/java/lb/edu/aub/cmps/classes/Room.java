@@ -148,7 +148,7 @@ public class Room {
 
 	public String toString() {
 		return "id " + id + " ,number " + number + " ,accessories: "
-				+ accessories + " capacity: " + room_capacity
+				+ accessories +"type: "+type+" capacity: " + room_capacity
 				+ " building Id: " + building_id +" Reserved Times: "+reserved;
 	}
 }
