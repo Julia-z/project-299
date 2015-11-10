@@ -7,7 +7,6 @@ public class Department {
 	private String name;
 	private Set<Course> courses_offered;
 	private int building_id;
-	private int priority;
 
 	public int getId() {
 		return id;
@@ -29,13 +28,7 @@ public class Department {
 		return building_id;
 	}
 
-	public void setPriority(int p){
-		this.priority = p;
-	}
-	public int getPriority() {
-		return priority;
-	}
-	
+
 	public String toString(){
 		return "id: "+id+" name: "+name+", courses offered: "+ courses_offered.toString();
 	}

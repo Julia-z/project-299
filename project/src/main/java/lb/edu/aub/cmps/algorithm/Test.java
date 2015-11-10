@@ -7,7 +7,11 @@ public class Test {
 	public static void main(String[] args){
 		SetUp setup = new SetUp();
 		Set<Class> classes = setup.getClasses();
-		System.out.println(classes);
+		
+		for(Class c: classes){
+			System.out.println(c.getProfessor());
+		}
+		//System.out.println(classes);
 		
 	}
 

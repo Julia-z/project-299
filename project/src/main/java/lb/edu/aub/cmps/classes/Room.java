@@ -151,4 +151,7 @@ public class Room {
 				+ accessories +"type: "+type+" capacity: " + room_capacity
 				+ " building Id: " + building_id +" Reserved Times: "+reserved;
 	}
+	public void initializeReserved(){
+		this.reserved = new HashSet<TimeSlot>();
+	}
 }

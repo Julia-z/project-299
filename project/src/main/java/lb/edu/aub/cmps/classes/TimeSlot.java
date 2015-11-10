@@ -8,8 +8,7 @@ public class TimeSlot {
 	private String start;
 	private String end;
 	/**
-	 *commented so that the mapper can function normally
-	 */
+	 *commented so that the mapper can function normally*/
 	/*
 	TimeSlot(Day day, String start, String end) {
 		this.day = day;

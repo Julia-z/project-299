@@ -83,6 +83,10 @@ public class Professor {
 		}
 		return available;
 	}
+	
+	public void initializeUnavailable(){
+		this.unavailable = new HashSet<TimeSlot>();
+	}
 
 	public String toString() {
 		return "id: " + id + ", name: " + name + ", classes: " + classes;

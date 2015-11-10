@@ -10,7 +10,6 @@ import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
 import lb.edu.aub.cmps.mappers.AccessoryMapper;
 import lb.edu.aub.cmps.mappers.CourseMapper;
-import lb.edu.aub.cmps.mappers.DepartmentMapper;
 import lb.edu.aub.cmps.mappers.ProfessorMapper;
 import lb.edu.aub.cmps.mappers.RoomMapper;
 import lb.edu.aub.cmps.services.ClassService;
@@ -40,7 +39,7 @@ public class MyTest {
 			Set<Course> courses = cm.getAllCourses();
 			System.out.println("Courses: " + courses.size());
 
-			DepartmentMapper dm = sqlSession.getMapper(DepartmentMapper.class);
+		//	DepartmentMapper dm = sqlSession.getMapper(DepartmentMapper.class);
 
 			/*Set<Department> departments = dm.getAllDepartments();
 			System.out.println("Deps: " + departments.size());

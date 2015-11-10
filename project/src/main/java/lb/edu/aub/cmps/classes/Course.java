@@ -1,5 +1,7 @@
 package lb.edu.aub.cmps.classes;
 
+import java.util.Set;
+
 
 public class Course {
 	private int course_id;
@@ -7,6 +9,7 @@ public class Course {
 	private String course_name;
 	private int category_id;
 	private int nbr_of_sections;
+	private Set<Class> classes;
 
 	public int getCourse_id() {
 		return course_id;
@@ -40,5 +43,13 @@ public class Course {
 	 */
 	public String toString(){
 		return "course id: "+course_id+", course name: "+course_name;
+	}
+
+	public Set<Class> getClasses() {
+		return classes;
+	}
+
+	public void setClasses(Set<Class> classes) {
+		this.classes = classes;
 	}
 }
