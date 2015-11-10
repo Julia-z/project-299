@@ -14,4 +14,18 @@
 	<select id='getAllCourses' resultMap='CourseResult'>
 		SELECT * from course
 	</select>
+	
+	<resultMap type='lb.edu.aub.cmps.classes.Class' id='ClassResult'>
+		<id property='class_id' column='Class_ID'></id>
+		<result property='course_id' column='Course_ID'></result>
+		<result property='class_capacity' column='Class_Capacity'></result>
+		<result property='type' column='Lecture_Type'></result>
+	</resultMap>
+
+
+	<select id='getAllClasses' parameterType='int' resultMap='ClassResult'>
+		SELECT c.Class_ID,
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type from class c join
+		type_enum t where c.Type_id = t.Type_id and c.Course_ID= #{id}
+	</select>
 </mapper>

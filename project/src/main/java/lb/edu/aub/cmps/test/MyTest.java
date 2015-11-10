@@ -13,6 +13,7 @@ import lb.edu.aub.cmps.mappers.CourseMapper;
 import lb.edu.aub.cmps.mappers.ProfessorMapper;
 import lb.edu.aub.cmps.mappers.RoomMapper;
 import lb.edu.aub.cmps.services.ClassService;
+import lb.edu.aub.cmps.services.CourseService;
 import lb.edu.aub.cmps.services.DepartmentService;
 import lb.edu.aub.cmps.services.MyBatisUtil;
 import lb.edu.aub.cmps.services.ProfessorService;
@@ -76,6 +77,10 @@ public class MyTest {
 			RoomService r = new RoomService();
 			Set<Room> rs = r.getAllRooms();
 			System.out.println(rs.toString());
+			
+			CourseService allCourses = new CourseService();
+			Set<Class> classes= allCourses.getAllClasses(1);
+			System.out.println("Classes are: "+classes.toString());
 			/*
 			 * TimeSlot[] timeSlots= clm.getClassTimes(1); Time T= new
 			 * Time(timeSlots); System.out.println(T.toString());
