@@ -372,14 +372,14 @@ public class SetUp {
 		System.out.println("COURSES");
 		for(Course c: courses) System.out.println(c.getNbr_of_sections());
 		*/
-		//for(Class cl: setup.getClasses()) System.out.println(cl.getType_id());
+	//	for(Class cl: setup.getClasses()) System.out.println(cl.getType());
 	//	for(Department d: setup.deps) System.out.println(d.getBuilding_id());
 		
 		//for(Professor p: setup.profs)System.out.println(p.getUnavailable());
 		
-		//for(Room r: setup.getRooms())System.out.println(r);
+		for(Room r: setup.getRooms())System.out.println(r.getType());
 			
-		for(Accessory a: setup.accessories) System.out.println(a);
+	//	for(Accessory a: setup.accessories) System.out.println(a);
 		
 	}
 }

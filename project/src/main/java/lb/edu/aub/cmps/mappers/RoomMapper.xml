@@ -8,18 +8,24 @@
 		<result property='number' column='Classroom_Number'></result>
 		<result property='room_capacity' column='Classroom_Capacity'></result>
 		<result property='building_id' column='Building_ID'></result>
+		<result property='type' column='Lecture_Type'></result>
 	</resultMap>
 
 	<select id='getAllRooms' resultMap='RoomResult'>
-		SELECT * from classroom
+		SELECT c.Classroom_Number,
+		c.Classroom_Capacity, c.Building_ID, t.Lecture_Type from classroom c
+		join type_enum t where c.Type_ID = t.Lecture_Type
 	</select>
-	
+
 	<resultMap type='lb.edu.aub.cmps.classes.Accessory' id='AccessoriesInRoom'>
 		<id property='id' column='Accessory_ID'></id>
 		<result property='name' column='Accessory_Name'></result>
 	</resultMap>
 
-	<select id='getAccessoriesInRoom' parameterType="int" resultMap='AccessoriesInRoom'>
-		SELECT a.Accessory_ID, a.Accessory_Name from classroom_accessory c join accessory_enum a where c.Classroom_ID= #{id}
+	<select id='getAccessoriesInRoom' parameterType="int"
+		resultMap='AccessoriesInRoom'>
+		SELECT a.Accessory_ID, a.Accessory_Name from
+		classroom_accessory c join accessory_enum a where c.Classroom_ID=
+		#{id}
 	</select>
 </mapper>

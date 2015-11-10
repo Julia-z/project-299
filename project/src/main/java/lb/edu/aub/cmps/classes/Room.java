@@ -1,6 +1,5 @@
 package lb.edu.aub.cmps.classes;
 
-import java.awt.Window.Type;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +8,7 @@ public class Room {
 	private String number;
 	private int room_capacity;
 	private int building_id;
-	private Type type;
+	private String type;
 	private Set<Accessory> accessories;
 	private HashSet<TimeSlot> reserved;
 
@@ -78,10 +77,10 @@ public class Room {
 	public void setBuilding_id(int building_id) {
 		this.building_id = building_id;
 	}
-	public Type getType(){
+	public String getType(){
 		return type;
 	}
-	public void setType(Type type){
+	public void setType(String type){
 		this.type = type;
 	}
 	public Building getBuilding(Set<Building> buildings){

@@ -19,7 +19,6 @@ public class Class {
 	private Time time;
 	private Professor Professor;
 	private String type;
-	private int type_id;
 
 	public int getClass_id() {
 		return class_id;
@@ -74,14 +73,6 @@ public class Class {
 
 	public String getType() {
 		return type;
-	}
-
-	public int getType_id() {
-		return type_id;
-	}
-
-	public void setType_id(int type_id) {
-		this.type_id = type_id;
 	}
 
 	/**

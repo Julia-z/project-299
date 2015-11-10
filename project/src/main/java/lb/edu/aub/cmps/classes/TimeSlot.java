@@ -1,6 +1,5 @@
 package lb.edu.aub.cmps.classes;
 
-import lb.edu.aub.cmps.enums.Day;
 
 public class TimeSlot {
 	private Day day;
