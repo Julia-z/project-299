@@ -24,15 +24,15 @@ import lb.edu.aub.cmps.services.RoomService;
 
 // calls on all the services and initialize all the data members
 public class SetUp {
-	private HashSet<Building> bldgs; //done
-	private HashSet<Class> classes; //still needs many fields
-	private HashSet<Course> courses; //still needs the classes
-	private HashSet<Department> deps;//DONE
-	private HashSet<Professor> profs;//DONE
-	private HashSet<Room> rooms;//still needs the type
-	private HashSet<Accessory> accessories;//done
+	private HashSet<Building> bldgs; // done
+	private HashSet<Class> classes; // still needs many fields
+	private HashSet<Course> courses; // still needs the classes
+	private HashSet<Department> deps;// DONE
+	private HashSet<Professor> profs;// DONE
+	private HashSet<Room> rooms;// still needs the type
+	private HashSet<Accessory> accessories;// done
 
-	private HashMap<Building, Set<Room>> bldg_rooms;//done
+	private HashMap<Building, Set<Room>> bldg_rooms;// done
 
 	// fills in the needed sets before starting the computation
 	public SetUp() {
@@ -52,7 +52,7 @@ public class SetUp {
 		accessories = (HashSet<Accessory>) new AccessoryService()
 				.getAllAccessories();
 
-		//populate the bldg_rooms map
+		// populate the bldg_rooms map
 		bldg_rooms = new HashMap<Building, Set<Room>>();
 		for (Room r : rooms) {
 			Building b = getBuildingById(r.getBuilding_id());
@@ -62,13 +62,15 @@ public class SetUp {
 			rooms.add(r);
 			bldg_rooms.put(b, rooms);
 		}
-		
-		//initialize the unavailable for every professor
-		for(Professor p: profs) p.initializeUnavailable();
-		
-		//initialize the reserved for room
-		for(Room r: rooms) r.initializeReserved();
-		
+
+		// initialize the unavailable for every professor
+		for (Professor p : profs)
+			p.initializeUnavailable();
+
+		// initialize the reserved for room
+		for (Room r : rooms)
+			r.initializeReserved();
+
 		/**
 		 * TODO build HashSet<Room, Set<Accessory>) to assign accessories for
 		 * the room Same for every section build HashSet<Department,
@@ -124,7 +126,6 @@ public class SetUp {
 		return rooms;
 	}
 
-
 	public HashSet<Accessory> getAccessories() {
 		return accessories;
 	}
@@ -158,8 +159,8 @@ public class SetUp {
 	}
 
 	/**
-	 * TODO 
-	 * done by yasmin
+	 * TODO done by yasmin
+	 * 
 	 * @return a room object that is available during the passed time slot
 	 * @return NULL if no rooms are left during a certain time slot
 	 * 
@@ -226,7 +227,7 @@ public class SetUp {
 		return null;
 	}
 
-	//DONE
+	// DONE
 	/**
 	 * DONE BY yasmin return all the rooms in the same building SHOULD respect
 	 * the capacity and the type of the room
@@ -245,7 +246,7 @@ public class SetUp {
 		return sameBuilding;
 	}
 
-	//DONE
+	// DONE
 	/**
 	 * DONE yasmin return all rooms in near buildings SHOULD respect capacity
 	 * and type SHOULD NOT return the rooms in the same building as the passes
@@ -269,7 +270,7 @@ public class SetUp {
 		return nearBuildings;
 	}
 
-	//DONE
+	// DONE
 	/**
 	 * DONE yasmin SHOULD respect capacity and type SHOULD NOT return the rooms
 	 * in the same building as the passes room neither the rooms in the nearby
@@ -278,19 +279,22 @@ public class SetUp {
 	public Set<Room> get_all_rooms(Room room, TimeSlot[] times) {
 		Set<Room> allRooms = new HashSet<Room>();
 		for (Room r : rooms) {
-			if (r.getId() != room.getId()
-					&& r.getType() == room.getType()
+			if (r.getId() != room.getId() && r.getType() == room.getType()
 					&& r.getRoom_capacity() >= room.getRoom_capacity()
-					&& r.getBuilding(bldgs).getLocation_id() != room//not in the same bldg
+					&& r.getBuilding(bldgs).getLocation_id() != room// not in
+																	// the same
+																	// bldg
 							.getBuilding(bldgs).getLocation_id()
-					&& r.getBuilding_id() != room.getBuilding_id()//nor in its near buildgs
+					&& r.getBuilding_id() != room.getBuilding_id()// nor in its
+																	// near
+																	// buildgs
 					&& room.is_available(times))
 				allRooms.add(r);
 		}
 		return allRooms;
 	}
 
-	//DONE
+	// DONE
 	/**
 	 * TODO julia returns 1 in case of success -1 in case of unavailable prof -2
 	 * in case of unavailable room
@@ -318,6 +322,7 @@ public class SetUp {
 
 	/**
 	 * easy just reserve the room and the prof if both are available
+	 * 
 	 * @param cl
 	 * @return
 	 */
@@ -325,8 +330,7 @@ public class SetUp {
 		Room r = cl.getRoom();
 		Time t = cl.getTime();
 		Professor p = cl.getProfessor();
-		if (p.isAvailable(t)
-				&& r.is_available(t.getTimeSlots())) {
+		if (p.isAvailable(t) && r.is_available(t.getTimeSlots())) {
 			r.reserveRoom(t.getTimeSlots());
 			p.addUnavailable(t);
 			return true;
@@ -334,7 +338,9 @@ public class SetUp {
 			return false;
 	}
 
-	/** julia
+	/**
+	 * julia
+	 * 
 	 * @return
 	 */
 	public boolean secondScheduleClass(Class cl) {
@@ -354,6 +360,58 @@ public class SetUp {
 			 * TODO
 			 */
 		} else {// no rooms are left during this time slot
+			//we should change the time slot
+			boolean done = false;
+			Time next = t.nextTime();
+			Time prev = t.previousTime();
+			if(next == null){
+				while(!done && prev != null){
+					//check the prof and the room during previous time
+					if(p.isAvailable(prev) && r.is_available(prev.getTimeSlots())){
+						r.reserveRoom(prev.getTimeSlots());
+						p.addUnavailable(prev);
+						cl.setTime(prev);
+						done = true;
+						return true;
+					}
+					prev = prev.previousTime();
+				}
+			}
+			else if (prev == null){
+				while(!done && next != null){
+					if(p.isAvailable(next) && r.is_available(next.getTimeSlots())){
+						r.reserveRoom(next.getTimeSlots());
+						p.addUnavailable(next);
+						cl.setTime(next);
+						done = true;
+						return true;
+					}
+				}
+			}
+			//next and prev are both not null
+			else{
+				while(!done ){//TODO need to add more
+					//try to schedule it next
+					if(next!= null &&(p.isAvailable(next) && r.is_available(next.getTimeSlots()))){
+						r.reserveRoom(next.getTimeSlots());
+						p.addUnavailable(next);
+						cl.setTime(next);
+						done = true;
+					}
+					//try to schedule it prev
+					else if(prev!= null &&(p.isAvailable(prev) && r.is_available(prev.getTimeSlots()))){
+						r.reserveRoom(prev.getTimeSlots());
+						p.addUnavailable(prev);
+						cl.setTime(prev);
+						done = true;
+					}
+					
+					//change the next and the prev
+					next = next.nextTime();
+					prev = prev.previousTime();
+					if(next == null && prev == null) return false;
+				}
+			}
 			
 		}
 		return true;
@@ -370,27 +428,26 @@ public class SetUp {
 		return null;
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		SetUp setup = new SetUp();
-	/*	Set<Building> bs = setup.getBldgs();
-		System.out.println("BUILDINGS");
-		for(Building b : bs){
-			System.out.println(b);
-		}
-		*/
-		
-		Set<Course > courses =  setup.getCourses();
+		/*
+		 * Set<Building> bs = setup.getBldgs(); System.out.println("BUILDINGS");
+		 * for(Building b : bs){ System.out.println(b); }
+		 */
+
+		Set<Course> courses = setup.getCourses();
 		System.out.println("COURSES");
-		for(Course c: courses) System.out.println(c.getNbr_of_sections());
-		
-//	for(Class cl: setup.getClasses()) System.out.println(cl);
-	//	for(Department d: setup.deps) System.out.println(d.getBuilding_id());
-		
-		//for(Professor p: setup.profs)System.out.println(p.getUnavailable());
-		
-		//for(Room r: setup.getRooms())System.out.println(r.getAccessories());
-			
-	//	for(Accessory a: setup.accessories) System.out.println(a);
-		
+		for (Course c : courses)
+			System.out.println(c.getNbr_of_sections());
+
+		// for(Class cl: setup.getClasses()) System.out.println(cl);
+		// for(Department d: setup.deps) System.out.println(d.getBuilding_id());
+
+		// for(Professor p: setup.profs)System.out.println(p.getUnavailable());
+
+		// for(Room r: setup.getRooms())System.out.println(r.getAccessories());
+
+		// for(Accessory a: setup.accessories) System.out.println(a);
+
 	}
 }

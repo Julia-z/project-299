@@ -5,6 +5,7 @@ public class TimeSlot {
 	private int day_id;
 	private String start;
 	private String end;
+	private static int maxHours = 19 ;
 
 	/**
 	 * commented so that the mapper can function normally
@@ -91,7 +92,7 @@ public class TimeSlot {
 		return conflict;
 	}
 
-	public TimeSlot nextTimeSlot() {
+	private TimeSlot changeTimeSlot(int h1, int m1, int h2, int m2) {
 		TimeSlot t = new TimeSlot();
 		Day d = this.getDay();
 		t.setDay(d);
@@ -99,17 +100,34 @@ public class TimeSlot {
 		String newEnd;
 		if (d == Day.T || d == Day.R) {
 			// we must add 1: 15 to it
-			newStart = addtime(this.getStart(), 1, 30);
-			newEnd = addtime(this.getEnd(), 1, 30);
+			newStart = addtime(this.getStart(), h1, m1);
+			newEnd = addtime(this.getEnd(), h1, m1);
 		} else {
-			newStart = addtime(this.getStart(), 1, 00);
-			newEnd = addtime(this.getEnd(), 1, 00);
+			newStart = addtime(this.getStart(), h2, m2);
+			newEnd = addtime(this.getEnd(), h2, m2);
 		}
+		if(newStart == null || newEnd == null) return null;
 		t.setStart(newStart);
 		t.setEnd(newEnd);
 		return t;
 	}
+	
+	public TimeSlot nextTimeSlot(){
+		return changeTimeSlot(1, 30, 1, 0);
+	}
+	
+	public TimeSlot previousTimeSlot(){
+		
+		return changeTimeSlot(-1, -30, -1, 0);
+	}
 
+	/**
+	 * 
+	 * @param start
+	 * @param h
+	 * @param min
+	 * @return null in case we can shift the time by h hours and min minutes anymore
+	 */
 	private static String addtime(String start, int h, int min) {
 		int h2 = Integer.parseInt(start.substring(0, 2)) + h;
 		int min2 = Integer.parseInt(start.substring(2)) + min;
@@ -118,6 +136,7 @@ public class TimeSlot {
 			min2 = min2 - 60;
 			h2 = h2 + 1;
 		}
+		if(h2 > maxHours) return null;
 		String strh = (h2 < 10) ? "0" + h2 : h2 + "";
 		String strmin = (min2 < 10) ? "0" + min2 : min2 + "";
 

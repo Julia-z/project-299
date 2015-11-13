@@ -57,12 +57,22 @@ public class Time {
 	/**
 	 * TODO by julia return a
 	 * 
-	 * @return
+	 * @return null in case we cant shift the time anymore
 	 */
 	public Time nextTime() {
 		TimeSlot[] ts = new TimeSlot[this.timeSlots.length];
 		for (int i = 0; i < ts.length; i++) {
+			if(this.timeSlots[i].nextTimeSlot() == null) return null;
 			ts[i] = this.timeSlots[i].nextTimeSlot();
+		}
+		return new Time(ts);
+	}
+	
+	public Time previousTime(){
+		TimeSlot[] ts = new TimeSlot[this.timeSlots.length];
+		for (int i = 0; i < ts.length; i++) {
+			if(this.timeSlots[i].previousTimeSlot() == null) return null;
+			ts[i] = this.timeSlots[i].previousTimeSlot();
 		}
 		return new Time(ts);
 	}
