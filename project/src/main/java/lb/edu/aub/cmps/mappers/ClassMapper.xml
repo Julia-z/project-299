@@ -40,8 +40,8 @@
 
 	<select id='getProfessor' parameterType="int" resultMap='ProfessorsResult'>
 		SELECT
-		c.Professor_ID, p.Professor_name from class_professor c join professor
-		p where c.Class_ID= #{id}
+		p.Professor_ID, p.Professor_name from class_professor c join professor
+		p where c.Class_ID= #{id} and c.Professor_ID= p.Professor_ID
 	</select>
 
 	<resultMap type='lb.edu.aub.cmps.classes.Accessory' id='AccessoriesResult'>
@@ -67,6 +67,7 @@
 		SELECT
 		r.Classroom_ID, r.Classroom_Number, r.Classroom_Capacity,
 		r.Building_ID from
-		classroom r join class c where c.Class_ID= #{id}
+		classroom r join class c where c.Class_ID= #{id} and
+		r.Classroom_ID= c.Classroom_ID
 	</select>
 </mapper>

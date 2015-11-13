@@ -28,14 +28,13 @@ public class ClassService implements ClassMapper {
 				TimeSlot[] times = cm.getClassTimes(id);
 				c.setTime(new Time(times));
 				/**
-				 * TODO 
-				 * -Not all classes are given professors, this is making a
-				 * problem. The user must be forced to at least put TBA
-				 * -Not all classes are given rooms, this is making the same problem. The
+				 * TODO -Not all classes are given professors, this is making a
+				 * problem. The user must be forced to at least put TBA -Not all
+				 * classes are given rooms, this is making the same problem. The
 				 * user must be forced to at least put TBA
 				 */
-				// c.setProfessor(cm.getProfessor(id));
-				// c.setRoom(cm.getClassroom(id));
+				c.setProfessor(cm.getProfessor(id));
+				c.setRoom(cm.getClassroom(id));
 
 				System.out.println("Class id: " + c.getClass_id()
 						+ ", Course id: " + c.getCourse_id() + ", Type :"
