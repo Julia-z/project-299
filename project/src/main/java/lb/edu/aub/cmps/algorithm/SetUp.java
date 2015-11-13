@@ -316,34 +316,45 @@ public class SetUp {
 			return -2;
 	}
 
-	
+	/**
+	 * easy just reserve the room and the prof if both are available
+	 * @param cl
+	 * @return
+	 */
 	public boolean bestScheduleClass(Class cl) {
 		Room r = cl.getRoom();
 		Time t = cl.getTime();
-		if (cl.getProfessor().isAvailable(t)
+		Professor p = cl.getProfessor();
+		if (p.isAvailable(t)
 				&& r.is_available(t.getTimeSlots())) {
 			r.reserveRoom(t.getTimeSlots());
+			p.addUnavailable(t);
 			return true;
 		} else
 			return false;
 	}
 
-	/**
-	 * TODO julia
-	 * 
+	/** julia
 	 * @return
 	 */
 	public boolean secondScheduleClass(Class cl) {
 		Room r = cl.getRoom();
 		Time t = cl.getTime();
+		Professor p = cl.getProfessor();
+		
 		Room r2 = getSimilar_available_rooms(r, t.getTimeSlots());
 		if (r2 != null) {
-			if (cl.getProfessor().isAvailable(t))
+			if (p.isAvailable(t)){
 				r2.reserveRoom(t.getTimeSlots());
-			cl.setRoom(r2);
+				p.addUnavailable(t);
+				cl.setRoom(r2);
+			}
 			return true;
+			/**
+			 * TODO
+			 */
 		} else {// no rooms are left during this time slot
-
+			
 		}
 		return true;
 	}
@@ -361,23 +372,23 @@ public class SetUp {
 
 	public static void main(String[] args){
 		SetUp setup = new SetUp();
-		/*Set<Building> bs = setup.getBldgs();
+	/*	Set<Building> bs = setup.getBldgs();
 		System.out.println("BUILDINGS");
 		for(Building b : bs){
 			System.out.println(b);
 		}
 		*/
-		/*
+		
 		Set<Course > courses =  setup.getCourses();
 		System.out.println("COURSES");
 		for(Course c: courses) System.out.println(c.getNbr_of_sections());
-		*/
-	//	for(Class cl: setup.getClasses()) System.out.println(cl.getType());
+		
+//	for(Class cl: setup.getClasses()) System.out.println(cl);
 	//	for(Department d: setup.deps) System.out.println(d.getBuilding_id());
 		
 		//for(Professor p: setup.profs)System.out.println(p.getUnavailable());
 		
-		for(Room r: setup.getRooms())System.out.println(r.getType());
+		//for(Room r: setup.getRooms())System.out.println(r.getAccessories());
 			
 	//	for(Accessory a: setup.accessories) System.out.println(a);
 		
