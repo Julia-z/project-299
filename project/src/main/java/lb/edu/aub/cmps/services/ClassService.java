@@ -12,34 +12,45 @@ import lb.edu.aub.cmps.mappers.ClassMapper;
 
 import org.apache.ibatis.session.SqlSession;
 
-public class ClassService implements ClassMapper{
+public class ClassService implements ClassMapper {
 	/**
 	 * Gets all classes and puts them in a set
 	 */
 	public Set<Class> getAllClasses() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
-		
+
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			Set<Class> allClasses= cm.getAllClasses();
-			for(Class c: allClasses){
+			Set<Class> allClasses = cm.getAllClasses();
+			for (Class c : allClasses) {
 				int id = c.getClass_id();
-				TimeSlot[] times= cm.getClassTimes(id);
+				TimeSlot[] times = cm.getClassTimes(id);
 				c.setTime(new Time(times));
-				c.setProfessor(cm.getProfessor(id));
-				c.setRoom(cm.getClassroom(id));
+				/**
+				 * TODO 
+				 * -Not all classes are given professors, this is making a
+				 * problem. The user must be forced to at least put TBA
+				 * -Not all classes are given rooms, this is making the same problem. The
+				 * user must be forced to at least put TBA
+				 */
+				// c.setProfessor(cm.getProfessor(id));
+				// c.setRoom(cm.getClassroom(id));
+
+				System.out.println("Class id: " + c.getClass_id()
+						+ ", Course id: " + c.getCourse_id() + ", Type :"
+						+ c.getType() + ", Time: " + c.getTime().toString());
 			}
+
 			/**
-			 * In case we wana loop over all professors and such
-			ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
-			Set<Professor> allProfessors= pm.getAllProfessors();
-			RoomMapper rm = sqlSession.getMapper(RoomMapper.class);
-			Set<Room> allRooms= rm.getAllRooms();
-			
-			for(Professor p: allProfessors){
-				if(p.getC)
-			}**/
+			 * In case we wana loop over all professors and such ProfessorMapper
+			 * pm = sqlSession.getMapper(ProfessorMapper.class); Set<Professor>
+			 * allProfessors= pm.getAllProfessors(); RoomMapper rm =
+			 * sqlSession.getMapper(RoomMapper.class); Set<Room> allRooms=
+			 * rm.getAllRooms();
+			 * 
+			 * for(Professor p: allProfessors){ if(p.getC) }
+			 **/
 			return allClasses;
 		} finally {
 			sqlSession.close();
@@ -47,8 +58,7 @@ public class ClassService implements ClassMapper{
 	}
 
 	/**
-	 * TODO mapper not implemented
-	 * Gets the sections of a certain class
+	 * TODO mapper not implemented Gets the sections of a certain class
 	 */
 	public Set<Integer> getSectionsInClass(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
@@ -62,8 +72,8 @@ public class ClassService implements ClassMapper{
 	}
 
 	/**
-	 * Creates an array of time slots of a certain class
-	 * TODO must be assigned to class's Time in setup
+	 * Creates an array of time slots of a certain class TODO must be assigned
+	 * to class's Time in setup
 	 */
 	public TimeSlot[] getClassTimes(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
@@ -84,7 +94,8 @@ public class ClassService implements ClassMapper{
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getProfessor(id);
+			Professor prof = cm.getProfessor(id);
+			return prof;
 		} finally {
 			sqlSession.close();
 		}
@@ -103,7 +114,7 @@ public class ClassService implements ClassMapper{
 			sqlSession.close();
 		}
 	}
-	
+
 	/**
 	 * Gets class's room
 	 */
@@ -131,6 +142,5 @@ public class ClassService implements ClassMapper{
 			sqlSession.close();
 		}
 	}
-	
-	
+
 }
