@@ -53,7 +53,8 @@
 	<select id='getAccessoriesInClass' parameterType="int"
 		resultMap='AccessoriesResult'>
 		SELECT a.Accessory_ID, a.Accessory_Name from class_accessory
-		c join accessory_enum a where c.Class_ID= #{id}
+		c join accessory_enum a where c.Class_ID= #{id} and c.Accessory_ID=
+		a.Accessory_ID
 	</select>
 
 	<resultMap type='lb.edu.aub.cmps.classes.Room' id='RoomResult'>
