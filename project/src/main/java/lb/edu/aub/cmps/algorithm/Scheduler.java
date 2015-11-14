@@ -9,7 +9,7 @@ import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 
-public class ScheduleAllClasses {
+public class Scheduler {
 
 	private SetUp setup;
 	private int num_of_iterations;
@@ -21,15 +21,19 @@ public class ScheduleAllClasses {
 																// the
 																// departments
 
+	public TreeMap<Department, Set<Course>> getRequests(){
+		return requests_by_dep;
+	}
 	/**
 	 * constructor
 	 * @param num_of_iterations
 	 */
-	public ScheduleAllClasses(int num_of_iterations) {
+	public Scheduler(int num_of_iterations) {
 		setup = new SetUp();
 		this.num_of_iterations = num_of_iterations;
 		this.requests_by_dep = setup.getDeps_courses_map();
 
+		
 		for (Department d : requests_by_dep.keySet()) {
 			count_all_courses += d.getCourses_offered().size();
 		}

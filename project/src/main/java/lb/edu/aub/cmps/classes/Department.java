@@ -32,4 +32,8 @@ public class Department {
 	public String toString(){
 		return "id: "+id+" name: "+name+", courses offered: "+ courses_offered.toString();
 	}
+	
+	public void addCourse(Course c){
+		courses_offered.add(c);
+	}
 }

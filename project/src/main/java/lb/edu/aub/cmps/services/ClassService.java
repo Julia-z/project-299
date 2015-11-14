@@ -36,9 +36,9 @@ public class ClassService implements ClassMapper {
 				c.setProfessor(cm.getProfessor(id));
 				c.setRoom(cm.getClassroom(id));
 
-				System.out.println("Class id: " + c.getClass_id()
+				/*System.out.println("Class id: " + c.getClass_id()
 						+ ", Course id: " + c.getCourse_id() + ", Type :"
-						+ c.getType() + ", Time: " + c.getTime().toString());
+						+ c.getType() + ", Time: " + c.getTime().toString());*/
 			}
 
 			/**
