@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.classes;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -123,14 +124,12 @@ public class Room {
 	 * @return if available returns true, if not available returns false
 	 */
 	public boolean reserveRoom(TimeSlot[] slots) {
-		if (this.is_available(slots)) {
-			for (int i = 0; i < slots.length; i++) {
-				this.reserved.add(slots[i]);
-			}
-			return true;
-		} else {
-			return false;
+		System.out.println("call on reserve room" + Arrays.toString(slots));
+		for (int i = 0; i < slots.length; i++) {
+			this.reserved.add(slots[i]);
 		}
+		System.out.println(this.number + " reserved: " + (reserved));
+		return true;
 	}
 
 	public HashSet<TimeSlot> getReserved() {

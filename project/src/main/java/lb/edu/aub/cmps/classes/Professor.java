@@ -85,6 +85,7 @@ public class Professor {
 	}
 	
 	public void initializeUnavailable(){
+		this.classes = new HashSet<Class>();
 		this.unavailable = new HashSet<TimeSlot>();
 	}
 

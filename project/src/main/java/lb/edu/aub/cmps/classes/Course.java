@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.classes;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -51,5 +52,9 @@ public class Course {
 
 	public void setClasses(Set<Class> classes) {
 		this.classes = classes;
+	}
+	public void addClass(Class cl){
+		if(classes == null) classes = new HashSet<Class>();
+		classes.add(cl);
 	}
 }

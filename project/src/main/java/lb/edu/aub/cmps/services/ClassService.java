@@ -33,8 +33,12 @@ public class ClassService implements ClassMapper {
 				 * classes are given rooms, this is making the same problem. The
 				 * user must be forced to at least put TBA
 				 */
-				c.setProfessor(cm.getProfessor(id));
-				c.setRoom(cm.getClassroom(id));
+				Professor p = cm.getProfessor(id);
+				p.initializeUnavailable();
+				c.setProfessor(p);
+				Room r = cm.getClassroom(id);
+				r.initializeReserved();
+				c.setRoom(r);
 
 				/*System.out.println("Class id: " + c.getClass_id()
 						+ ", Course id: " + c.getCourse_id() + ", Type :"
