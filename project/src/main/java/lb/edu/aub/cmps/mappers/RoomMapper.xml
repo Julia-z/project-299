@@ -4,6 +4,7 @@
 
 <mapper namespace='lb.edu.aub.cmps.mappers.RoomMapper'>
 	<resultMap type='lb.edu.aub.cmps.classes.Room' id='RoomResult'>
+	
 		<id property='id' column='Classroom_ID'></id>
 		<result property='number' column='Classroom_Number'></result>
 		<result property='room_capacity' column='Classroom_Capacity'></result>
@@ -12,7 +13,7 @@
 	</resultMap>
 
 	<select id='getAllRooms' resultMap='RoomResult'>
-		SELECT c.Classroom_Number,
+		SELECT c.Classroom_ID, c.Classroom_Number,
 		c.Classroom_Capacity, c.Building_ID, t.Lecture_Type from classroom c
 		join type_enum t where c.Type_ID = t.Lecture_Type
 	</select>

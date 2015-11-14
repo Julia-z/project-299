@@ -48,7 +48,8 @@ public class Scheduler {
 		Set<Class> not_sched = new HashSet<Class>();
 		int remaining_classes = count_all_courses;
 		int j = 0;
-		Iterator<Course>[] its = new Iterator[requests_by_dep.keySet().size()];
+		int size = requests_by_dep.keySet().size();
+		Iterator<Course>[] its = new Iterator[size];
 		for(Department d: requests_by_dep.keySet()){
 			its[j] = requests_by_dep.get(d).iterator();
 			j++;
