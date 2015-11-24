@@ -9,28 +9,6 @@ public class Professor {
 	private Set<Class> classes;
 	private HashSet<TimeSlot> unavailable;
 
-	/*
-	 * TESTING public static void main(String[] args){ TimeSlot[] times = new
-	 * TimeSlot[3]; times[0] = new TimeSlot(); times[0].setDay(Day.M);
-	 * times[0].setStart("1203"); times[0].setEnd("1300"); times[1] = new
-	 * TimeSlot(); times[1].setDay(Day.T); times[1].setStart("0700");
-	 * times[1].setEnd("0730"); times[2] = new TimeSlot();
-	 * times[2].setDay(Day.F); times[2].setStart("0731");
-	 * times[2].setEnd("0830"); HashSet<TimeSlot> wish = new
-	 * HashSet<TimeSlot>(); wish.add(times[0]); wish.add(times[2]);
-	 * wish.add(times[1]); Professor myProfessor = new Professor();
-	 * myProfessor.id = 1; myProfessor.name = "jaber"; myProfessor.unavailable =
-	 * wish;
-	 * 
-	 * TimeSlot[] times3 = new TimeSlot[3]; times3[0] = new TimeSlot();
-	 * times3[0].setDay(Day.M); times3[0].setStart("0900");
-	 * times3[0].setEnd("1000"); times3[1] = new TimeSlot();
-	 * times3[1].setDay(Day.W); times3[1].setStart("1700");
-	 * times3[1].setEnd("1730"); times3[2] = new TimeSlot();
-	 * times3[2].setDay(Day.F); times3[2].setStart("1931");
-	 * times3[2].setEnd("1930"); Time myTime = new Time(times3);
-	 * System.out.println(myProfessor.isAvailable(myTime)); }
-	 */
 
 	public int getId() {
 		return id;
