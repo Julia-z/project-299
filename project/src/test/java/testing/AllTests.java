@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		ProfTestCase4.class, TimeSlotsTestCase1.class,
 		TimeSlotsTestCase2.class, TimeSlotsTestCase3.class,
 		TimeSlotsTestCase4.class, TimeSlotsTestCase5.class,
-		TimeSlotsTestCase6.class })
+		TimeSlotsTestCase6.class, RoomTestCase1.class, RoomTestCase2.class, RoomTestCase3.class })
 public class AllTests {
 
 }
