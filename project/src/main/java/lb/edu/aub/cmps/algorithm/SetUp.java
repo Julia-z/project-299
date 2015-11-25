@@ -67,8 +67,12 @@ public class SetUp {
 			dep.addCourse(c);
 		}
 		id_bldg = new HashMap<Integer, Building>();
-		for(Building b: bldgs)
+		bldg_rooms = new HashMap<Building, Set<Room>>();
+
+		for(Building b: bldgs){
 			id_bldg.put(b.getId(), b);
+			bldg_rooms.put(b, new HashSet<Room>());
+		}
 		
 		id_course = new HashMap<Integer, Course>();
 		for(Course c:courses){
@@ -80,10 +84,11 @@ public class SetUp {
 		
 		id_room = new HashMap<Integer, Room>();
 		// populate the bldg_rooms map
-		bldg_rooms = new HashMap<Building, Set<Room>>();
+		
 		for (Room r : rooms) {
 			id_room.put(r.getId(), r);
 			Building b = getBuildingById(r.getBuilding_id());
+
 			Set<Room> rooms = bldg_rooms.get(b);
 			if (rooms == null)
 				rooms = new HashSet<Room>();
@@ -295,7 +300,10 @@ public class SetUp {
 		Set<Room> nearBuildings = new HashSet<Room>();
 		Set<Building> nearbs = getNearBuildings(getBuildingById(room
 				.getBuilding_id()));
+		System.out.println("near buildings: " + nearbs);
+		
 		for (Building b : nearbs) {
+			System.out.println("bld_rooms.keySet().size(): " + (bldg_rooms.keySet().size()));
 			for (Room r : bldg_rooms.get(b)) {
 				if (r.getId() != room.getId() // not the same room
 						&& r.getType() == room.getType() // same type
@@ -365,18 +373,18 @@ public class SetUp {
 	 * @return
 	 */
 	public boolean bestScheduleClass(Class cl) {
-		System.out.println(".....>> "+id_room +"<<.....");
 		Room r = id_room.get(cl.getRoom().getId());
 		Time t = cl.getTime();
 		Professor p = id_prof.get(cl.getProfessor().getId());
-		System.out.println("JULIA test " + cl.getRoom());
-		//System.out.println(t);
 		if (p.isAvailable(t) && r.is_available(t.getTimeSlots())) {
 			reserve(p, r, t, cl);
 			System.out.println("met");
 			return true;
-		} else
+		} else{
+			System.out.println("Not met");
 			return false;
+		}
+			
 	}
 
 	/**
@@ -446,8 +454,8 @@ public class SetUp {
 					}
 
 					// change the next and the prev
-					next = next.nextTime();
-					prev = prev.previousTime();
+					if(next != null)next = next.nextTime();
+					if(prev!= null) prev = prev.previousTime();
 					if (next == null && prev == null)
 						return false;
 				}
@@ -469,12 +477,6 @@ public class SetUp {
 		}
 		return map;
 	}
-
-	public static void main(String[] args) {
-		SetUp setup = new SetUp();
-		System.out.println(setup.id_room);
-
-	}
 	
 	public void reserve(Professor p, Room r, Time t, Class c){
 		p.addClass(c);
@@ -486,4 +488,5 @@ public class SetUp {
 		
 		c.setTime(t);		
 	}
+
 }
