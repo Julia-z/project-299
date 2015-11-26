@@ -154,12 +154,11 @@ public class Room implements RoomVisitable{
 	}
 
 	/**
-	 * TODO
 	 * prints the time and the course or class given during that time in the room
 	 * time should be sorted
 	 */
 	public void accept(RoomVisitor visitor) {
-		
+		visitor.visit(this);
 		
 	}
 }

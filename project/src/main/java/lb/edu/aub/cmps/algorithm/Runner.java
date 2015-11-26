@@ -9,7 +9,6 @@ public class Runner {
 
 	public static void main(String[] args) {
 		IScheduler s = new BasicScheduler();
-	
 		Set<Class> notSched = s.schedule();
 		System.out.println(notSched.size());
 	}

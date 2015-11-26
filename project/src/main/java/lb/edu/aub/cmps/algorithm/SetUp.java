@@ -288,8 +288,7 @@ public class SetUp {
 		}
 		return sameBuilding;
 	}
-
-	// DONE
+	
 	/**
 	 * DONE yasmin return all rooms in near buildings SHOULD respect capacity
 	 * and type SHOULD NOT return the rooms in the same building as the passes
@@ -477,6 +476,17 @@ public class SetUp {
 		}
 		return map;
 	}
+	/**
+	 * TODO dont forget
+	 * @param p
+	 * @param r
+	 * @param t
+	 * @param c
+	 */
+	/*
+	public TreeMap<Department, TreeSet<Class>> getDeps_Classes_map(){
+		TreeMap
+	}*/
 	
 	public void reserve(Professor p, Room r, Time t, Class c){
 		p.addClass(c);
