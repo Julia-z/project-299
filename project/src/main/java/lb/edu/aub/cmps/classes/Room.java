@@ -1,6 +1,6 @@
 package lb.edu.aub.cmps.classes;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -10,7 +10,7 @@ public class Room implements RoomVisitable{
 	private int room_capacity;
 	private int building_id;
 	private String type;
-	private Set<Accessory> accessories;
+	private Set<Integer> accessories_ids;
 	//map: Timeslot -> course name
 	private TreeMap<TimeSlot, String> reserved;
 
@@ -135,21 +135,18 @@ public class Room implements RoomVisitable{
 		return reserved;
 	}
 
-	public Set<Accessory> getAccessories() {
-		return accessories;
-	}
-
-	public void setAccessories(Set<Accessory> accessories) {
-		this.accessories = accessories;
-	}
 
 	public String toString() {
 		return "id " + id + " ,number " + number + " ,accessories: "
-				+ accessories +"type: "+type+" capacity: " + room_capacity
+				+ accessories_ids +"type: "+type+" capacity: " + room_capacity
 				+ " building Id: " + building_id +" Reserved Times: "+reserved;
 	}
 	public void initializeReserved(){
 		this.reserved = new TreeMap<TimeSlot, String>(new RoomByTimeSlotComparator());
+	}
+	public void addAccessoryId(int id){
+		if(accessories_ids == null) accessories_ids = new HashSet<Integer>();
+		accessories_ids.add(id);
 	}
 
 	/**
@@ -158,6 +155,15 @@ public class Room implements RoomVisitable{
 	 */
 	public void accept(RoomVisitor visitor) {
 		visitor.visit(this);
+		
+	}
+	
+	public boolean hasAccessory(Set<Integer> a){
+		return accessories_ids.containsAll(a);
+	}
+
+	public void setAccessories(Set<Integer> accessories_ids) {
+		this.accessories_ids = accessories_ids;
 		
 	}
 }

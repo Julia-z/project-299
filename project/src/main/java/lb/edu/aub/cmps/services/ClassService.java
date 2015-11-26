@@ -2,7 +2,6 @@ package lb.edu.aub.cmps.services;
 
 import java.util.Set;
 
-import lb.edu.aub.cmps.classes.Accessory;
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
@@ -107,7 +106,7 @@ public class ClassService implements ClassMapper {
 	/**
 	 * Creates a set of all accessories in a certain class
 	 */
-	public Set<Accessory> getAccessoriesInClass(int id) {
+	public Set<Integer> getAccessoriesInClass(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {

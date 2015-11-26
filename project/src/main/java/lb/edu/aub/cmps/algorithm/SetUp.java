@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import lb.edu.aub.cmps.classes.Accessory;
 import lb.edu.aub.cmps.classes.Building;
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.ClassTimeComparator;
@@ -27,13 +26,13 @@ import lb.edu.aub.cmps.services.RoomService;
 
 // calls on all the services and initialize all the data members
 public class SetUp {
-	private HashSet<Building> bldgs; 
+	private HashSet<Building> bldgs;
 	private HashSet<Class> classes; // still needs many fields
 	private HashSet<Course> courses; // still needs the classes
 	private HashSet<Department> deps;
 	private HashSet<Professor> profs;
 	private HashSet<Room> rooms;// still needs the type
-	private HashSet<Accessory> accessories;
+	private HashSet<Integer> accessories;
 
 	private HashMap<Building, Set<Room>> bldg_rooms;
 	private HashMap<Integer, Department> id_dep;
@@ -41,10 +40,10 @@ public class SetUp {
 	private HashMap<Integer, Course> id_course;
 	private HashMap<Integer, Room> id_room;
 	private HashMap<Integer, Professor> id_prof;
-	
+
 	TreeMap<Department, Set<Course>> deps_courses_map;
 	TreeMap<Department, Set<Class>> deps_classes_map;
-	
+
 	// fills in the needed sets before starting the computation
 	public SetUp() {
 
@@ -55,18 +54,18 @@ public class SetUp {
 				.getAllDepartments();
 		profs = (HashSet<Professor>) new ProfessorService().getAllProfessors();
 		rooms = (HashSet<Room>) new RoomService().getAllRooms();
-		accessories = (HashSet<Accessory>) new AccessoryService()
+		accessories = (HashSet<Integer>) new AccessoryService()
 				.getAllAccessories();
 
 		// initialize the unavailable for every professor
 		for (Professor p : profs)
 			p.initializeUnavailable();
 		id_dep = new HashMap<Integer, Department>();
-		for(Department d: deps){
+		for (Department d : deps) {
 			id_dep.put(d.getId(), d);
 			d.setCourses_offered(new HashSet<Course>());
 		}
-		for(Course c: courses){
+		for (Course c : courses) {
 			int dep_id = c.getDepartment();
 			Department dep = getDepartmentById(dep_id);
 			dep.addCourse(c);
@@ -74,22 +73,22 @@ public class SetUp {
 		id_bldg = new HashMap<Integer, Building>();
 		bldg_rooms = new HashMap<Building, Set<Room>>();
 
-		for(Building b: bldgs){
+		for (Building b : bldgs) {
 			id_bldg.put(b.getId(), b);
 			bldg_rooms.put(b, new HashSet<Room>());
 		}
-		
+
 		id_course = new HashMap<Integer, Course>();
-		for(Course c:courses){
+		for (Course c : courses) {
 			id_course.put(c.getCourse_id(), c);
 		}
 		id_prof = new HashMap<Integer, Professor>();
-		for(Professor p: profs)
+		for (Professor p : profs)
 			id_prof.put(p.getId(), p);
-		
+
 		id_room = new HashMap<Integer, Room>();
 		// populate the bldg_rooms map
-		
+
 		for (Room r : rooms) {
 			id_room.put(r.getId(), r);
 			Building b = getBuildingById(r.getBuilding_id());
@@ -100,33 +99,33 @@ public class SetUp {
 			rooms.add(r);
 			bldg_rooms.put(b, rooms);
 		}
-		for(Class c: classes){
+		for (Class c : classes) {
 			int course_id = c.getCourse_id();
 			Course course = getCourseById(course_id);
 			course.addClass(c);
 		}
 
-		
-
 		// initialize the reserved for room
 		for (Room r : rooms)
-			r.initializeReserved();		
-		
+			r.initializeReserved();
+
 		/**
 		 * TODO build HashSet<Room, Set<Accessory>) to assign accessories for
 		 * the room Same for every section build HashSet<Department,
 		 * Set<Courses>) to assign courses given by departments
 		 */
-		
-		//initialize the deps_courses_map;
-		
-		deps_courses_map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
-		deps_classes_map = new TreeMap<Department, Set<Class>>(Collections.reverseOrder(new DepartmentWeightComparator()));
 
-		for(Department d: deps){
+		// initialize the deps_courses_map;
+
+		deps_courses_map = new TreeMap<Department, Set<Course>>(
+				Collections.reverseOrder(new DepartmentWeightComparator()));
+		deps_classes_map = new TreeMap<Department, Set<Class>>(
+				Collections.reverseOrder(new DepartmentWeightComparator()));
+
+		for (Department d : deps) {
 			deps_courses_map.put(d, d.getCourses_offered());
 			Set<Class> classes = new TreeSet<Class>(new ClassTimeComparator());
-			for(Course c: deps_courses_map.get(d)){
+			for (Course c : deps_courses_map.get(d)) {
 				classes.addAll(c.getClasses());
 			}
 			deps_classes_map.put(d, classes);
@@ -158,11 +157,11 @@ public class SetUp {
 		return rooms;
 	}
 
-	public HashSet<Accessory> getAccessories() {
+	public HashSet<Integer> getAccessories() {
 		return accessories;
 	}
-	
-	public int getNumOfClasses(){
+
+	public int getNumOfClasses() {
 		return classes.size();
 	}
 
@@ -190,13 +189,13 @@ public class SetUp {
 	private Building getBuildingById(int id) {
 		return id_bldg.get(id);
 	}
-	
-	//DONE
-	private Department getDepartmentById(int id){
+
+	// DONE
+	private Department getDepartmentById(int id) {
 		return id_dep.get(id);
 	}
-	
-	private Course getCourseById(int id){
+
+	private Course getCourseById(int id) {
 		return id_course.get(id);
 	}
 
@@ -285,7 +284,7 @@ public class SetUp {
 		}
 		return sameBuilding;
 	}
-	
+
 	/**
 	 * DONE yasmin return all rooms in near buildings SHOULD respect capacity
 	 * and type SHOULD NOT return the rooms in the same building as the passes
@@ -297,9 +296,10 @@ public class SetUp {
 		Set<Building> nearbs = getNearBuildings(getBuildingById(room
 				.getBuilding_id()));
 		System.out.println("near buildings: " + nearbs);
-		
+
 		for (Building b : nearbs) {
-			System.out.println("bld_rooms.keySet().size(): " + (bldg_rooms.keySet().size()));
+			System.out.println("bld_rooms.keySet().size(): "
+					+ (bldg_rooms.keySet().size()));
 			for (Room r : bldg_rooms.get(b)) {
 				if (r.getId() != room.getId() // not the same room
 						&& r.getType() == room.getType() // same type
@@ -350,7 +350,7 @@ public class SetUp {
 		Professor p = c.getProfessor();
 
 		boolean av_room = r.is_available(t.getTimeSlots());
-		boolean av_prof =(p==null)?true:  p.isAvailable(t);
+		boolean av_prof = (p == null) ? true : p.isAvailable(t);
 
 		if (av_room && av_prof) {
 			reserve(p, r, t, c);
@@ -367,97 +367,127 @@ public class SetUp {
 	 * 
 	 * @return
 	 */
-	public boolean secondScheduleClass(Class cl) {
-		Room r = id_room.get(cl.getRequestedRoom().getId());
+	public boolean changeRoom(Class cl) {
 		Time t = cl.getRequestedTime();
 		Professor p = id_prof.get(cl.getProfessor().getId());
-		
-		Room r2 = getSimilar_available_rooms(r, t.getTimeSlots());
-		if (r2 != null) {
-			if (p.isAvailable(t)) {
-				reserve(p, r, t, cl);
-			}
-			return true;
-			
-		} else {// no rooms are left during this time slot
-			// we should change the time slot
-			boolean done = false;
-			Time next = t.nextTime();
-			Time prev = t.previousTime();
-			if (next == null) {
-				while (!done && prev != null) {
-					// check the prof and the room during previous time
-					if (p.isAvailable(prev)
-							&& r.is_available(prev.getTimeSlots())) {
-						reserve(p, r, prev, cl);
-
-						done = true;
-						return true;
-					}
-					prev = prev.previousTime();
-				}
-			} else if (prev == null) {
-				while (!done && next != null) {
-					if (p.isAvailable(next)
-							&& r.is_available(next.getTimeSlots())) {
-						reserve(p, r, next, cl);
-						done = true;
-						return true;
+		/*
+		 * Room r2 = getSimilar_available_rooms(r, t.getTimeSlots()); if (r2 !=
+		 * null) { if (p.isAvailable(t)) { reserve(p, r, t, cl); } return true;
+		 * 
+		 * } else {// no rooms are left during this time slot
+		 */
+		// we should change the time slot
+		int step = 1;
+		boolean scheduled = false;
+		Set<Room> rooms = get_all_rooms_in_same_building(cl.getRequestedRoom(),
+				cl.getRequestedTime().getTimeSlots());
+		while (!scheduled && step < 3) {
+			// there are rooms => try to schedule
+			if (rooms != null) {
+				for (Room room2 : rooms) {
+					if (room2.hasAccessory(cl.getAccessoriesIds())) {
+						reserve(p, room2, t, cl);
+						cl.setGiven_room(room2);
+						cl.setGiven_time(t);
+						scheduled = true;
+						break;
 					}
 				}
+			} else {
+				if (step == 1)
+					rooms = get_all_rooms_in_all_near_buildings(
+							cl.getRequestedRoom(), cl.getRequestedTime()
+									.getTimeSlots());
+				else if (step == 2)
+					rooms = get_all_rooms(cl.getRequestedRoom(), cl
+							.getRequestedTime().getTimeSlots());
+				step++;
 			}
-			// next and prev are both not null
-			else {
-				while (!done) {// TODO need to add more
-					// try to schedule it next
-					if (next != null
-							&& (p.isAvailable(next) && r.is_available(next
-									.getTimeSlots()))) {
-						reserve(p, r, next, cl);
-
-						done = true;
-					}
-					// try to schedule it prev
-					else if (prev != null
-							&& (p.isAvailable(prev) && r.is_available(prev
-									.getTimeSlots()))) {
-						reserve(p, r, prev, cl);
-
-						done = true;
-					}
-
-					// change the next and the prev
-					if(next != null)next = next.nextTime();
-					if(prev!= null) prev = prev.previousTime();
-					if (next == null && prev == null)
-						return false;
-				}
-			}
-
 		}
+		return scheduled;
+	}
+
+	public boolean changeTime(Class cl) {
+		Time t = cl.getRequestedTime();
+		Room r = cl.getRequestedRoom();
+		Professor p = id_prof.get(cl.getProfessor().getId());
+		boolean done = false;
+		Time next = t.nextTime();
+		Time prev = t.previousTime();
+		if (next == null) {
+			while (!done && prev != null) {
+				// check the prof and the room during previous time
+				if (p.isAvailable(prev) && r.is_available(prev.getTimeSlots())) {
+					reserve(p, r, prev, cl);
+
+					done = true;
+					return true;
+				}
+				prev = prev.previousTime();
+			}
+		} else if (prev == null) {
+			while (!done && next != null) {
+				if (p.isAvailable(next) && r.is_available(next.getTimeSlots())) {
+					reserve(p, r, next, cl);
+					done = true;
+					return true;
+				}
+			}
+		}
+		// next and prev are both not null
+		else {
+			while (!done) {// TODO need to add more
+				// try to schedule it next
+				if (next != null
+						&& (p.isAvailable(next) && r.is_available(next
+								.getTimeSlots()))) {
+					reserve(p, r, next, cl);
+
+					done = true;
+				}
+				// try to schedule it prev
+				else if (prev != null
+						&& (p.isAvailable(prev) && r.is_available(prev
+								.getTimeSlots()))) {
+					reserve(p, r, prev, cl);
+
+					done = true;
+				}
+
+				// change the next and the prev
+				if (next != null)
+					next = next.nextTime();
+				if (prev != null)
+					prev = prev.previousTime();
+				if (next == null && prev == null)
+					return false;
+			}
+		}
+
+		// }
 		return true;
 	}
 
-	
-	
-	public void reserve(Professor p, Room r, Time t, Class c){
-		if(p!= null) {
+	public void reserve(Professor p, Room r, Time t, Class c) {
+		if (p != null) {
 			p.addClass(c);
 			p.addUnavailable(c.getGivenTime());
 			id_prof.put(p.getId(), p);
 
 		}
-		
-		r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id()).getCourse_name());
-		id_room.put(r.getId(), r);		
+
+		r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id())
+				.getCourse_name());
+		id_room.put(r.getId(), r);
 		c.setGiven_time(t);
 		c.setGiven_room(r);
 	}
+
 	public TreeMap<Department, Set<Course>> getDeps_courses_map() {
 		return deps_courses_map;
 	}
 
-	public TreeMap<Department, Set<Class>> getDeps_Classes_map(){
+	public TreeMap<Department, Set<Class>> getDeps_Classes_map() {
 		return deps_classes_map;
 	}
 

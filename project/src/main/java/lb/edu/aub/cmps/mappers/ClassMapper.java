@@ -2,7 +2,6 @@ package lb.edu.aub.cmps.mappers;
 
 import java.util.Set;
 
-import lb.edu.aub.cmps.classes.Accessory;
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
@@ -22,7 +21,7 @@ public interface ClassMapper {
 	
 	public Professor getProfessor(int id);
 	
-	public Set<Accessory> getAccessoriesInClass(int id); 
+	public Set<Integer> getAccessoriesInClass(int id); 
 	
 	public Room getClassroom(int id);
  

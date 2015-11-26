@@ -53,12 +53,14 @@ public class Course {
 
 	public void setClasses(Set<Class> classes) {
 		this.classes = classes;
+		num_of_classes = classes.size();
 	}
 	public void addClass(Class cl){
 		if(classes == null) classes = new HashSet<Class>();
 		classes.add(cl);
+		num_of_classes++;
 	}
 	public int getNum_of_classes(){
-		return classes.size();
+		return num_of_classes;
 	}
 }

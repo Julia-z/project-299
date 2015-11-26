@@ -24,6 +24,7 @@ public class BasicScheduler extends Scheduler implements IScheduler {
 		int remaining_classes = count_all_courses;
 		int j = 0;
 		int size = requests_by_dep.keySet().size();
+		@SuppressWarnings("unchecked")
 		Iterator<Course>[] its = new Iterator[size];
 		for(Department d: requests_by_dep.keySet()){
 			its[j] = requests_by_dep.get(d).iterator();
@@ -51,9 +52,11 @@ public class BasicScheduler extends Scheduler implements IScheduler {
 							System.out.println("class time is "+to_sched.getRequestedTime());
 							if (setup.bestScheduleClass(to_sched) != 1){
 								System.out.println("NOT SCHEDULED BEST...........................................................................................");
-								if (!setup.secondScheduleClass(to_sched)){
-									not_sched.put(to_sched, "Reason");
-									System.out.println("added to not scheduled");
+								if (!setup.changeRoom(to_sched)){
+									if(!setup.changeTime(to_sched)){
+										not_sched.put(to_sched, "Reason");
+										System.out.println("added to not scheduled");
+									}
 								}
 								
 							}

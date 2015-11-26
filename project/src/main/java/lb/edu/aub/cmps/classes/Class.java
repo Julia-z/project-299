@@ -1,6 +1,7 @@
 package lb.edu.aub.cmps.classes;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /*
  *	class_capacity: All sections together
@@ -22,6 +23,7 @@ public class Class {
 	private Professor Professor;
 	private String type;
 	private boolean isMet;
+	private Set<Integer> accessories_ids;
 
 	public int getClass_id() {
 		return class_id;
@@ -122,6 +124,15 @@ public class Class {
 
 	public void setGiven_time(Time given_time) {
 		this.given_time = given_time;
+	}
+	
+	public void addAccessoryId(int id){
+		if(accessories_ids == null) accessories_ids = new HashSet<Integer>();
+		accessories_ids.add(id);
+	}
+	
+	public Set<Integer> getAccessoriesIds(){
+		return accessories_ids;
 	}
 
 }

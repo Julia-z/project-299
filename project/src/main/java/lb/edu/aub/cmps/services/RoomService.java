@@ -2,7 +2,6 @@ package lb.edu.aub.cmps.services;
 
 import java.util.Set;
 
-import lb.edu.aub.cmps.classes.Accessory;
 import lb.edu.aub.cmps.classes.Room;
 import lb.edu.aub.cmps.mappers.RoomMapper;
 
@@ -29,13 +28,13 @@ public class RoomService implements RoomMapper {
 		return null;
 	}
 
-	public Set<Accessory> getAccessoriesInRoom(int id) {
+	public Set<Integer> getAccessoriesInRoom(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
 
 			RoomMapper rm = sqlSession.getMapper(RoomMapper.class);
-			Set<Accessory> accessories = rm.getAccessoriesInRoom(id);
+			Set<Integer> accessories = rm.getAccessoriesInRoom(id);
 			return accessories;
 		} catch (Exception e) {
 			System.out.println(e);
