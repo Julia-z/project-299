@@ -2,6 +2,10 @@ package lb.edu.aub.cmps.classes;
 
 import java.io.PrintStream;
 
+import lb.edu.aub.cmps.algorithm.BasicScheduler;
+import lb.edu.aub.cmps.algorithm.IScheduler;
+import lb.edu.aub.cmps.algorithm.SetUp;
+
 public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 
 	
@@ -11,8 +15,18 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 	 */
 	public void visit(Room r) {
 		PrintStream out = new PrintStream(System.out);
-		for(TimeSlot t: r.getReserved() ){
-			out.print("lksjf;l");
+		for(TimeSlot t: r.getReserved().keySet() ){
+			out.println(t);
+		}
+	}
+	
+	public static void main(String[] args){
+		BasicScheduler sched = new BasicScheduler();
+		sched.schedule();
+		SetUp s = sched.setup();
+		for(Room r: s.getRooms()){
+			System.out.println(r.getNumber());
+			r.accept(new PrintTimeClassInRoomVisitor());
 		}
 	}
 
