@@ -16,7 +16,7 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 	public void visit(Room r) {
 		PrintStream out = new PrintStream(System.out);
 		for(TimeSlot t: r.getReserved().keySet() ){
-			out.println(t);
+			out.println(t + r.getReserved().get(t));
 		}
 	}
 	
