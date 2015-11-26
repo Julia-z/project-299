@@ -76,6 +76,14 @@ public class Time {
 		}
 		return new Time(ts);
 	}
+	/**
+	 * TODO
+	 * @param t2
+	 * @return -1, 0, 1
+	 */
+	public int compareTo(Time t2){
+		return -1;
+	}
 
 	/*
 	public static void main(String[] args) {

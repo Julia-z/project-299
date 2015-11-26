@@ -142,6 +142,15 @@ public class TimeSlot {
 
 		return strh + strmin;
 	}
+	
+	//t2 has to have the same day as this
+	//TODO
+	//return 1 if (this.start < t2.start) 
+	//		-1 if (this.start > t2.start)
+	//		 0 otherwise
+	public int compareTo(TimeSlot t2){
+		return -1;
+	}
 	/*
 	 * public static void main(String[] args) { TimeSlot t = new TimeSlot();
 	 * t.setDay(Day.W); t.setStart("1000"); t.setEnd("1050");

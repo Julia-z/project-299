@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Room {
+public class Room implements RoomVisitable{
 	private int id;
 	private String number;
 	private int room_capacity;
@@ -151,5 +151,15 @@ public class Room {
 	}
 	public void initializeReserved(){
 		this.reserved = new HashSet<TimeSlot>();
+	}
+
+	/**
+	 * TODO
+	 * prints the time and the course or class given during that time in the room
+	 * time should be sorted
+	 */
+	public void accept(RoomVisitor visitor) {
+		
+		
 	}
 }
