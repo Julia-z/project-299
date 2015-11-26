@@ -24,6 +24,11 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 		BasicScheduler sched = new BasicScheduler();
 		sched.schedule();
 		SetUp s = sched.setup();
+		System.out.println("_________________________________________________________________________________");
+		System.out.println("_________________________________________________________________________________");
+		System.out.println("_________________________________________________________________________________");
+		System.out.println("_________________________________________________________________________________");
+
 		for(Room r: s.getRooms()){
 			System.out.println(r.getNumber());
 			r.accept(new PrintTimeClassInRoomVisitor());

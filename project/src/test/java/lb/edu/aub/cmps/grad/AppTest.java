@@ -171,7 +171,7 @@ public class AppTest
 		myRoom.setRoom_capacity(15);
 		myRoom.setBuilding_id(3);
 		myRoom.initializeReserved();
-		myRoom.reserveRoom(times);
+		myRoom.reserveRoom(times, "CMPS200");
 		TimeSlot[] times2 = new TimeSlot[3];
 		times2[0] = new TimeSlot();
 		times2[0].setDay(Day.M);
@@ -221,8 +221,8 @@ public class AppTest
 		myRoom.setRoom_capacity(15);
 		myRoom.setBuilding_id(3);
 		myRoom.initializeReserved();
-		myRoom.reserveRoom(times);
-		myRoom.reserveRoom(times2);
+		myRoom.reserveRoom(times, "CMPS-212");
+		myRoom.reserveRoom(times2, "CMPS-213");
 		TimeSlot[] times3 = new TimeSlot[3];
 		times3[0] = new TimeSlot();
 		times3[0].setDay(Day.M);
@@ -272,8 +272,8 @@ public class AppTest
 		myRoom.setRoom_capacity(15);
 		myRoom.setBuilding_id(3);
 		myRoom.initializeReserved();
-		myRoom.reserveRoom(times);
-		myRoom.reserveRoom(times2);
+		myRoom.reserveRoom(times, "CMPS-253");
+		myRoom.reserveRoom(times2, "CMPS-200");
 		TimeSlot[] times3 = new TimeSlot[2];
 		times3[0] = new TimeSlot();
 		times3[0].setDay(Day.M);
