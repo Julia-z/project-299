@@ -7,7 +7,7 @@ import lb.edu.aub.cmps.classes.Class;
 public class ByTimeScheduler extends Scheduler implements IScheduler {
 
 	public Set<Class> schedule() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

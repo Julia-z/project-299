@@ -75,5 +75,9 @@ public class BasicScheduler extends Scheduler implements IScheduler {
 		}
 		return not_sched;
 	}
+	
+	public SetUp setup(){
+		return setup;
+	}
 
 }

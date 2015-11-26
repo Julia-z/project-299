@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import lb.edu.aub.cmps.classes.Accessory;
 import lb.edu.aub.cmps.classes.Building;
 import lb.edu.aub.cmps.classes.Class;
+import lb.edu.aub.cmps.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.Professor;
@@ -39,6 +41,8 @@ public class SetUp {
 	private HashMap<Integer, Course> id_course;
 	private HashMap<Integer, Room> id_room;
 	private HashMap<Integer, Professor> id_prof;
+	
+	TreeMap<Department, Set<Course>> deps_courses_map;
 	
 	// fills in the needed sets before starting the computation
 	public SetUp() {
@@ -113,6 +117,12 @@ public class SetUp {
 		 * Set<Courses>) to assign courses given by departments
 		 */
 		
+		//initialize the deps_courses_map;
+		
+		deps_courses_map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
+		for(Department d: deps){
+			deps_courses_map.put(d, d.getCourses_offered());
+		}
 
 	}
 
@@ -470,23 +480,20 @@ public class SetUp {
 	 * @return
 	 */
 	public TreeMap<Department, Set<Course>> getDeps_courses_map() {
-		TreeMap<Department, Set<Course>> map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
-		for(Department d: deps){
-			map.put(d, d.getCourses_offered());
-		}
-		return map;
+		return deps_courses_map;
 	}
-	/**
-	 * TODO dont forget
-	 * @param p
-	 * @param r
-	 * @param t
-	 * @param c
-	 */
-	/*
-	public TreeMap<Department, TreeSet<Class>> getDeps_Classes_map(){
-		TreeMap
-	}*/
+	//TODO
+	public TreeMap<Department, Set<Class>> getDeps_Classes_map(){
+		TreeMap<Department, Set<Class>> deps_classes_map = new TreeMap<Department, Set<Class>>();
+		for(Department d: deps_courses_map.keySet()){
+			Set<Class> classes = new TreeSet<Class>(new ClassTimeComparator());
+			for(Course c: deps_courses_map.get(d)){
+				classes.addAll(c.getClasses());
+			}
+			deps_classes_map.put(d, classes);
+		}
+		return deps_classes_map;
+	}
 	
 	public void reserve(Professor p, Room r, Time t, Class c){
 		p.addClass(c);
@@ -498,5 +505,14 @@ public class SetUp {
 		
 		c.setTime(t);		
 	}
-
+	
+	/*
+	public static void main(String[] args){
+		SetUp s = new SetUp();
+		Set<Course> courses = s.getCourses();
+		for(Course c: courses){
+			System.out.println(c.getClasses());
+		}
+	}
+*/
 }

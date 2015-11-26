@@ -15,7 +15,7 @@ public class Class {
 	private int course_id;
 	private int class_capacity;
 	private HashSet<Integer> section_numbers;
-	private Room room;
+	private Room req_room;
 	private Time time;
 	private Professor Professor;
 	private String type;
@@ -60,7 +60,7 @@ public class Class {
 
 
 	public Room getRoom() {
-		return room;
+		return req_room;
 	}
 
 	public Time getTime() {
@@ -95,7 +95,7 @@ public class Class {
 	}
 
 	public void setRoom(Room classroom) {
-		this.room = classroom;
+		this.req_room = classroom;
 	}
 
 }
