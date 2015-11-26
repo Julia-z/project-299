@@ -1,7 +1,7 @@
 package lb.edu.aub.cmps.classes;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Set;
 
 public class Room implements RoomVisitable{
@@ -11,7 +11,8 @@ public class Room implements RoomVisitable{
 	private int building_id;
 	private String type;
 	private Set<Accessory> accessories;
-	private HashSet<TimeSlot> reserved;
+	//map: Timeslot -> class id
+	private HashMap<TimeSlot, Integer> reserved;
 
 	/*
 	 * TESTING public static void main(String[] args){ TimeSlot[] times = new
@@ -107,7 +108,7 @@ public class Room implements RoomVisitable{
 		// conflicts
 		if (this.reserved == null)
 			return available;
-		for (TimeSlot reservedTimeSlot : this.reserved) {
+		for (TimeSlot reservedTimeSlot : this.reserved.keySet()) {
 			for (int i = 0; i < slots.length; i++) {
 				if (reservedTimeSlot.conflicts(slots[i]))
 					available = false;
@@ -123,16 +124,16 @@ public class Room implements RoomVisitable{
 	 * @param slots
 	 * @return if available returns true, if not available returns false
 	 */
-	public boolean reserveRoom(TimeSlot[] slots) {
+	public boolean reserveRoom(TimeSlot[] slots, int class_id) {
 		System.out.println("call on reserve room" + Arrays.toString(slots));
 		for (int i = 0; i < slots.length; i++) {
-			this.reserved.add(slots[i]);
+			this.reserved.put(slots[i], class_id);
 		}
 		System.out.println(this.number + " reserved: " + (reserved));
 		return true;
 	}
 
-	public HashSet<TimeSlot> getReserved() {
+	public HashMap<TimeSlot, Integer> getReserved() {
 		return reserved;
 	}
 
@@ -150,7 +151,7 @@ public class Room implements RoomVisitable{
 				+ " building Id: " + building_id +" Reserved Times: "+reserved;
 	}
 	public void initializeReserved(){
-		this.reserved = new HashSet<TimeSlot>();
+		this.reserved = new HashMap<TimeSlot, Integer>();
 	}
 
 	/**
