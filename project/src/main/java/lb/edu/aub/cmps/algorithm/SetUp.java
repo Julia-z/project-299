@@ -344,43 +344,22 @@ public class SetUp {
 	 * @param c
 	 * @return
 	 */
-	public int bestScheduleClass2(Class c) {
+	public int bestScheduleClass(Class c) {
 		Room r = c.getRequestedRoom();
 		Time t = c.getRequestedTime();
 		Professor p = c.getProfessor();
 
 		boolean av_room = r.is_available(t.getTimeSlots());
-		boolean av_prof = p.isAvailable(t);
+		boolean av_prof =(p==null)?true:  p.isAvailable(t);
 
 		if (av_room && av_prof) {
-			r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id()).getCourse_name());
-			p.addUnavailable(t);
+			reserve(p, r, t, c);
+			c.setIsMet(true);
 			return 1;
 		} else if (!av_prof) {
 			return -1;
 		} else
 			return -2;
-	}
-
-	/**
-	 * easy just reserve the room and the prof if both are available
-	 * 
-	 * @param cl
-	 * @return
-	 */
-	public boolean bestScheduleClass(Class cl) {
-		Room r = id_room.get(cl.getRequestedRoom().getId());
-		Time t = cl.getRequestedTime();
-		Professor p = id_prof.get(cl.getProfessor().getId());
-		if (p.isAvailable(t) && r.is_available(t.getTimeSlots())) {
-			reserve(p, r, t, cl);
-			System.out.println("met");
-			return true;
-		} else{
-			System.out.println("Not met");
-			return false;
-		}
-			
 	}
 
 	/**
@@ -459,32 +438,27 @@ public class SetUp {
 		return true;
 	}
 
+	
+	
+	public void reserve(Professor p, Room r, Time t, Class c){
+		if(p!= null) {
+			p.addClass(c);
+			p.addUnavailable(c.getGivenTime());
+			id_prof.put(p.getId(), p);
+
+		}
+		
+		r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id()).getCourse_name());
+		id_room.put(r.getId(), r);		
+		c.setGiven_time(t);
+		c.setGiven_room(r);
+	}
 	public TreeMap<Department, Set<Course>> getDeps_courses_map() {
 		return deps_courses_map;
 	}
-	//TODO
+
 	public TreeMap<Department, Set<Class>> getDeps_Classes_map(){
 		return deps_classes_map;
 	}
-	
-	public void reserve(Professor p, Room r, Time t, Class c){
-		p.addClass(c);
-		p.addUnavailable(c.getGivenTime());
-		id_prof.put(p.getId(), p);
-		
-		r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id()).getCourse_name());
-		id_room.put(r.getId(), r);
-		
-		c.setTime(t);		
-	}
-	
-	/*
-	public static void main(String[] args){
-		SetUp s = new SetUp();
-		Set<Course> courses = s.getCourses();
-		for(Course c: courses){
-			System.out.println(c.getClasses());
-		}
-	}
-*/
+
 }

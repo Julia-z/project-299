@@ -49,7 +49,7 @@ public class BasicScheduler extends Scheduler implements IScheduler {
 						for(Class to_sched: course.getClasses()){
 							//try to meet the request
 							System.out.println("class time is "+to_sched.getRequestedTime());
-							if (!setup.bestScheduleClass(to_sched)){
+							if (setup.bestScheduleClass(to_sched) != 1){
 								System.out.println("NOT SCHEDULED BEST...........................................................................................");
 								if (!setup.secondScheduleClass(to_sched)){
 									not_sched.put(to_sched, "Reason");

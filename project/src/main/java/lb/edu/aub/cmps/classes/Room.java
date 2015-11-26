@@ -125,11 +125,9 @@ public class Room implements RoomVisitable{
 	 * @return if available returns true, if not available returns false
 	 */
 	public boolean reserveRoom(TimeSlot[] slots, String course_name) {
-		System.out.println("call on reserve room" + Arrays.toString(slots));
 		for (int i = 0; i < slots.length; i++) {
 			this.reserved.put(slots[i], course_name);
 		}
-		System.out.println(this.number + " reserved: " + (reserved));
 		return true;
 	}
 

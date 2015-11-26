@@ -104,5 +104,24 @@ public class Class {
 	public boolean getIsMet(){
 		return isMet;
 	}
+	public void setIsMet(boolean b){
+		this.isMet = b;
+	}
+
+	public Room getGiven_room() {
+		return given_room;
+	}
+
+	public void setGiven_room(Room given_room) {
+		this.given_room = given_room;
+	}
+
+	public Time getGiven_time() {
+		return given_time;
+	}
+
+	public void setGiven_time(Time given_time) {
+		this.given_time = given_time;
+	}
 
 }

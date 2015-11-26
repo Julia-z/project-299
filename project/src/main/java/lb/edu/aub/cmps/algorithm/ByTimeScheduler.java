@@ -7,6 +7,7 @@ import java.util.Set;
 
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Department;
+import lb.edu.aub.cmps.classes.Room;
 
 public class ByTimeScheduler extends Scheduler implements IScheduler {
 
@@ -47,7 +48,22 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 				for (int i = 0; i < classes_to_sched; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
-						
+						int best = setup.bestScheduleClass(c_to_sched);
+						//in case it didn't succeed to meet the request
+						if(best!=1){
+							//if it is a professor conflict we need to change the time slot
+							if(best == -1){
+								//change time 
+							}
+							//in case it is an unavailable room we need to search for a room
+							else if(best == -2){
+								//change room
+								Set<Room> rooms = setup.get_all_rooms_in_same_building(c_to_sched.getRequestedRoom(), c_to_sched.getRequestedTime().getTimeSlots());
+								if(rooms == null){
+									rooms = setup.get_all_rooms_in_all_near_buildings(c_to_sched.getRequestedRoom(), c_to_sched.getRequestedTime().getTimeSlots());
+								}
+							}
+						}
 					}
 				}
 			}
