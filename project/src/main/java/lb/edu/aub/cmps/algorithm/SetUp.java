@@ -25,20 +25,20 @@ import lb.edu.aub.cmps.services.RoomService;
 
 // calls on all the services and initialize all the data members
 public class SetUp {
-	private HashSet<Building> bldgs; // done
+	private HashSet<Building> bldgs; 
 	private HashSet<Class> classes; // still needs many fields
 	private HashSet<Course> courses; // still needs the classes
-	private HashSet<Department> deps;// DONE
-	private HashSet<Professor> profs;// DONE
+	private HashSet<Department> deps;
+	private HashSet<Professor> profs;
 	private HashSet<Room> rooms;// still needs the type
-	private HashSet<Accessory> accessories;// done
+	private HashSet<Accessory> accessories;
 
-	private HashMap<Building, Set<Room>> bldg_rooms;// done
-	private HashMap<Integer, Department> id_dep;//done
-	private HashMap<Integer, Building> id_bldg;//done
-	private HashMap<Integer, Course> id_course;//done
-	private HashMap<Integer, Room> id_room;//done
-	private HashMap<Integer, Professor> id_prof;//done
+	private HashMap<Building, Set<Room>> bldg_rooms;
+	private HashMap<Integer, Department> id_dep;
+	private HashMap<Integer, Building> id_bldg;
+	private HashMap<Integer, Course> id_course;
+	private HashMap<Integer, Room> id_room;
+	private HashMap<Integer, Professor> id_prof;
 	
 	// fills in the needed sets before starting the computation
 	public SetUp() {
@@ -169,7 +169,7 @@ public class SetUp {
 
 	// DONE
 	/**
-	 * Finds Buildings that have the same location as this DONE
+	 * Finds Buildings that have the same location as the passed bldg DONE
 	 * 
 	 * @param bldgs
 	 * @return Set of buildings with same location.

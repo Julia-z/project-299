@@ -10,36 +10,12 @@ import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.Room;
 
-public class BasicScheduler implements Scheduler {
+public class BasicScheduler extends Scheduler implements IScheduler {
 
-	private SetUp setup;
-	private int num_of_iterations;
-	private int count_all_courses;
-	private TreeMap<Department, Set<Course>> requests_by_dep; // sorted by weight
-																// since it
-																// knows
-																// how to sort
-																// the
-																// departments
 
-	public TreeMap<Department, Set<Course>> getRequests(){
-		return requests_by_dep;
+	public BasicScheduler(){
+		super();
 	}
-	/**
-	 * constructor
-	 * @param num_of_iterations
-	 */
-	public BasicScheduler(int num_of_iterations) {
-		setup = new SetUp();
-		this.num_of_iterations = num_of_iterations;
-		this.requests_by_dep = setup.getDeps_courses_map();
-
-		
-		for (Department d : requests_by_dep.keySet()) {
-			count_all_courses += d.getCourses_offered().size();
-		}
-	}
-
 	/**
 	 * 
 	 * @return set of classes that couldn't be scheduled NULL in case of success
