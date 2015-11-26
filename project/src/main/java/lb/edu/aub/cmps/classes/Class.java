@@ -21,6 +21,7 @@ public class Class {
 	private Time given_time;
 	private Professor Professor;
 	private String type;
+	private boolean isMet;
 
 	public int getClass_id() {
 		return class_id;
@@ -95,6 +96,10 @@ public class Class {
 	}
 	public Room getRequestedRoom(){
 		return req_room;
+	}
+	
+	public boolean getIsMet(){
+		return isMet;
 	}
 
 }

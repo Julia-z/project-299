@@ -1,7 +1,9 @@
 package lb.edu.aub.cmps.algorithm;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Course;
@@ -18,6 +20,7 @@ public abstract class Scheduler implements IScheduler{
 																// the
 																// departments
 
+	protected TreeMap<Department, TreeSet<Class>> classes_req_by_dep;
 	public TreeMap<Department, Set<Course>> getRequests(){
 		return requests_by_dep;
 	}
@@ -36,5 +39,5 @@ public abstract class Scheduler implements IScheduler{
 		}
 	}
 	
-	public abstract Set<Class> schedule();
+	public abstract Map<Class, String> schedule();
 }

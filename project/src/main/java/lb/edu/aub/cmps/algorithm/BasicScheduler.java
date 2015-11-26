@@ -1,9 +1,8 @@
 package lb.edu.aub.cmps.algorithm;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.Map;
 
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Course;
@@ -20,8 +19,8 @@ public class BasicScheduler extends Scheduler implements IScheduler {
 	 * 
 	 * @return set of classes that couldn't be scheduled NULL in case of success
 	 */
-	public Set<Class> schedule() {
-		Set<Class> not_sched = new HashSet<Class>();
+	public Map<Class, String> schedule() {
+		Map<Class, String> not_sched = new HashMap<Class, String>();
 		int remaining_classes = count_all_courses;
 		int j = 0;
 		int size = requests_by_dep.keySet().size();
@@ -53,7 +52,7 @@ public class BasicScheduler extends Scheduler implements IScheduler {
 							if (!setup.bestScheduleClass(to_sched)){
 								System.out.println("NOT SCHEDULED BEST...........................................................................................");
 								if (!setup.secondScheduleClass(to_sched)){
-									not_sched.add(to_sched);
+									not_sched.put(to_sched, "Reason");
 									System.out.println("added to not scheduled");
 								}
 								
