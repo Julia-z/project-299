@@ -144,12 +144,20 @@ public class TimeSlot {
 	}
 	
 	//t2 has to have the same day as this
-	//TODO
 	//return 1 if (this.start < t2.start) 
 	//		-1 if (this.start > t2.start)
 	//		 0 otherwise
 	public int compareTo(TimeSlot t2){
-		return -1;
+		int daydiff = this.day_id - t2.day_id;
+		if(daydiff < 0 ) return -1;
+		else if(daydiff > 0) return +1;
+		else{
+			int start1 = Integer.parseInt(this.start);
+			int start2 = Integer.parseInt(t2.start);
+			if(start1 < start2) return -1;
+			else if(start1 > start2) return 1;
+			else return 0;
+		}
 	}
 	/*
 	 * public static void main(String[] args) { TimeSlot t = new TimeSlot();

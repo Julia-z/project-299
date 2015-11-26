@@ -3,6 +3,7 @@ package lb.edu.aub.cmps.classes;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class Room implements RoomVisitable{
 	private int id;
@@ -12,7 +13,7 @@ public class Room implements RoomVisitable{
 	private String type;
 	private Set<Accessory> accessories;
 	//map: Timeslot -> course name
-	private HashMap<TimeSlot, String> reserved;
+	private TreeMap<TimeSlot, String> reserved;
 
 	/*
 	 * TESTING public static void main(String[] args){ TimeSlot[] times = new
@@ -133,7 +134,7 @@ public class Room implements RoomVisitable{
 		return true;
 	}
 
-	public HashMap<TimeSlot, String> getReserved() {
+	public TreeMap<TimeSlot, String> getReserved() {
 		return reserved;
 	}
 
@@ -151,7 +152,7 @@ public class Room implements RoomVisitable{
 				+ " building Id: " + building_id +" Reserved Times: "+reserved;
 	}
 	public void initializeReserved(){
-		this.reserved = new HashMap<TimeSlot, String>();
+		this.reserved = new TreeMap<TimeSlot, String>(new RoomByTimeSlotComparator());
 	}
 
 	/**
