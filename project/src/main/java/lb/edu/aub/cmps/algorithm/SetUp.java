@@ -358,8 +358,8 @@ public class SetUp {
 	 * @return
 	 */
 	public int bestScheduleClass2(Class c) {
-		Room r = c.getRoom();
-		Time t = c.getTime();
+		Room r = c.getRequestedRoom();
+		Time t = c.getRequestedTime();
 		Professor p = c.getProfessor();
 
 		boolean av_room = r.is_available(t.getTimeSlots());
@@ -382,8 +382,8 @@ public class SetUp {
 	 * @return
 	 */
 	public boolean bestScheduleClass(Class cl) {
-		Room r = id_room.get(cl.getRoom().getId());
-		Time t = cl.getTime();
+		Room r = id_room.get(cl.getRequestedRoom().getId());
+		Time t = cl.getRequestedTime();
 		Professor p = id_prof.get(cl.getProfessor().getId());
 		if (p.isAvailable(t) && r.is_available(t.getTimeSlots())) {
 			reserve(p, r, t, cl);
@@ -402,8 +402,8 @@ public class SetUp {
 	 * @return
 	 */
 	public boolean secondScheduleClass(Class cl) {
-		Room r = id_room.get(cl.getRoom().getId());
-		Time t = cl.getTime();
+		Room r = id_room.get(cl.getRequestedRoom().getId());
+		Time t = cl.getRequestedTime();
 		Professor p = id_prof.get(cl.getProfessor().getId());
 		
 		Room r2 = getSimilar_available_rooms(r, t.getTimeSlots());
@@ -497,7 +497,7 @@ public class SetUp {
 	
 	public void reserve(Professor p, Room r, Time t, Class c){
 		p.addClass(c);
-		p.addUnavailable(c.getTime());
+		p.addUnavailable(c.getGivenTime());
 		id_prof.put(p.getId(), p);
 		
 		r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id()).getCourse_name());

@@ -28,8 +28,8 @@ public class Professor {
 
 	public void addClass(Class c) {
 		classes.add(c);
-		for (int i = 0; i < c.getTime().getTimeSlots().length; i++) {
-			unavailable.add(c.getTime().getTimeSlots()[i]);
+		for (int i = 0; i < c.getGivenTime().getTimeSlots().length; i++) {
+			unavailable.add(c.getGivenTime().getTimeSlots()[i]);
 		}
 
 	}

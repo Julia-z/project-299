@@ -16,7 +16,9 @@ public class Class {
 	private int class_capacity;
 	private HashSet<Integer> section_numbers;
 	private Room req_room;
-	private Time time;
+	private Room given_room;
+	private Time req_time;
+	private Time given_time;
 	private Professor Professor;
 	private String type;
 
@@ -48,24 +50,6 @@ public class Class {
 		return section_numbers;
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 */
-	public boolean scheduleClass() {
-		// find the best time slot and room and set them
-		return true;
-	}
-
-
-	public Room getRoom() {
-		return req_room;
-	}
-
-	public Time getTime() {
-		return time;
-	}
 
 	public Professor getProfessor() {
 		return Professor;
@@ -91,11 +75,26 @@ public class Class {
 	}
 
 	public void setTime(Time classTime) {
-		this.time = classTime;
+		this.given_time = classTime;
 	}
 
 	public void setRoom(Room classroom) {
-		this.req_room = classroom;
+		this.given_room = classroom;
+	}
+	
+	public Time getRequestedTime(){
+		return req_time;
+	}
+	
+	public Time getGivenTime(){
+		return given_time;
+	}
+	
+	public Room getGivenRoom(){
+		return given_room;
+	}
+	public Room getRequestedRoom(){
+		return req_room;
 	}
 
 }
