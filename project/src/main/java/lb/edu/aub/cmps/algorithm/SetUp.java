@@ -366,7 +366,7 @@ public class SetUp {
 		boolean av_prof = p.isAvailable(t);
 
 		if (av_room && av_prof) {
-			r.reserveRoom(t.getTimeSlots(), c.getClass_id());
+			r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id()).getCourse_name());
 			p.addUnavailable(t);
 			return 1;
 		} else if (!av_prof) {
@@ -500,7 +500,7 @@ public class SetUp {
 		p.addUnavailable(c.getTime());
 		id_prof.put(p.getId(), p);
 		
-		r.reserveRoom(t.getTimeSlots(), c.getClass_id());
+		r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id()).getCourse_name());
 		id_room.put(r.getId(), r);
 		
 		c.setTime(t);		

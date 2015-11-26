@@ -11,8 +11,8 @@ public class Room implements RoomVisitable{
 	private int building_id;
 	private String type;
 	private Set<Accessory> accessories;
-	//map: Timeslot -> class id
-	private HashMap<TimeSlot, Integer> reserved;
+	//map: Timeslot -> course name
+	private HashMap<TimeSlot, String> reserved;
 
 	/*
 	 * TESTING public static void main(String[] args){ TimeSlot[] times = new
@@ -124,16 +124,16 @@ public class Room implements RoomVisitable{
 	 * @param slots
 	 * @return if available returns true, if not available returns false
 	 */
-	public boolean reserveRoom(TimeSlot[] slots, int class_id) {
+	public boolean reserveRoom(TimeSlot[] slots, String course_name) {
 		System.out.println("call on reserve room" + Arrays.toString(slots));
 		for (int i = 0; i < slots.length; i++) {
-			this.reserved.put(slots[i], class_id);
+			this.reserved.put(slots[i], course_name);
 		}
 		System.out.println(this.number + " reserved: " + (reserved));
 		return true;
 	}
 
-	public HashMap<TimeSlot, Integer> getReserved() {
+	public HashMap<TimeSlot, String> getReserved() {
 		return reserved;
 	}
 
@@ -151,7 +151,7 @@ public class Room implements RoomVisitable{
 				+ " building Id: " + building_id +" Reserved Times: "+reserved;
 	}
 	public void initializeReserved(){
-		this.reserved = new HashMap<TimeSlot, Integer>();
+		this.reserved = new HashMap<TimeSlot, String>();
 	}
 
 	/**
