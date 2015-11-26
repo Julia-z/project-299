@@ -18,14 +18,13 @@
 		join type_enum t where c.Type_ID = t.Lecture_Type
 	</select>
 
-	<resultMap type='lb.edu.aub.cmps.classes.Accessory' id='AccessoriesInRoom'>
+	<resultMap type='Integer' id='AccessoriesInRoom'>
 		<id property='id' column='Accessory_ID'></id>
-		<result property='name' column='Accessory_Name'></result>
 	</resultMap>
 
 	<select id='getAccessoriesInRoom' parameterType="int"
 		resultMap='AccessoriesInRoom'>
-		SELECT a.Accessory_ID, a.Accessory_Name from
+		SELECT a.Accessory_ID from
 		classroom_accessory c join accessory_enum a where c.Classroom_ID=
 		#{id}
 	</select>
