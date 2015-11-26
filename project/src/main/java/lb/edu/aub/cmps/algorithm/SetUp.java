@@ -99,7 +99,9 @@ public class SetUp {
 			rooms.add(r);
 			bldg_rooms.put(b, rooms);
 		}
+		System.out.println(rooms.size());
 		for (Class c : classes) {
+			System.out.println("hello");
 			int course_id = c.getCourse_id();
 			Course course = getCourseById(course_id);
 			course.addClass(c);

@@ -9,13 +9,16 @@
 		<result property='number' column='Classroom_Number'></result>
 		<result property='room_capacity' column='Classroom_Capacity'></result>
 		<result property='building_id' column='Building_ID'></result>
-		<result property='type' column='Lecture_Type'></result>
+		
+<!-- 		<result property='type' column='Lecture_Type'></result> -->
+		
 	</resultMap>
 
 	<select id='getAllRooms' resultMap='RoomResult'>
 		SELECT c.Classroom_ID, c.Classroom_Number,
-		c.Classroom_Capacity, c.Building_ID, t.Lecture_Type from classroom c
-		join type_enum t where c.Type_ID = t.Type_ID
+		c.Classroom_Capacity, c.Building_ID from classroom c
+		
+
 	</select>
 
 	<resultMap type='Integer' id='AccessoriesInRoom'>

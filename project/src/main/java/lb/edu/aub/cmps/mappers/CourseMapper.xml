@@ -16,7 +16,7 @@
 	</select>
 	
 	<resultMap type='lb.edu.aub.cmps.classes.Class' id='ClassResult'>
-		<id property='class_id' column='Class_ID'></id>
+		<id property='class_id' column='Lecture_ID'></id>
 		<result property='course_id' column='Course_ID'></result>
 		<result property='class_capacity' column='Class_Capacity'></result>
 		<result property='type' column='Lecture_Type'></result>
@@ -25,7 +25,7 @@
 
 	<select id='getAllClasses' parameterType='int' resultMap='ClassResult'>
 		SELECT c.Class_ID,
-		c.Course_ID, c.Class_Capacity, t.Lecture_Type from class c join
-		type_enum t where c.Type_id = t.Type_id and c.Course_ID= #{id}
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type from lecture c join
+		type_enum t where c.Type_id = t.Type_id and c.Lecture_ID= #{id}
 	</select>
 </mapper>
