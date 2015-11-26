@@ -491,4 +491,9 @@ public class SetUp {
 		return deps_classes_map;
 	}
 
+	
+	public static void main(String[] args){
+		SetUp s = new SetUp();
+		System.out.println(s.deps.size());
+	}
 }

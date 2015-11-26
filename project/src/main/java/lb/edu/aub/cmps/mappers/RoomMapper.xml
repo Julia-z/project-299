@@ -15,7 +15,7 @@
 	<select id='getAllRooms' resultMap='RoomResult'>
 		SELECT c.Classroom_ID, c.Classroom_Number,
 		c.Classroom_Capacity, c.Building_ID, t.Lecture_Type from classroom c
-		join type_enum t where c.Type_ID = t.Lecture_Type
+		join type_enum t where c.Type_ID = t.Type_ID
 	</select>
 
 	<resultMap type='Integer' id='AccessoriesInRoom'>
