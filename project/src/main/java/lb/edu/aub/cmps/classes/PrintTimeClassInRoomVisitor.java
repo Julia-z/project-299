@@ -1,51 +1,59 @@
 package lb.edu.aub.cmps.classes;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
+import lb.edu.aub.cmps.algorithm.BasicScheduler;
+import lb.edu.aub.cmps.algorithm.SetUp;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
-import lb.edu.aub.cmps.algorithm.BasicScheduler;
-import lb.edu.aub.cmps.algorithm.IScheduler;
-import lb.edu.aub.cmps.algorithm.SetUp;
 
 public class PrintTimeClassInRoomVisitor implements RoomVisitor {
-	
-	private static int rowsCount;
-	private FileOutputStream output;
-	private Workbook wb;
-	private Sheet Rooms;
-	private String excelFileName;
 	/**
-	 * TODO
+	 * Julia's fields
 	 */
-	public void visit(Room r) {
-		//PrintStream out = new PrintStream(System.out);
-		wb=new HSSFWorkbook();
+	HSSFWorkbook wb;
+	HSSFSheet Rooms;
+	int rowsCount;
+	
+	/**
+	 * Yasmin's fields
+	 */
+	private FileOutputStream output;
+	private String excelFileName;
+	
+	public PrintTimeClassInRoomVisitor(){
+		wb = new HSSFWorkbook();
 		Rooms = wb.createSheet("Rooms");
-		excelFileName = "C:/Users/Yasmin/Documents/299/Test.xls";
-		rowsCount++;
+		excelFileName = "Test.xls";
+		rowsCount = 0;
+
+	}
+
+	public void visit(Room r) {
 		Row row= Rooms.createRow(rowsCount);
+		rowsCount++;
 		Cell name= row.createCell(0);
+		name.setCellValue("jello");
 		name.setCellValue(r.getNumber());
-		System.out.println(r.getNumber());
-		/*for(TimeSlot t: r.getReserved().keySet() ){
+		for(TimeSlot t: r.getReserved().keySet() ){
 			Row row1= Rooms.createRow(rowsCount);
-			Cell name1= row1.createCell(0);
-			name1.setCellValue(r.getNumber());
+			Cell name1= row1.createCell(1);
+			name1.setCellValue(t.toString());
 			
-		}*/
+			Cell course = row1.createCell(2);
+			course.setCellValue(r.getReserved().get(t));
+			rowsCount ++;
+		}
 		
 		try{
-			output= new FileOutputStream(excelFileName);
+			output= new FileOutputStream(new File(excelFileName));
 			wb.write(output);
+			output.close();
 		}catch(IOException e){
 		}
 		System.out.println("COUNTING gROWS"+rowsCount);
@@ -54,16 +62,17 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 	}
 	
 	public static void main(String[] args){
-		rowsCount=0;
+		//rowsCount=0;
 		BasicScheduler sched = new BasicScheduler();
 		sched.schedule();
 		SetUp s = sched.setup();
 		System.out.println("_________________________________________________________________________________");
 		System.out.println("_________________________________________________________________________________");
 		System.out.println("_________________________________________________________________________________");
-		
+		RoomVisitor visitor = new PrintTimeClassInRoomVisitor();
 		for(Room r: s.getRooms()){
-			r.accept(new PrintTimeClassInRoomVisitor());
+			System.out.println("Here: " + r.getNumber());
+			r.accept(visitor);
 		}
 	}
 
