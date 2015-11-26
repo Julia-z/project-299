@@ -7,6 +7,7 @@ public class Department {
 	private String name;
 	private Set<Course> courses_offered;
 	private int building_id;
+	private int num_of_classes;
 
 	public int getId() {
 		return id;
@@ -35,5 +36,10 @@ public class Department {
 	
 	public void addCourse(Course c){
 		courses_offered.add(c);
+		num_of_classes += c.getNum_of_classes();
+	}
+	
+	public int getNum_of_classes(){
+		return num_of_classes;
 	}
 }

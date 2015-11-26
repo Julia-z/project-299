@@ -11,6 +11,7 @@ public class Course {
 	private int category_id;
 	private int nbr_of_sections;
 	private Set<Class> classes;
+	private int num_of_classes;
 
 	public int getCourse_id() {
 		return course_id;
@@ -56,5 +57,8 @@ public class Course {
 	public void addClass(Class cl){
 		if(classes == null) classes = new HashSet<Class>();
 		classes.add(cl);
+	}
+	public int getNum_of_classes(){
+		return classes.size();
 	}
 }

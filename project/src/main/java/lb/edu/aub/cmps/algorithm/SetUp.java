@@ -43,6 +43,7 @@ public class SetUp {
 	private HashMap<Integer, Professor> id_prof;
 	
 	TreeMap<Department, Set<Course>> deps_courses_map;
+	TreeMap<Department, Set<Class>> deps_classes_map;
 	
 	// fills in the needed sets before starting the computation
 	public SetUp() {
@@ -120,33 +121,17 @@ public class SetUp {
 		//initialize the deps_courses_map;
 		
 		deps_courses_map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
+		deps_classes_map = new TreeMap<Department, Set<Class>>();
+
 		for(Department d: deps){
 			deps_courses_map.put(d, d.getCourses_offered());
+			Set<Class> classes = new TreeSet<Class>(new ClassTimeComparator());
+			for(Course c: deps_courses_map.get(d)){
+				classes.addAll(c.getClasses());
+			}
+			deps_classes_map.put(d, classes);
 		}
-
 	}
-
-	/*
-	 * public static void main(String[] args) { SetUp s = new SetUp();
-	 * TimeSlot[] times = new TimeSlot[3]; times[0] = new TimeSlot();
-	 * times[0].setDay(Day.M); times[0].setStart("0500");
-	 * times[0].setEnd("0600"); times[1] = new TimeSlot();
-	 * times[1].setDay(Day.T); times[1].setStart("0700");
-	 * times[1].setEnd("0730"); times[2] = new TimeSlot();
-	 * times[2].setDay(Day.F); times[2].setStart("0731");
-	 * times[2].setEnd("0830"); System.out.println(s.rooms); Room myRoom = new
-	 * Room(); myRoom.setId(2); myRoom.setNumber("322");
-	 * myRoom.setRoom_capacity(30); myRoom.setBuilding_id(3);
-	 * s.rooms.add(myRoom); Room myRoom2 = new Room(); myRoom2.setId(3);
-	 * myRoom2.setNumber("3211111"); myRoom2.setRoom_capacity(10);
-	 * myRoom2.setBuilding_id(10); s.rooms.add(myRoom2);
-	 * System.out.println("BUILDINGS"+s.bldgs); for (Room r : s.rooms) {
-	 * System.out
-	 * .println("Similar Available ROOM for "+r+":\n "+s.getSimilar_available_rooms
-	 * (r, times)); }
-	 * 
-	 * }
-	 */
 
 	// getteres
 	public HashSet<Building> getBldgs() {
@@ -175,6 +160,10 @@ public class SetUp {
 
 	public HashSet<Accessory> getAccessories() {
 		return accessories;
+	}
+	
+	public int getNumOfClasses(){
+		return classes.size();
 	}
 
 	// DONE
@@ -212,8 +201,6 @@ public class SetUp {
 	}
 
 	/**
-	 * TODO done by yasmin
-	 * 
 	 * @return a room object that is available during the passed time slot
 	 * @return NULL if no rooms are left during a certain time slot
 	 * 
@@ -412,9 +399,7 @@ public class SetUp {
 				reserve(p, r, t, cl);
 			}
 			return true;
-			/**
-			 * TODO
-			 */
+			
 		} else {// no rooms are left during this time slot
 			// we should change the time slot
 			boolean done = false;
@@ -474,24 +459,11 @@ public class SetUp {
 		return true;
 	}
 
-	/**
-	 * TODO with bilal
-	 * 
-	 * @return
-	 */
 	public TreeMap<Department, Set<Course>> getDeps_courses_map() {
 		return deps_courses_map;
 	}
 	//TODO
 	public TreeMap<Department, Set<Class>> getDeps_Classes_map(){
-		TreeMap<Department, Set<Class>> deps_classes_map = new TreeMap<Department, Set<Class>>();
-		for(Department d: deps_courses_map.keySet()){
-			Set<Class> classes = new TreeSet<Class>(new ClassTimeComparator());
-			for(Course c: deps_courses_map.get(d)){
-				classes.addAll(c.getClasses());
-			}
-			deps_classes_map.put(d, classes);
-		}
 		return deps_classes_map;
 	}
 	
