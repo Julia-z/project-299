@@ -36,7 +36,7 @@ public class Department {
 	
 	public void addCourse(Course c){
 		courses_offered.add(c);
-		num_of_classes += c.getNum_of_classes();
+		//num_of_classes += c.getNum_of_classes();
 	}
 	
 	public int getNum_of_classes(){

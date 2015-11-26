@@ -121,7 +121,7 @@ public class SetUp {
 		//initialize the deps_courses_map;
 		
 		deps_courses_map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
-		deps_classes_map = new TreeMap<Department, Set<Class>>();
+		deps_classes_map = new TreeMap<Department, Set<Class>>(Collections.reverseOrder(new DepartmentWeightComparator()));
 
 		for(Department d: deps){
 			deps_courses_map.put(d, d.getCourses_offered());

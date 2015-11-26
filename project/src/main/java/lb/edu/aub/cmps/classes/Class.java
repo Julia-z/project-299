@@ -76,23 +76,26 @@ public class Class {
 	}
 
 	public void setTime(Time classTime) {
-		this.given_time = classTime;
+		this.req_time = classTime;
 	}
 
 	public void setRoom(Room classroom) {
-		this.given_room = classroom;
+		this.req_room = classroom;
 	}
 	
 	public Time getRequestedTime(){
 		return req_time;
 	}
-	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public Time getGivenTime(){
-		return given_time;
+		return req_time;
 	}
 	
 	public Room getGivenRoom(){
-		return given_room;
+		return req_room;
 	}
 	public Room getRequestedRoom(){
 		return req_room;
