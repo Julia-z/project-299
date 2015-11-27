@@ -492,7 +492,9 @@ public class SetUp {
 	public TreeMap<Department, Set<Class>> getDeps_Classes_map() {
 		return deps_classes_map;
 	}
-
+	public HashMap<Building, Set<Room>> getBldgs_rooms_map() {
+		return bldg_rooms;
+	}
 	
 	public static void main(String[] args){
 		SetUp s = new SetUp();
