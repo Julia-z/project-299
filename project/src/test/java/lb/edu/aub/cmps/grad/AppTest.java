@@ -1,6 +1,5 @@
 package lb.edu.aub.cmps.grad;
 
-import static org.junit.Assert.assertEquals;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

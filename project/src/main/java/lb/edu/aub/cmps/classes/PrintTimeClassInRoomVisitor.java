@@ -3,9 +3,9 @@ package lb.edu.aub.cmps.classes;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Set;
 
-import lb.edu.aub.cmps.algorithm.BasicScheduler;
-import lb.edu.aub.cmps.algorithm.SetUp;
+import lb.edu.aub.cmps.services.RoomService;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -29,7 +29,7 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 	public PrintTimeClassInRoomVisitor(){
 		wb = new HSSFWorkbook();
 		Rooms = wb.createSheet("Rooms");
-		excelFileName = "Test.xls";
+		excelFileName = "Outputs\\Test.xls";
 		rowsCount = 0;
 
 	}
@@ -63,16 +63,18 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 	
 	public static void main(String[] args){
 		//rowsCount=0;
-		BasicScheduler sched = new BasicScheduler();
-		sched.schedule();
-		SetUp s = sched.setup();
+	//	BasicScheduler sched = new BasicScheduler();
+		//sched.schedule();
+		//SetUp s = sched.setup();
 		System.out.println("_________________________________________________________________________________");
 		System.out.println("_________________________________________________________________________________");
 		System.out.println("_________________________________________________________________________________");
 		RoomVisitor visitor = new PrintTimeClassInRoomVisitor();
-		
-		for(Room r: s.getRooms()){
-			System.out.println("Here: " + r.getNumber());
+		Set<Room> rooms = new RoomService().getAllRooms();
+		for(Room r: rooms){
+			r.initializeReserved();
+		}
+		for(Room r: rooms){
 			r.accept(visitor);
 		}
 	}
