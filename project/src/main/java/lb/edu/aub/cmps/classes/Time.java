@@ -2,7 +2,7 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.Arrays;
 
-public class Time {
+public class Time{
 	private TimeSlot[] timeSlots;
 
 	/*
@@ -77,12 +77,14 @@ public class Time {
 		return new Time(ts);
 	}
 	/**
-	 * TODO
 	 * @param t2
 	 * @return -1, 0, 1
 	 */
 	public int compareTo(Time t2){
-		return -1;
+		TimeSlot t1Slot= timeSlots[0];
+		TimeSlot t2Slot= t2.getTimeSlots()[0];
+		
+		return t1Slot.compareTo(t2Slot);
 	}
 
 	/*
