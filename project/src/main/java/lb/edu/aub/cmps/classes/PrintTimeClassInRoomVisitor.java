@@ -70,6 +70,7 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 		System.out.println("_________________________________________________________________________________");
 		System.out.println("_________________________________________________________________________________");
 		RoomVisitor visitor = new PrintTimeClassInRoomVisitor();
+		
 		for(Room r: s.getRooms()){
 			System.out.println("Here: " + r.getNumber());
 			r.accept(visitor);

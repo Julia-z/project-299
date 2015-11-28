@@ -54,18 +54,37 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							boolean scheduled = false;
 							//if it is a professor conflict we need to change the time slot
 							if(best == -1){
-								//change time 
-								scheduled = setup.changeTime(c_to_sched);
+								//if the class is marked not to change time
+								if(!c_to_sched.canChangeTime()) notSched.put(c_to_sched, "Professor conflicts time. The class is marked not to change the time");
+								
+								else{	
+									//change time 
+									scheduled = setup.changeTime(c_to_sched);
+									if(!scheduled) notSched.put(c_to_sched, "Professor Conflict. Failed to change the time");
+								}
 							}
 							//in case it is an unavailable room we need to search for a room
 							else if(best == -2){
-								//change room
-								scheduled = setup.changeRoom(c_to_sched);
-								//if no rooms try to change time
-								if(!scheduled)	scheduled = setup.changeTime(c_to_sched);
-								//if after that it is not scheduled add it to not scheduled set
-								if(!scheduled) notSched.put(c_to_sched, "");
-								
+								//if the class is marked not to change the room
+								if(!c_to_sched.canChangeRoom()){
+									scheduled = setup.changeTime(c_to_sched);
+									if(!scheduled) notSched.put(c_to_sched, "The room is unavialable at any time! the class is marked not to change the room");
+									
+								}
+								else{
+									//we can change room
+									scheduled = setup.changeRoom(c_to_sched);
+									//if no rooms try to change time
+									if(!scheduled){
+										if(!c_to_sched.canChangeTime()) notSched.put(c_to_sched, "The room is unavailable at the given time and the time can't be changed");
+										else{
+											scheduled = setup.changeTime(c_to_sched);
+											if(!scheduled) notSched.put(c_to_sched, "all rooms are not available at all the times");
+										}
+									}
+									//if after that it is not scheduled add it to not scheduled set
+									if(!scheduled) notSched.put(c_to_sched, "");
+								}
 							}
 						}
 						remaining_classes --;

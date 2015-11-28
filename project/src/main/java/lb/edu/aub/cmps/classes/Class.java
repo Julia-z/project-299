@@ -24,6 +24,11 @@ public class Class {
 	private String type;
 	private boolean isMet;
 	private Set<Integer> accessories_ids;
+	/**
+	 * TODO read them from the db
+	 */
+	private boolean canChangeTime;
+	private boolean canChangeRoom;
 
 	public int getClass_id() {
 		return class_id;
@@ -125,7 +130,13 @@ public class Class {
 	public void setGiven_time(Time given_time) {
 		this.given_time = given_time;
 	}
+	public void setCanChangeTime(boolean canChangeTime){
+		this.canChangeTime = canChangeTime;
+	}
 	
+	public void setCanChangeRoom(boolean canChangeRoom){
+		this.canChangeRoom = canChangeRoom;
+	}
 	public void addAccessoryId(int id){
 		if(accessories_ids == null) accessories_ids = new HashSet<Integer>();
 		accessories_ids.add(id);
@@ -133,6 +144,14 @@ public class Class {
 	
 	public Set<Integer> getAccessoriesIds(){
 		return accessories_ids;
+	}
+	
+	public boolean canChangeTime(){
+		return canChangeTime;
+	}
+	
+	public boolean canChangeRoom(){
+		return canChangeRoom;
 	}
 
 }
