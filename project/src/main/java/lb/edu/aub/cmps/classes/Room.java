@@ -12,7 +12,7 @@ public class Room implements RoomVisitable{
 	private String type;
 	private Set<Integer> accessories_ids;
 	//map: Timeslot -> course name
-	private TreeMap<TimeSlot, String> reserved;
+	private TreeMap<TimeSlot, Class> reserved;
 
 	/*
 	 * TESTING public static void main(String[] args){ TimeSlot[] times = new
@@ -124,14 +124,14 @@ public class Room implements RoomVisitable{
 	 * @param slots
 	 * @return if available returns true, if not available returns false
 	 */
-	public boolean reserveRoom(TimeSlot[] slots, String course_name) {
+	public boolean reserveRoom(TimeSlot[] slots, Class cl) {
 		for (int i = 0; i < slots.length; i++) {
-			this.reserved.put(slots[i], course_name);
+			this.reserved.put(slots[i], cl);
 		}
 		return true;
 	}
 
-	public TreeMap<TimeSlot, String> getReserved() {
+	public TreeMap<TimeSlot, Class> getReserved() {
 		return reserved;
 	}
 
@@ -142,7 +142,7 @@ public class Room implements RoomVisitable{
 				+ " building Id: " + building_id +" Reserved Times: "+reserved;
 	}
 	public void initializeReserved(){
-		this.reserved = new TreeMap<TimeSlot, String>(new RoomByTimeSlotComparator());
+		this.reserved = new TreeMap<TimeSlot, Class>(new RoomByTimeSlotComparator());
 	}
 	public void addAccessoryId(int id){
 		if(accessories_ids == null) accessories_ids = new HashSet<Integer>();

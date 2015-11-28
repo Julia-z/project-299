@@ -102,7 +102,9 @@ public class SetUp {
 		System.out.println(rooms.size());
 		for (Class c : classes) {
 			System.out.println("hello");
+			
 			int course_id = c.getCourse_id();
+			c.setCourse_name(id_course.get(course_id).getCourse_name());
 			Course course = getCourseById(course_id);
 			course.addClass(c);
 		}
@@ -469,6 +471,10 @@ public class SetUp {
 		// }
 		return true;
 	}
+	
+	public boolean changeRoomAndTime(){
+		return false;
+	}
 
 	public void reserve(Professor p, Room r, Time t, Class c) {
 		if (p != null) {
@@ -478,8 +484,7 @@ public class SetUp {
 
 		}
 
-		r.reserveRoom(t.getTimeSlots(), id_course.get(c.getCourse_id())
-				.getCourse_name());
+		r.reserveRoom(t.getTimeSlots(), c);
 		id_room.put(r.getId(), r);
 		c.setGiven_time(t);
 		c.setGiven_room(r);

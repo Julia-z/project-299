@@ -49,6 +49,24 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
 						int best = setup.bestScheduleClass(c_to_sched);
+						if(best != 1){
+							boolean scheduled = false;
+							if(best != -1){//the prof is unavailable at the time => change time
+								//if we cant 
+								if(!c_to_sched.canChangeTime())notSched.put(c_to_sched, "Professor conflicts time. The class is marked not to change the time");
+								else{
+									//we can change the time
+									scheduled = setup.changeTime(c_to_sched);
+									if(!scheduled) notSched.put(c_to_sched, "Professor Conflict. Failed to change the time");
+
+								}
+							}
+								
+						}
+						
+						
+						
+						
 						//in case it didn't succeed to meet the request
 						if(best!=1){
 							boolean scheduled = false;

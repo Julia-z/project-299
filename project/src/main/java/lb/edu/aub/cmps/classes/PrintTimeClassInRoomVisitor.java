@@ -46,7 +46,8 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 			name1.setCellValue(t.toString());
 			
 			Cell course = row1.createCell(2);
-			course.setCellValue(r.getReserved().get(t));
+			//
+			course.setCellValue(r.getReserved().get(t).getCourse_id());
 			rowsCount ++;
 		}
 		

@@ -14,6 +14,7 @@ import java.util.Set;
 public class Class {
 	private int class_id;
 	private int course_id;
+	private String course_name;
 	private int class_capacity;
 	private HashSet<Integer> section_numbers;
 	private Room req_room;
@@ -93,10 +94,7 @@ public class Class {
 	public Time getRequestedTime(){
 		return req_time;
 	}
-	/**
-	 * TODO
-	 * @return
-	 */
+
 	public Time getGivenTime(){
 		return req_time;
 	}
@@ -152,6 +150,14 @@ public class Class {
 	
 	public boolean canChangeRoom(){
 		return canChangeRoom;
+	}
+
+	public String getCourse_name() {
+		return course_name;
+	}
+
+	public void setCourse_name(String course_name) {
+		this.course_name = course_name;
 	}
 
 }
