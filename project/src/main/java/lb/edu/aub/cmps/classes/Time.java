@@ -81,6 +81,11 @@ public class Time{
 	 * @return -1, 0, 1
 	 */
 	public int compareTo(Time t2){
+		if(timeSlots.length == 0 ) {
+			if(t2.getTimeSlots().length == 0)return 0;
+			else return -1;
+		}
+		if(t2.getTimeSlots().length == 0) return 1;
 		TimeSlot t1Slot= timeSlots[0];
 		TimeSlot t2Slot= t2.getTimeSlots()[0];
 		

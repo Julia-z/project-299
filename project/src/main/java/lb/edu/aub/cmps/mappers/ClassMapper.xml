@@ -5,16 +5,16 @@
 
 <mapper namespace='lb.edu.aub.cmps.mappers.ClassMapper'>
 	<resultMap type='lb.edu.aub.cmps.classes.Class' id='ClassResult'>
-		<id property='class_id' column='Class_ID'></id>
+		<id property='class_id' column='Lecture_ID'></id>
 		<result property='course_id' column='Course_ID'></result>
-		<result property='class_capacity' column='Class_Capacity'></result>
+		<result property='class_capacity' column='Lecture_Capacity'></result>
 		<result property='type' column='Lecture_Type'></result>
 	</resultMap>
 
 
 	<select id='getAllClasses' resultMap='ClassResult'>
-		SELECT c.Lecture_ID,
-		c.Course_ID, c.Class_Capacity, t.Lecture_Type from lecture c join
+		SELECT c.LECTURE_ID,
+		c.Course_ID, c.Lecture_Capacity, t.Lecture_Type from lecture c join
 		type_enum t where c.Type_id = t.Type_id
 	</select>
 
@@ -29,7 +29,7 @@
 
 	<select id='getClassTimes' parameterType="int" resultMap='ClassTimeResult'>
 		SELECT
-		Day_ID, Start, End from class_time where Class_ID= #{id}
+		Day_ID, Start, End from lecture_time where Lecture_ID= #{id}
 	</select>
 
 	<resultMap type='lb.edu.aub.cmps.classes.Professor' id='ProfessorsResult'>

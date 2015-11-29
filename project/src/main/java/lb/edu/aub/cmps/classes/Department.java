@@ -42,4 +42,6 @@ public class Department {
 	public int getNum_of_classes(){
 		return num_of_classes;
 	}
+	
+	
 }
