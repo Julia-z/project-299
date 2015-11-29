@@ -1,38 +1,36 @@
-Nov 29, 2015 8:07:47 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:06 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Fetching buildings...
-Nov 29, 2015 8:07:48 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Buildings retrieved
-Nov 29, 2015 8:07:48 PM lb.edu.aub.cmps.algorithm.SetUp <init>
-INFO: Fetching Classes...
-Nov 29, 2015 8:07:48 PM lb.edu.aub.cmps.algorithm.SetUp <init>
-INFO: Classes retrieved
-Nov 29, 2015 8:07:48 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Fetching Departments...
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Departments retrieved
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
-INFO: Fetching Courses...
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
-INFO: Courses retrieved
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Fetching Professors...
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Professors retrieved
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Fetching Rooms...
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Rooms retrieved
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Fetching Accessories...
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Accessories retrieved
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
-INFO: Mapping rooms to their corresponding buildings...
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+INFO: Fetching Classes...
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+INFO: Classes retrieved
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+INFO: Fetching Courses...
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+INFO: Courses retrieved
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Mapping classes to their corresponding courses...
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Mapping classes to their corresponding courses. Done
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Mapping courses to departments...
-Nov 29, 2015 8:07:49 PM lb.edu.aub.cmps.algorithm.SetUp <init>
+Nov 29, 2015 9:24:07 PM lb.edu.aub.cmps.algorithm.SetUp <init>
 INFO: Mapping courses to departments. Done

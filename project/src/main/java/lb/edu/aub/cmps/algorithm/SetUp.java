@@ -67,6 +67,44 @@ public class SetUp {
 			bldg_rooms.put(b, new HashSet<Integer>());
 		}
 		log.info("Buildings retrieved");
+		
+		//departments
+		log.info("Fetching Departments...");
+		deps = (HashSet<Department>) new DepartmentService().getAllDepartments();
+		id_dep = new HashMap<Integer, Department>();
+		for(Department d: deps){
+			d.setCourses_offered(new HashSet<Course>());
+			id_dep.put(d.getId(), d);
+		}
+		log.info("Departments retrieved");
+		
+		//professors
+		log.info("Fetching Professors...");
+	    profs = (HashSet<Professor>) new ProfessorService().getAllProfessors();
+	    id_prof = new HashMap<Integer, Professor>();
+	    for(Professor p: profs){
+	    	p.initializeUnavailable();
+	    	id_prof.put(p.getId(), p);
+	    }
+	    log.info("Professors retrieved");
+	    
+	    //rooms
+	    log.info("Fetching Rooms...");
+	    rooms = (HashSet<Room>) new RoomService().getAllRooms();
+	    id_room = new HashMap<Integer, Room>();
+	    for(Room r: rooms){
+	    	r.initializeReserved();
+	    	id_room.put(r.getId(), r);
+	    }
+	    log.info("Rooms retrieved");
+	    
+	    //accessories
+	    log.info("Fetching Accessories...");
+	    accessories = (HashSet<Integer>) new AccessoryService()
+				.getAllAccessories();
+	    log.info("Accessories retrieved");
+
+
 	    
 		//classes
 		log.info("Fetching Classes...");
@@ -77,68 +115,32 @@ public class SetUp {
 	    }
 		log.info("Classes retrieved");
 
-	    log.info("Fetching Departments...");
-		deps = (HashSet<Department>) new DepartmentService().getAllDepartments();
-		id_dep = new HashMap<Integer, Department>();
-		for(Department d: deps){
-			d.setCourses_offered(new HashSet<Course>());
-			id_dep.put(d.getId(), d);
-		}
-		log.info("Departments retrieved");
-		
-		log.info("Fetching Courses...");
-	    courses = (HashSet<Course>) new CourseService().getAllCourses();
-	    id_course = new HashMap<Integer, Course>();
-	    for(Course c: courses){
-	    	id_course.put(c.getCourse_id(), c);
-	    	
-	    }
-	    log.info("Courses retrieved");
-
-
-		log.info("Fetching Professors...");
-	    profs = (HashSet<Professor>) new ProfessorService().getAllProfessors();
-	    id_prof = new HashMap<Integer, Professor>();
-	    for(Professor p: profs){
-	    	p.initializeUnavailable();
-	    	id_prof.put(p.getId(), p);
-	    }
-	    log.info("Professors retrieved");
-
-	    log.info("Fetching Rooms...");
-	    rooms = (HashSet<Room>) new RoomService().getAllRooms();
-	    id_room = new HashMap<Integer, Room>();
-	    for(Room r: rooms){
-	    	r.initializeReserved();
-	    	id_room.put(r.getId(), r);
-	    }
-	    log.info("Rooms retrieved");
-
-	    log.info("Fetching Accessories...");
-	    accessories = (HashSet<Integer>) new AccessoryService()
-				.getAllAccessories();
-	    log.info("Accessories retrieved");
-
 	    
+		
+		
 		deps_courses_map = new TreeMap<Department, Set<Course>>(
 				Collections.reverseOrder(new DepartmentWeightComparator()));
 		deps_classes_map = new TreeMap<Department, Set<Class>>(
 				Collections.reverseOrder(new DepartmentWeightComparator()));
 		
 		
-	    // ____________________________________________________________________________________
+		
+		log.info("Fetching Courses...");
+	    courses = (HashSet<Course>) new CourseService().getAllCourses();
+	    id_course = new HashMap<Integer, Course>();
+	    for(Course c: courses){
+	    	id_course.put(c.getCourse_id(), c);
+	    	int dep_id = c.getDepartment();
+	    	Department d = id_dep.get(dep_id);
+	    	d.addCourse(c);
+	    	Set<Course> old = deps_courses_map.get(d);
+	    	if(old == null) old = new HashSet<Course>();
+	    	old.add(c);
+	    	//deps_courses_map.put(d, old);
+	    }
+	    log.info("Courses retrieved");
+	  		
 	
-		log.info("Mapping rooms to their corresponding buildings...");
-		for (Room r : rooms) {
-			//id_room.put(r.getId(), r);
-			Building b = id_bldg.get(r.getBuilding_id());
-			Set<Integer> rooms = bldg_rooms.get(b);
-			if (rooms == null)
-				rooms = new HashSet<Integer>();
-			rooms.add(r.getId());
-			bldg_rooms.put(b, rooms);
-		}
-
 		log.info("Mapping classes to their corresponding courses...");
 		for (Class c : id_class.values()) {
 			int course_id = c.getCourse_id();
@@ -148,11 +150,14 @@ public class SetUp {
 			int dep_id = course.getDepartment();
 	    	Department d = id_dep.get(dep_id);
 	    	d.addCourse(course);
-	    	id_dep.put(dep_id, d);
-			id_course.put(course_id, course);
+	    	//id_dep.put(dep_id, d);
+			//id_course.put(course_id, course);
 		}
 		log.info("Mapping classes to their corresponding courses. Done");
+	   
 		
+		// ____________________________________________________________________________________
+
 		
 		/**
 		 * TODO build HashSet<Room, Set<Accessory>) to assign accessories for
@@ -168,7 +173,7 @@ public class SetUp {
 			deps_courses_map.put(d, d.getCourses_offered());
 			Set<Class> classes = new TreeSet<Class>(new ClassTimeComparator());
 			for (Course c : deps_courses_map.get(d)) {
-				classes.addAll(c.getClasses());
+				if(c.getClasses() != null)	classes.addAll(c.getClasses());
 			}
 			deps_classes_map.put(d, classes);
 		}
@@ -370,7 +375,7 @@ public class SetUp {
 
 	// DONE
 	/**
-	 * TODO julia returns 1 in case of success -1 in case of unavailable prof -2
+	 * julia returns 1 in case of success -1 in case of unavailable prof -2
 	 * in case of unavailable room
 	 * 
 	 * @param c
@@ -531,29 +536,23 @@ public class SetUp {
 	
 	public static void main(String[] args) throws SecurityException, IOException{
 		SetUp s = new SetUp();
-		//int count = 0;
-		//for(Department d: s.getDeps_Classes_map().keySet()){
-		//	System.out.println(d.getId() + "-> "+s.getDeps_Classes_map().get(d).size());
-		//	count += s.getDeps_Classes_map().get(d).size();
-	//	}
-		//System.out.println(s.getDeps_Classes_map());
+
+/*
 		HashMap<Integer, Department> deps = s.id_dep;
 		HashMap<Integer, Building> bldgs = s.id_bldg;
 		HashMap<Integer, Class> classes = s.id_class;
 		HashMap<Integer, Course> courses = s.id_course;
 		HashMap<Integer, Professor> profs = s.id_prof;
 		HashMap<Integer, Room> rooms = s.id_room;
+		int c = 0;
+		for(Department d: s.deps_classes_map.keySet()){
+			System.out.println(d.getId()+">"+s.deps_classes_map.get(d).size());
+			c+= s.deps_classes_map.get(d).size();
+		}
+		System.out.println(c);
 		
-		TreeMap<Department, Set<Class>> dep_classes = s.deps_classes_map;
 		//System.out.println(rooms.size());
-		int cnt = 0;
-		for(Course c: courses.values()){
-		//	System.out.println(c.getClasses());
-			if(c.getClasses() != null) cnt += c.getClasses().size();
-		}
-		//System.out.println(cnt);
-		for(Department d: dep_classes.keySet()){
-			System.out.println(d.getId()+">"+d.getCourses_offered().size());
-		}
+		 * */
+		 
 	}
 }
