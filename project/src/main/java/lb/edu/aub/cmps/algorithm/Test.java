@@ -1,10 +1,11 @@
 package lb.edu.aub.cmps.algorithm;
 
+import java.io.IOException;
 import java.util.Set;
 import lb.edu.aub.cmps.classes.Class;
 
 public class Test {
-	public static void main(String[] args){
+	public static void main(String[] args) throws SecurityException, IOException{
 		SetUp setup = new SetUp();
 		Set<Class> classes = setup.getClasses();
 		

@@ -1,17 +1,20 @@
 package lb.edu.aub.cmps.algorithm;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import lb.edu.aub.cmps.classes.Building;
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
+import lb.edu.aub.cmps.classes.MyLogger;
 import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
 import lb.edu.aub.cmps.classes.Time;
@@ -43,52 +46,94 @@ public class SetUp {
 
 	TreeMap<Department, Set<Course>> deps_courses_map;
 	TreeMap<Department, Set<Class>> deps_classes_map;
+	private MyLogger loggerWrapper;
 
 	// fills in the needed sets before starting the computation
-	public SetUp() {
+	public SetUp() throws SecurityException, IOException {
+		loggerWrapper = MyLogger.getInstance();
+	    Logger log= loggerWrapper.getLogger();
+	    
+	    log.info("Fetching buildings...");
 
 		bldgs = (HashSet<Building>) new BuildingService().getAllBuildings();
-		classes = (HashSet<Class>) new ClassService().getAllClasses();
-		courses = (HashSet<Course>) new CourseService().getAllCourses();
+		log.info("Buildings retrieved");
+	    
+		log.info("Fetching Classes...");
+	    classes = (HashSet<Class>) new ClassService().getAllClasses();
+		log.info("Classes retrieved");
+
+		log.info("Fetching Courses...");
+	    courses = (HashSet<Course>) new CourseService().getAllCourses();
+	    log.info("Courses retrieved");
+
+	    log.info("Fetching Departments...");
 		deps = (HashSet<Department>) new DepartmentService()
 				.getAllDepartments();
-		profs = (HashSet<Professor>) new ProfessorService().getAllProfessors();
-		rooms = (HashSet<Room>) new RoomService().getAllRooms();
-		accessories = (HashSet<Integer>) new AccessoryService()
-				.getAllAccessories();
+		log.info("Departments retrieved");
 
+		log.info("Fetching Professors...");
+	    profs = (HashSet<Professor>) new ProfessorService().getAllProfessors();
+	    log.info("Professors retrieved");
+
+	    log.info("Fetching Rooms...");
+	    rooms = (HashSet<Room>) new RoomService().getAllRooms();
+	    log.info("Rooms retrieved");
+
+	    log.info("Fetching Accessories...");
+	    accessories = (HashSet<Integer>) new AccessoryService()
+				.getAllAccessories();
+	    log.info("Accessories retrieved");
+		
 		// initialize the unavailable for every professor
-		for (Professor p : profs)
+		log.info("Initializing unavailable times for every professor...");
+	    for (Professor p : profs)
 			p.initializeUnavailable();
-		id_dep = new HashMap<Integer, Department>();
+	    log.info("Initializing unavailable times. Done");
+	    
+	    id_dep = new HashMap<Integer, Department>();
+	
+	    log.info("Initializing offered courses for every department...");
 		for (Department d : deps) {
 			id_dep.put(d.getId(), d);
 			d.setCourses_offered(new HashSet<Course>());
 		}
+		log.info("Initializing offered courses. Done");
+		
+		log.info("Initializing departments of all given courses...");
 		for (Course c : courses) {
 			int dep_id = c.getDepartment();
 			Department dep = getDepartmentById(dep_id);
 			dep.addCourse(c);
 		}
+		log.info("Initializing departments of given courses. Done");
+		
 		id_bldg = new HashMap<Integer, Building>();
 		bldg_rooms = new HashMap<Building, Set<Room>>();
 
+		log.info("Initializing rooms in buildings...");
 		for (Building b : bldgs) {
 			id_bldg.put(b.getId(), b);
 			bldg_rooms.put(b, new HashSet<Room>());
 		}
-
+		log.info("Initializing rooms in buildings. Done");
+		
+		log.info("Initializing course IDs...");
 		id_course = new HashMap<Integer, Course>();
 		for (Course c : courses) {
 			id_course.put(c.getCourse_id(), c);
 		}
+		log.info("Initializing course IDs . Done");
+		
 		id_prof = new HashMap<Integer, Professor>();
+		log.info("Initializing professors IDs...");
 		for (Professor p : profs)
 			id_prof.put(p.getId(), p);
-
+		log.info("Initializing professors IDs. Done");
+		
 		id_room = new HashMap<Integer, Room>();
 		// populate the bldg_rooms map
 
+		log.info("Mapping rooms to their corresponding buildings...");
 		for (Room r : rooms) {
 			id_room.put(r.getId(), r);
 			Building b = getBuildingById(r.getBuilding_id());
@@ -99,7 +144,11 @@ public class SetUp {
 			rooms.add(r);
 			bldg_rooms.put(b, rooms);
 		}
+		log.info("Mapping rooms to their corresponding buildings. Done");
+		
 		System.out.println(rooms.size());
+		
+		log.info("Mapping classes to their corresponding courses...");
 		for (Class c : classes) {
 			System.out.println("hello");
 			
@@ -108,11 +157,14 @@ public class SetUp {
 			Course course = getCourseById(course_id);
 			course.addClass(c);
 		}
-
+		log.info("Mapping classes to their corresponding courses. Done");
+		
 		// initialize the reserved for room
+		log.info("Mapping reseved rooms to time slots...");
 		for (Room r : rooms)
 			r.initializeReserved();
-
+		log.info("Mapping reseved rooms to time slots. Done");
+		
 		/**
 		 * TODO build HashSet<Room, Set<Accessory>) to assign accessories for
 		 * the room Same for every section build HashSet<Department,
@@ -126,6 +178,7 @@ public class SetUp {
 		deps_classes_map = new TreeMap<Department, Set<Class>>(
 				Collections.reverseOrder(new DepartmentWeightComparator()));
 
+		log.info("Mapping courses to departments...");
 		for (Department d : deps) {
 			deps_courses_map.put(d, d.getCourses_offered());
 			Set<Class> classes = new TreeSet<Class>(new ClassTimeComparator());
@@ -134,6 +187,7 @@ public class SetUp {
 			}
 			deps_classes_map.put(d, classes);
 		}
+		log.info("Mapping courses to departments. Done");
 	}
 
 	// getteres
@@ -501,7 +555,7 @@ public class SetUp {
 		return bldg_rooms;
 	}
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws SecurityException, IOException{
 		SetUp s = new SetUp();
 		System.out.println(s.deps.size());
 	}

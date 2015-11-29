@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.algorithm;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,7 +13,7 @@ import lb.edu.aub.cmps.classes.Room;
 public class BasicScheduler extends Scheduler implements IScheduler {
 
 
-	public BasicScheduler(){
+	public BasicScheduler() throws SecurityException, IOException{
 		super();
 	}
 	/**

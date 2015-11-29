@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.algorithm;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -13,7 +14,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 	private Map<Department, Set<Class>> classes_by_dep;
 	private int num_of_all_classes;
 
-	public ByTimeScheduler() {
+	public ByTimeScheduler() throws SecurityException, IOException {
 		super();
 		classes_by_dep = setup.getDeps_Classes_map();
 		num_of_all_classes = setup.getNumOfClasses();

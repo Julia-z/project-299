@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.algorithm;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -27,8 +28,10 @@ public abstract class Scheduler implements IScheduler{
 	/**
 	 * constructor
 	 * @param num_of_iterations
+	 * @throws IOException 
+	 * @throws SecurityException 
 	 */
-	public Scheduler() {
+	public Scheduler() throws SecurityException, IOException {
 		setup = new SetUp();
 		this.num_of_iterations = 10;
 		this.requests_by_dep = setup.getDeps_courses_map();
