@@ -22,6 +22,9 @@ public abstract class Scheduler implements IScheduler{
 																// departments
 
 	protected TreeMap<Department, TreeSet<Class>> classes_req_by_dep;
+	protected Map<Department, Set<Class>> scheduled_map;
+
+	
 	public TreeMap<Department, Set<Course>> getRequests(){
 		return requests_by_dep;
 	}
@@ -41,6 +44,8 @@ public abstract class Scheduler implements IScheduler{
 			count_all_courses += d.getCourses_offered().size();
 		}
 	}
-	
+	public Map<Department, Set<Class>> getScheduled(){
+		return scheduled_map;
+	}
 	public abstract Map<Class, String> schedule();
 }

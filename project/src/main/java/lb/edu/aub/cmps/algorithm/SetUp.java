@@ -137,6 +137,9 @@ public class SetUp {
 
 		log.info("Mapping classes to their corresponding courses...");
 		for (Class c : id_class.values()) {
+			//TODO remove these two lines if the booleans are read from the database
+			c.setCanChangeRoom(true);//by default
+			c.setCanChangeRoom(true);//by default
 			int course_id = c.getCourse_id();
 			c.setCourse_name(id_course.get(course_id).getCourse_name());
 			Course course = id_course.get(course_id);
@@ -154,13 +157,6 @@ public class SetUp {
 
 		// ____________________________________________________________________________________
 
-		/**
-		 * TODO build HashSet<Room, Set<Accessory>) to assign accessories for
-		 * the room Same for every section build HashSet<Department,
-		 * Set<Courses>) to assign courses given by departments
-		 */
-
-		// __________________________________________________________________________________________
 		// initialize the deps_courses_map;
 
 		log.info("Mapping courses to departments...");
