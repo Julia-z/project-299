@@ -47,14 +47,15 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 		boolean floor_turn = false;
 
 		while (remaining_classes > 0) {
-			System.out.println("*Remaining classes: " + remaining_classes);
+			remaining_classes--;
+			//System.out.println("*Remaining classes: " + remaining_classes);
 			int k = 0;
 			for (Department d : setup.getDeps_Classes_map().keySet()) {
 				double classes_to_sched = (d.getNum_of_classes() / num_of_iterations);
 				classes_to_sched = (floor_turn) ? Math.floor(classes_to_sched)
 						: Math.ceil(classes_to_sched);
-				System.out.println("-Department: " + d.getName() + " >> "
-						+ classes_to_sched);
+				//System.out.println("-Department: " + d.getName() + " >> "
+					//	+ classes_to_sched);
 
 				floor_turn = !floor_turn;
 				Iterator<Class> it = its[k];
@@ -62,10 +63,10 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 				for (int i = 0; i < classes_to_sched; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
-						System.out.println(c_to_sched);
+						//System.out.println(c_to_sched);
 
 						int best = setup.bestScheduleClass(c_to_sched);
-						System.out.println("best is: " + best);
+					//	System.out.println("best is: " + best);
 						boolean scheduled = true;
 
 						// request met
@@ -138,7 +139,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							}
 
 						}
-						remaining_classes--;
 					}
 				}
 
