@@ -44,6 +44,8 @@ public class TimeSlot {
 			day = Day.R;
 		} else if (day_id == 5) {
 			day = Day.F;
+		} else if (day_id == 6) {
+			day = Day.S;
 		}
 	}
 
