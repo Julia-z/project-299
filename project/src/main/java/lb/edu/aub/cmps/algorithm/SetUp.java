@@ -38,6 +38,7 @@ public class SetUp {
 	private HashSet<Room> rooms;// still needs the type
 	private HashSet<Integer> accessories;
 	
+	
 	private HashMap<Integer, Building> id_bldg;
 	private HashMap<Integer, Class> id_class;
 	private HashMap<Integer, Department> id_dep;
@@ -536,7 +537,12 @@ public class SetUp {
 	
 	public static void main(String[] args) throws SecurityException, IOException{
 		SetUp s = new SetUp();
-
+		
+		
+		for(Class c: s.classes){
+			System.out.println(c.getAccessoriesIds());
+		}
+		
 /*
 		HashMap<Integer, Department> deps = s.id_dep;
 		HashMap<Integer, Building> bldgs = s.id_bldg;

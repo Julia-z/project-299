@@ -159,5 +159,9 @@ public class Class {
 	public void setCourse_name(String course_name) {
 		this.course_name = course_name;
 	}
+	
+	public void setAccessoriesIds(Set<Integer> ids){
+		this.accessories_ids = ids;
+	}
 
 }

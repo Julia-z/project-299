@@ -26,18 +26,16 @@ public class ClassService implements ClassMapper {
 				int id = c.getClass_id();
 				TimeSlot[] times = cm.getClassTimes(id);
 				c.setTime(new Time(times));
-				/**
-				 * TODO -Not all classes are given professors, this is making a
-				 * problem. The user must be forced to at least put TBA -Not all
-				 * classes are given rooms, this is making the same problem. The
-				 * user must be forced to at least put TBA
-				 */
+
 				Professor p = cm.getProfessor(id);
 				if(p!=null)	p.initializeUnavailable();
 				c.setProfessor(p);
 				Room r = cm.getClassroom(id);
 				if(r!=null)	r.initializeReserved();
 				c.setRoom(r);
+				
+				Set<Integer> acc = cm.getAccessoriesInClass(id);
+				c.setAccessoriesIds(acc);
 
 				/*System.out.println("Class id: " + c.getClass_id()
 						+ ", Course id: " + c.getCourse_id() + ", Type :"
@@ -45,7 +43,7 @@ public class ClassService implements ClassMapper {
 			}
 
 			/**
-			 * In case we wana loop over all professors and such ProfessorMapper
+			 * In case we wanna loop over all professors and such ProfessorMapper
 			 * pm = sqlSession.getMapper(ProfessorMapper.class); Set<Professor>
 			 * allProfessors= pm.getAllProfessors(); RoomMapper rm =
 			 * sqlSession.getMapper(RoomMapper.class); Set<Room> allRooms=
