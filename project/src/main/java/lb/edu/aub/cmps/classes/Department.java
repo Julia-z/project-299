@@ -31,12 +31,12 @@ public class Department {
 
 
 	public String toString(){
-		return "id: "+id+" name: "+name+", courses offered: "+ courses_offered.toString();
+		return "id: "+id+" name: "+name+", num of classes: "+ num_of_classes;
 	}
 	
 	public void addCourse(Course c){
 		courses_offered.add(c);
-		//num_of_classes += c.getNum_of_classes();
+		num_of_classes += c.getNum_of_classes();
 	}
 	
 	public int getNum_of_classes(){

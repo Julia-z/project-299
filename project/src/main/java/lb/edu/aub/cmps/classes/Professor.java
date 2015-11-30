@@ -68,6 +68,6 @@ public class Professor {
 	}
 
 	public String toString() {
-		return "id: " + id + ", name: " + name + ", classes: " + classes;
+		return "id: " + id + ", name: " + name + ", classes: " + classes + "UNAVAILABLE: "+unavailable;
 	}
 }
