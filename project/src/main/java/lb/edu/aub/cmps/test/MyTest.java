@@ -1,14 +1,11 @@
 package lb.edu.aub.cmps.test;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import lb.edu.aub.cmps.classes.Class;
-import lb.edu.aub.cmps.classes.Professor;
-import lb.edu.aub.cmps.classes.Room;
+import lb.edu.aub.cmps.services.AccessoryService;
 import lb.edu.aub.cmps.services.ClassService;
-import lb.edu.aub.cmps.services.CourseService;
-import lb.edu.aub.cmps.services.ProfessorService;
-import lb.edu.aub.cmps.services.RoomService;
+import lb.edu.aub.cmps.classes.Class;
 
 public class MyTest {
 	public static void main(String[] args) {
@@ -51,11 +48,21 @@ public class MyTest {
 		 * System.out.println(dep.toString()); }
 		 * System.out.println(ds.toString());
 		 */
+
+		
 		ClassService c = new ClassService();
-		Set<Class> cs = c.getAllClasses();
+		HashSet<Class> classes = (HashSet<Class>) c.getAllClasses();
+
+		for (Class cl : classes) {
+			int id = cl.getClass_id();
+			HashSet<Integer> ids= (HashSet<Integer>) c.getAccessoriesInClass(id);
+			System.out.println(ids.size());
+			for(Integer i: ids){
+				System.out.println(i.toString());
+			}
+		}
+
 		/*
-		 * for(Class cl: cs){ System.out.println(cl.toString()); }
-		 */
 		System.out.println(cs.toString());
 
 		ProfessorService p = new ProfessorService();
