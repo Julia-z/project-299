@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
+import lb.edu.aub.cmps.classes.Room;
 
 public abstract class Scheduler implements IScheduler{
 	protected SetUp setup;
@@ -46,6 +47,9 @@ public abstract class Scheduler implements IScheduler{
 	}
 	public Map<Department, Set<Class>> getScheduled(){
 		return scheduled_map;
+	}
+	public Map<Integer, Room> getIdRoomMap(){
+		return setup.getId_RoomMap();
 	}
 	public abstract Map<Class, String> schedule();
 }

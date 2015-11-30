@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -547,5 +548,9 @@ public class SetUp {
 		 * //System.out.println(rooms.size());
 		 */
 
+	}
+
+	public Map<Integer, Room> getId_RoomMap() {
+		return id_room;
 	}
 }
