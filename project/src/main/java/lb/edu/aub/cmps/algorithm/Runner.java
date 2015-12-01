@@ -2,15 +2,20 @@ package lb.edu.aub.cmps.algorithm;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Department;
+import lb.edu.aub.cmps.classes.MyLogger;
 import lb.edu.aub.cmps.classes.Room;
 
 public class Runner {
 
 	public static void main(String[] args) throws SecurityException, IOException {
-
+		MyLogger loggerWrapper = MyLogger.getInstance();
+		Logger log = loggerWrapper.getLogger();
+		
+		log.info("Program started...");
 		IScheduler s = new ByTimeScheduler();
 		s.schedule();
 		
@@ -30,5 +35,7 @@ public class Runner {
 			Room r = id_room.get(i);
 			System.out.printf("%-14s: Reserved at %-30s\n", r.getNumber(), r.getReserved());
 		}
+		
+		log.info("Program terminated");
 	}
 }

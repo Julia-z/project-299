@@ -7,11 +7,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.DepartmentWeightComparator;
+import lb.edu.aub.cmps.classes.MyLogger;
 
 public class ByTimeScheduler extends Scheduler implements IScheduler {
 
@@ -19,6 +21,8 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 	private int num_of_all_classes;
 
 	private Iterator<Class>[] its;
+	private MyLogger loggerWrapper = MyLogger.getInstance();
+	Logger log = loggerWrapper.getLogger();
 
 	@SuppressWarnings("unchecked")
 	public ByTimeScheduler() throws SecurityException, IOException {
@@ -36,10 +40,11 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 			i++;
 			scheduled_map.put(d, new TreeSet<Class>(new ClassTimeComparator()));
 		}
-
+		log.info("ByTimeScheduler created.");
 	}
 
 	public Map<Class, String> schedule() {
+		log.info("BasicScheduler initiated.... Schedule method running");
 		Map<Class, String> notSched = new HashMap<Class, String>();
 
 		int remaining_classes = num_of_all_classes;
@@ -48,14 +53,14 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 
 		while (remaining_classes > 0) {
 			remaining_classes--;
-			//System.out.println("*Remaining classes: " + remaining_classes);
+			// System.out.println("*Remaining classes: " + remaining_classes);
 			int k = 0;
 			for (Department d : setup.getDeps_Classes_map().keySet()) {
 				double classes_to_sched = (d.getNum_of_classes() / num_of_iterations);
 				classes_to_sched = (floor_turn) ? Math.floor(classes_to_sched)
 						: Math.ceil(classes_to_sched);
-				//System.out.println("-Department: " + d.getName() + " >> "
-					//	+ classes_to_sched);
+				// System.out.println("-Department: " + d.getName() + " >> "
+				// + classes_to_sched);
 
 				floor_turn = !floor_turn;
 				Iterator<Class> it = its[k];
@@ -63,25 +68,32 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 				for (int i = 0; i < classes_to_sched; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
-						//System.out.println(c_to_sched);
+						// System.out.println(c_to_sched);
 
 						int best = setup.bestScheduleClass(c_to_sched);
-					//	System.out.println("best is: " + best);
+						// System.out.println("best is: " + best);
 						boolean scheduled = true;
 
 						// request met
-						if (best == 1)
+						if (best == 1) {
 							scheduled_map.get(d).add(c_to_sched);
+							log.info("Request of the " + d.getName()
+									+ " department granted.");
+						}
 
 						// the request cannot be met
 						// unavailable professor
 						else if (best == -1) {
+							log.warning("Unavailable professor, trying to change time...");
 							scheduled = false;
 							// the professor is unavailable at the
 							// time => change time
+
 							if (!c_to_sched.canChangeTime()) {
 								notSched.put(c_to_sched,
 										"Professor conflicts time. The class is marked not to change the time");
+								log.severe("Professor conflicts time. The class is marked not to change the time");
+
 								scheduled = false;
 							} else { // we can change the time
 								scheduled = setup.changeTime(c_to_sched);
@@ -90,6 +102,8 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 									// room for the new time
 									notSched.put(c_to_sched,
 											"Professor Conflict. Failed to change the time");
+
+									log.severe("Professor Conflict. Failed to change the time");
 									scheduled = false;
 								}
 							}
@@ -101,12 +115,15 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							// search for a room else if(best == -2){ //if the
 							// class is
 							// marked not to change the room
+							log.warning("Unavailable professor, trying to change time...");
+
 							if (!c_to_sched.canChangeRoom()) {
 								scheduled = setup.changeTime(c_to_sched);
 								if (!scheduled) {
 									notSched.put(
 											c_to_sched,
 											"The room is unavialable at any time! the class is marked not to change the room");
+									log.severe("The room is unavialable at any time! the class is marked not to change the room");
 									scheduled = false;
 								}
 							} else { // we can change room scheduled =
@@ -116,6 +133,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 									if (!c_to_sched.canChangeTime()) {
 										notSched.put(c_to_sched,
 												"The room is unavailable at the given time and the time can't be changed");
+										log.severe("The room is unavailable at the given time and the time can't be changed");
 										scheduled = false;
 
 									} else {
@@ -123,7 +141,8 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 												.changeTime(c_to_sched);
 										if (!scheduled) {
 											notSched.put(c_to_sched,
-													"all rooms are not available at all the times");
+													"all rooms are not available at all times");
+											log.severe("All rooms are not available at all times");
 											scheduled = false;
 
 										}
@@ -133,19 +152,14 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							}
 							if (!scheduled)
 								notSched.put(c_to_sched, "");
-							else {
+							else
 								scheduled_map.get(d).add(c_to_sched);
-
-							}
-
 						}
 					}
 				}
-
 			}
-
 		}
-
+		log.info("Scheduling done!");
 		return notSched;
 	}
 
