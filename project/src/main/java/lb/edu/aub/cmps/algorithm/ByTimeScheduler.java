@@ -91,11 +91,13 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							// time => change time
 
 							if (!c_to_sched.canChangeTime()) {
+								System.out.println("we cant change the time............................");
 								notSched.put(c_to_sched,
 										"Professor conflicts time. The class is marked not to change the time");
 								log.info("Professor conflicts time. The class " +c_to_sched.getClass_id() +" is marked not to change the time");
 
 							} else { // we can change the time
+								System.out.println("We can change the time................................."+c_to_sched.getRequestedTime());
 								scheduled = setup.changeTime(c_to_sched);
 								if (!scheduled) {
 									// TODO if not scheduling keep changing the
@@ -185,7 +187,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 	
 	public static void main(String[] args) throws SecurityException, IOException{
 		Scheduler s = new ByTimeScheduler();
-		s.schedule();
+	//	Map<Class, String> not = s.schedule();
 		System.out.println("__________________________________________________________________________");
 
 		/*
@@ -199,10 +201,18 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 		System.out.println("__________________________________________________________________________");
 		for(Set<Class> c: s.getScheduled().values()){
 			for(Class cl: c){
-				if(!cl.getRequestedRoom().getNumber().equals(cl.getGivenRoom().getNumber()))
-					System.out.println(cl.getClass_id() +": "+cl.getRequestedRoom().getNumber()+"->"+cl.getGivenRoom().getNumber());
+				//if(cl.getClass_id() == 20)
+				//System.out.println(cl.getClass_id() +": "+cl.getRequestedTime()+"->"+cl.getGivenTime());
+				if(cl.getRequestedTime().compareTo(cl.getGivenTime() )!=0){
+					System.out.println(cl.getRequestedTime() +" > "+cl.getGivenTime());
+				}
+				System.out.println("......");
+				//if(!cl.getRequestedRoom().getNumber().equals(cl.getGivenRoom().getNumber()))
+				//	System.out.println(cl.getClass_id() +": "+cl.getRequestedRoom().getNumber()+"->"+cl.getGivenRoom().getNumber());
 			}
+			
 		}
+		
 	}
 	
 

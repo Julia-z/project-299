@@ -141,7 +141,7 @@ public class SetUp {
 		for (Class c : id_class.values()) {
 			//TODO remove these two lines if the booleans are read from the database
 			c.setCanChangeRoom(true);//by default
-			c.setCanChangeRoom(true);//by default
+			c.setCanChangeTime(true);//by default
 			int course_id = c.getCourse_id();
 			c.setCourse_name(id_course.get(course_id).getCourse_name());
 			Course course = id_course.get(course_id);
@@ -447,11 +447,25 @@ public class SetUp {
 
 	public boolean changeTime(Class cl) {
 		Time t = cl.getRequestedTime();
-		Room r = cl.getRequestedRoom();
-		Professor p = id_prof.get(cl.getProfessor().getId());
+		Room r = id_room.get(cl.getRequestedRoom().getId());
+		Professor p = cl.getProfessor();
+		if(p != null) p = id_prof.get(cl.getProfessor().getId());
 		boolean done = false;
 		Time next = t.nextTime();
-		Time prev = t.previousTime();
+		System.out.println("the next time is "+next);
+		while(next != null && !done){
+			if(r.is_available(next.getTimeSlots())){
+				if(p != null && p.isAvailable(next)) {
+					done = true;
+					reserve(p, r, next, cl);
+				}
+			}
+			next = next.nextTime();
+		}
+		//Time prev = t.previousTime();
+		//System.out.println("the previous time is "+prev);
+
+		/*
 		if (next == null) {
 			while (!done && prev != null) {
 				// check the prof and the room during previous time
@@ -501,7 +515,7 @@ public class SetUp {
 					return false;
 			}
 		}
-
+*/
 		// }
 		return true;
 	}
