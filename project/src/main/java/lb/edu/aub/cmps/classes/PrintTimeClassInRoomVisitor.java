@@ -94,7 +94,7 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 				firstCell.setCellValue(t.toString().substring(3, 17));
 				if (r.getReserved().get(t).getGiven_room() != r.getReserved()
 						.get(t).getRequestedRoom()
-						|| r.getReserved().get(t).getGiven_time() != r.getReserved().get(t).getRequestedTime()) {
+						|| r.getReserved().get(t).getGivenTime() != r.getReserved().get(t).getRequestedTime()) {
 					firstCell.setCellStyle(red);
 				}
 				Previous = t.toString().substring(3, 17);

@@ -74,6 +74,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 
 						int best = setup.bestScheduleClass(c_to_sched);
 						// System.out.println("best is: " + best);
+						System.out.println(c_to_sched + " > "+best);
 						boolean scheduled = true;
 
 						// request met
@@ -118,8 +119,8 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							// search for a room else if(best == -2){ //if the
 							// class is
 							// marked not to change the room
+							System.out.println("UNAVAILABLE ROOOOOOOOOOOOOOOOOOM" + c_to_sched.getRequestedRoom());
 							log.info("Unavailable room, trying to change time...");
-
 							if (!c_to_sched.canChangeRoom()) {
 								scheduled = setup.changeTime(c_to_sched);
 								if (!scheduled) {
@@ -131,10 +132,14 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 								}
 								else{
 									scheduled_map.get(d).add(c_to_sched);
+									System.out.println("finallyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 								}
-							} else { // we can change room scheduled =
-								setup.changeRoom(c_to_sched); // if no rooms try
-																// tochange time
+							}
+							else { // we can change room scheduled =
+								System.out.println(">>>>>>>>>>" + setup.changeRoom(c_to_sched)); // if no rooms try
+								System.out.println(">>>>>>>>>>>>>>>>>>>" + c_to_sched.getGiven_room());
+								
+								// tochange time
 								if (!scheduled) {
 									if (!c_to_sched.canChangeTime()) {
 										notSched.put(c_to_sched,
@@ -158,8 +163,11 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							}
 							if (!scheduled)
 								notSched.put(c_to_sched, "");
-							else
+							else{
 								scheduled_map.get(d).add(c_to_sched);
+								System.out.println(c_to_sched.getClass_id() + " fetttttttttttttttttttttttttttttttttt"+c_to_sched.getRequestedRoom().getNumber()+" ????? "+c_to_sched.getGiven_room().getNumber());
+								
+							}
 						}
 					}
 				}
@@ -174,4 +182,28 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 	public Map<Department, Set<Class>> getScheduled() {
 		return scheduled_map;
 	}
+	
+	public static void main(String[] args) throws SecurityException, IOException{
+		Scheduler s = new ByTimeScheduler();
+		s.schedule();
+		System.out.println("__________________________________________________________________________");
+
+		/*
+		//System.out.println("The classes that are not scheduled are: " + notSched.keySet().size());
+		for(Department d: s.getScheduled().keySet()){
+			Set<Class> classes = s.getScheduled().get(d);
+			for(Class c: classes){
+				System.out.printf("%-4d in room: %-14s at time: %-30s\n", c.getClass_id(), c.getGiven_room().getNumber(), c.getGiven_time());
+			}
+		}*/
+		System.out.println("__________________________________________________________________________");
+		for(Set<Class> c: s.getScheduled().values()){
+			for(Class cl: c){
+				if(!cl.getRequestedRoom().getNumber().equals(cl.getGiven_room().getNumber()))
+					System.out.println(cl.getClass_id() +": "+cl.getRequestedRoom().getNumber()+"->"+cl.getGiven_room().getNumber());
+			}
+		}
+	}
+	
+
 }

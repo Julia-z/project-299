@@ -19,12 +19,13 @@ public class Runner {
 		log.info("Program started...");
 		IScheduler s = new ByTimeScheduler();
 		s.schedule();
-		
+		System.out.println("__________________________________________________________________________");
+
 		//System.out.println("The classes that are not scheduled are: " + notSched.keySet().size());
 		for(Department d: s.getScheduled().keySet()){
 			Set<Class> classes = s.getScheduled().get(d);
 			for(Class c: classes){
-				System.out.printf("%-4d in room: %-14s at time: %-30s\n", c.getClass_id(), c.getGiven_room().getNumber(), c.getGiven_time());
+				System.out.printf("%-4d in room: %-14s at time: %-30s\n", c.getClass_id(), c.getGiven_room().getNumber(), c.getGivenTime());
 			}
 		}
 		System.out.println("__________________________________________________________________________");
@@ -39,5 +40,7 @@ public class Runner {
 		long endTime   = System.currentTimeMillis();
 		
 		log.info("Program terminated in "+(endTime-startTime)+" milliseconds");
+		
+		
 	}
 }

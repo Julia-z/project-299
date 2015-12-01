@@ -96,11 +96,11 @@ public class Class {
 	}
 
 	public Time getGivenTime(){
-		return req_time;
+		return given_time;
 	}
 	
 	public Room getGivenRoom(){
-		return req_room;
+		return given_room;
 	}
 	public Room getRequestedRoom(){
 		return req_room;
@@ -121,9 +121,7 @@ public class Class {
 		this.given_room = given_room;
 	}
 
-	public Time getGiven_time() {
-		return given_time;
-	}
+	
 
 	public void setGiven_time(Time given_time) {
 		this.given_time = given_time;

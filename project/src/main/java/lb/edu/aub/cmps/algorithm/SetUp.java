@@ -59,7 +59,7 @@ public class SetUp {
 
 		// buildings
 		log.info("Fetching buildings...");
-		bldg_rooms = (HashMap<Building, Set<Integer>>) new HashMap<Building, Set<Integer>>();
+		bldg_rooms = new HashMap<Building, Set<Integer>>();
 		bldgs = (HashSet<Building>) new BuildingService().getAllBuildings();
 
 		id_bldg = new HashMap<Integer, Building>();
@@ -97,6 +97,7 @@ public class SetUp {
 		for (Room r : rooms) {
 			r.initializeReserved();
 			id_room.put(r.getId(), r);
+			bldg_rooms.get(id_bldg.get(r.getBuilding_id())).add(r.getId());
 		}
 		log.info("Rooms retrieved");
 
@@ -307,8 +308,11 @@ public class SetUp {
 					&& r.getRoom_capacity() >= room.getRoom_capacity() // greater
 																		// capacity
 					&& r.getType() == room.getType()// same type
-					&& room.is_available(times))// available
+					&& room.is_available(times)){// available
 				sameBuilding.add(r);
+				System.out.println("???????????????"+r);
+				
+			}
 		}
 		return sameBuilding;
 	}
@@ -375,8 +379,11 @@ public class SetUp {
 	 */
 	public int bestScheduleClass(Class c) {
 		Room r = c.getRequestedRoom();
+		r = id_room.get(r.getId());
+
 		Time t = c.getRequestedTime();
 		Professor p = c.getProfessor();
+		if(p!= null)	p = id_prof.get(p.getId());
 
 		boolean av_room = r.is_available(t.getTimeSlots());
 		boolean av_prof = (p == null) ? true : p.isAvailable(t);
@@ -410,11 +417,13 @@ public class SetUp {
 		boolean scheduled = false;
 		Set<Room> rooms = get_all_rooms_in_same_building(cl.getRequestedRoom(),
 				cl.getRequestedTime().getTimeSlots());
+		System.out.println("Rooms are " + rooms);
 		while (!scheduled && step < 3) {
 			// there are rooms => try to schedule
 			if (rooms != null) {
 				for (Room room2 : rooms) {
 					if (room2.hasAccessory(cl.getAccessoriesIds())) {
+						System.out.println("the room is "+room2.getId());
 						reserve(p, room2, t, cl);
 						cl.setGiven_room(room2);
 						cl.setGiven_time(t);
@@ -527,30 +536,20 @@ public class SetUp {
 		return bldg_rooms;
 	}
 
-	public static void main(String[] args) throws SecurityException,
-			IOException {
-		SetUp s = new SetUp();
-
-		for (Class c : s.classes) {
-			System.out.println(c.getAccessoriesIds());
-		}
-
-		/*
-		 * HashMap<Integer, Department> deps = s.id_dep; HashMap<Integer,
-		 * Building> bldgs = s.id_bldg; HashMap<Integer, Class> classes =
-		 * s.id_class; HashMap<Integer, Course> courses = s.id_course;
-		 * HashMap<Integer, Professor> profs = s.id_prof; HashMap<Integer, Room>
-		 * rooms = s.id_room; int c = 0; for(Department d:
-		 * s.deps_classes_map.keySet()){
-		 * System.out.println(d.getId()+">"+s.deps_classes_map.get(d).size());
-		 * c+= s.deps_classes_map.get(d).size(); } System.out.println(c);
-		 * 
-		 * //System.out.println(rooms.size());
-		 */
-
-	}
-
+	
 	public Map<Integer, Room> getId_RoomMap() {
 		return id_room;
+	}
+	
+	public static void main(String[] args) throws SecurityException, IOException{
+		SetUp s = new SetUp();
+		Map<Integer, Room > rooms = s.id_room;
+		Map<Integer, Class> classes = s.id_class;
+		Room r = rooms.get(62);
+		Class c = classes.get(43);
+		Set<Room > similar = s.get_all_rooms_in_same_building(r, c.getRequestedTime().getTimeSlots());
+		System.out.println("__________________________________________________________________________");
+		System.out.println(similar);
+		
 	}
 }
