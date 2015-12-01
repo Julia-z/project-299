@@ -6,6 +6,7 @@ public class TimeSlot {
 	private String start;
 	private String end;
 	private static int maxHours = 19;
+	private static int minHours = 8;
 
 	/**
 	 * commented so that the mapper can function normally
@@ -93,7 +94,7 @@ public class TimeSlot {
 		return conflict;
 	}
 
-	private TimeSlot changeTimeSlot(int h1, int m1, int h2, int m2) {
+	private TimeSlot changeTimeSlot(int hMWF, int mMWF, int hTR, int mTR) {
 		TimeSlot t = new TimeSlot();
 		Day d = this.getDay();
 		t.setDay(d);
@@ -101,11 +102,11 @@ public class TimeSlot {
 		String newEnd;
 		if (d == Day.T || d == Day.R) {
 			// we must add 1: 15 to it
-			newStart = addtime(this.getStart(), h1, m1);
-			newEnd = addtime(this.getEnd(), h1, m1);
+			newStart = addtime(this.getStart(), hMWF, mMWF);
+			newEnd = addtime(this.getEnd(), hMWF, mMWF);
 		} else {
-			newStart = addtime(this.getStart(), h2, m2);
-			newEnd = addtime(this.getEnd(), h2, m2);
+			newStart = addtime(this.getStart(), hTR, mTR);
+			newEnd = addtime(this.getEnd(), hTR, mTR);
 		}
 		if (newStart == null || newEnd == null)
 			return null;
@@ -136,11 +137,15 @@ public class TimeSlot {
 		int min2 = Integer.parseInt(start.substring(2)) + min;
 	//	System.out.println();
 		//System.out.println(h2 + ">"+min2);
+		if(min2 <0){
+			min2 = 60 - Math.abs(min2);
+			h2 --;
+		}
 		if (min2 >= 60) {
 			min2 = min2 - 60;
 			h2 = h2 + 1;
 		}
-		if (h2 > maxHours)
+		if (h2 > maxHours || h2 < minHours)
 			return null;
 		String strh = (h2 < 10) ? "0" + h2 : h2 + "";
 		String strmin = (min2 < 10) ? "0" + min2 : min2 + "";
@@ -177,14 +182,14 @@ public class TimeSlot {
 		t.setEnd("1250");
 		TimeSlot t2 = new TimeSlot();
 		t2.setDay(Day.R);
-		t2.setStart("1200");
-		t2.setEnd("1250");
+		t2.setStart("800");
+		t2.setEnd("915");
 		
 		TimeSlot t3 = new TimeSlot();
 		t3.setDay(Day.R);
 		t3.setStart("1200");
 		t3.setEnd("1250");
-		System.out.println(t);
+		System.out.println(t2);
 		System.out.println(t2.previousTimeSlot());
 		//System.out.println(t.nextTimeSlot().nextTimeSlot());
 	}

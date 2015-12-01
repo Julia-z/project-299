@@ -185,35 +185,5 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 		return scheduled_map;
 	}
 	
-	public static void main(String[] args) throws SecurityException, IOException{
-		Scheduler s = new ByTimeScheduler();
-	//	Map<Class, String> not = s.schedule();
-		System.out.println("__________________________________________________________________________");
-
-		/*
-		//System.out.println("The classes that are not scheduled are: " + notSched.keySet().size());
-		for(Department d: s.getScheduled().keySet()){
-			Set<Class> classes = s.getScheduled().get(d);
-			for(Class c: classes){
-				System.out.printf("%-4d in room: %-14s at time: %-30s\n", c.getClass_id(), c.getGiven_room().getNumber(), c.getGiven_time());
-			}
-		}*/
-		System.out.println("__________________________________________________________________________");
-		for(Set<Class> c: s.getScheduled().values()){
-			for(Class cl: c){
-				//if(cl.getClass_id() == 20)
-				//System.out.println(cl.getClass_id() +": "+cl.getRequestedTime()+"->"+cl.getGivenTime());
-				if(cl.getRequestedTime().compareTo(cl.getGivenTime() )!=0){
-					System.out.println(cl.getRequestedTime() +" > "+cl.getGivenTime());
-				}
-				System.out.println("......");
-				//if(!cl.getRequestedRoom().getNumber().equals(cl.getGivenRoom().getNumber()))
-				//	System.out.println(cl.getClass_id() +": "+cl.getRequestedRoom().getNumber()+"->"+cl.getGivenRoom().getNumber());
-			}
-			
-		}
-		
-	}
 	
-
 }

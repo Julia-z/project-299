@@ -446,26 +446,32 @@ public class SetUp {
 	}
 
 	public boolean changeTime(Class cl) {
+		System.out.println("HERE");
 		Time t = cl.getRequestedTime();
 		Room r = id_room.get(cl.getRequestedRoom().getId());
 		Professor p = cl.getProfessor();
 		if(p != null) p = id_prof.get(cl.getProfessor().getId());
+		
 		boolean done = false;
 		Time next = t.nextTime();
 		System.out.println("the next time is "+next);
+		/** this code works **/
+		/*
 		while(next != null && !done){
 			if(r.is_available(next.getTimeSlots())){
 				if(p != null && p.isAvailable(next)) {
 					done = true;
 					reserve(p, r, next, cl);
+					cl.setIsMet(false);
 				}
 			}
 			next = next.nextTime();
 		}
-		//Time prev = t.previousTime();
-		//System.out.println("the previous time is "+prev);
+		if(!done) return false;*/
+		Time prev = t.previousTime();
+		System.out.println("the previous time is "+prev);
 
-		/*
+		
 		if (next == null) {
 			while (!done && prev != null) {
 				// check the prof and the room during previous time
@@ -515,7 +521,7 @@ public class SetUp {
 					return false;
 			}
 		}
-*/
+
 		// }
 		return true;
 	}
@@ -530,13 +536,8 @@ public class SetUp {
 		if (p != null) {
 			p.addClass(c);
 			p.addUnavailable(c.getGivenTime());
-			id_prof.put(p.getId(), p);
-
 		}
-
-		r.reserveRoom(t.getTimeSlots(), c);
-		id_room.put(r.getId(), r);
-		
+		r.reserveRoom(t.getTimeSlots(), c);		
 	}
 
 	public TreeMap<Department, Set<Course>> getDeps_courses_map() {
