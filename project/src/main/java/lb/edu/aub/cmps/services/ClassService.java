@@ -71,10 +71,6 @@ public class ClassService implements ClassMapper {
 		}
 	}
 
-	/**
-	 * Creates an array of time slots of a certain class TODO must be assigned
-	 * to class's Time in setup
-	 */
 	public TimeSlot[] getClassTimes(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
@@ -129,9 +125,6 @@ public class ClassService implements ClassMapper {
 		}
 	}
 
-	/**
-	 * TODO mapper still not written, needing a class Type enum cannot work
-	 */
 	public String getType(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
