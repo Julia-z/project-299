@@ -25,7 +25,7 @@ public class Runner {
 		for(Department d: s.getScheduled().keySet()){
 			Set<Class> classes = s.getScheduled().get(d);
 			for(Class c: classes){
-				System.out.printf("%-4d in room: %-14s at time: %-30s\n", c.getClass_id(), c.getGiven_room().getNumber(), c.getGivenTime());
+				System.out.printf("%-4d in room: %-14s at time: %-30s\n", c.getClass_id(), c.getGivenRoom().getNumber(), c.getGivenTime());
 			}
 		}
 		System.out.println("__________________________________________________________________________");

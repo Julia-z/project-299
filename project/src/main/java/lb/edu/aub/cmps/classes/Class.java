@@ -113,9 +113,7 @@ public class Class {
 		this.isMet = b;
 	}
 
-	public Room getGiven_room() {
-		return given_room;
-	}
+
 
 	public void setGiven_room(Room given_room) {
 		this.given_room = given_room;

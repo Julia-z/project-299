@@ -511,6 +511,8 @@ public class SetUp {
 	}
 
 	public void reserve(Professor p, Room r, Time t, Class c) {
+		c.setGiven_time(t);
+		c.setGiven_room(r);
 		if (p != null) {
 			p.addClass(c);
 			p.addUnavailable(c.getGivenTime());
@@ -520,8 +522,7 @@ public class SetUp {
 
 		r.reserveRoom(t.getTimeSlots(), c);
 		id_room.put(r.getId(), r);
-		c.setGiven_time(t);
-		c.setGiven_room(r);
+		
 	}
 
 	public TreeMap<Department, Set<Course>> getDeps_courses_map() {

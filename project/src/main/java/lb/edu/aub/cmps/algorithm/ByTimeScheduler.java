@@ -137,7 +137,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							}
 							else { // we can change room scheduled =
 								System.out.println(">>>>>>>>>>" + setup.changeRoom(c_to_sched)); // if no rooms try
-								System.out.println(">>>>>>>>>>>>>>>>>>>" + c_to_sched.getGiven_room());
+								System.out.println(">>>>>>>>>>>>>>>>>>>" + c_to_sched.getGivenRoom());
 								
 								// tochange time
 								if (!scheduled) {
@@ -165,7 +165,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 								notSched.put(c_to_sched, "");
 							else{
 								scheduled_map.get(d).add(c_to_sched);
-								System.out.println(c_to_sched.getClass_id() + " fetttttttttttttttttttttttttttttttttt"+c_to_sched.getRequestedRoom().getNumber()+" ????? "+c_to_sched.getGiven_room().getNumber());
+								System.out.println(c_to_sched.getClass_id() + " fetttttttttttttttttttttttttttttttttt"+c_to_sched.getRequestedRoom().getNumber()+" ????? "+c_to_sched.getGivenRoom().getNumber());
 								
 							}
 						}
@@ -199,8 +199,8 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 		System.out.println("__________________________________________________________________________");
 		for(Set<Class> c: s.getScheduled().values()){
 			for(Class cl: c){
-				if(!cl.getRequestedRoom().getNumber().equals(cl.getGiven_room().getNumber()))
-					System.out.println(cl.getClass_id() +": "+cl.getRequestedRoom().getNumber()+"->"+cl.getGiven_room().getNumber());
+				if(!cl.getRequestedRoom().getNumber().equals(cl.getGivenRoom().getNumber()))
+					System.out.println(cl.getClass_id() +": "+cl.getRequestedRoom().getNumber()+"->"+cl.getGivenRoom().getNumber());
 			}
 		}
 	}

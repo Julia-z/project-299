@@ -28,6 +28,7 @@ public class Professor {
 
 	public void addClass(Class c) {
 		classes.add(c);
+		System.out.println(c.getClass_id()+"->"+c.getGivenTime());
 		for (int i = 0; i < c.getGivenTime().getTimeSlots().length; i++) {
 			unavailable.add(c.getGivenTime().getTimeSlots()[i]);
 		}
