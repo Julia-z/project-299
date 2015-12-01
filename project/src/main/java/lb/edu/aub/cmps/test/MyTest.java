@@ -1,11 +1,9 @@
 package lb.edu.aub.cmps.test;
 
 import java.util.HashSet;
-import java.util.Set;
 
-import lb.edu.aub.cmps.services.AccessoryService;
-import lb.edu.aub.cmps.services.ClassService;
 import lb.edu.aub.cmps.classes.Class;
+import lb.edu.aub.cmps.services.ClassService;
 
 public class MyTest {
 	public static void main(String[] args) {

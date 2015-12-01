@@ -55,7 +55,6 @@ public class Time{
 	}
 
 	/**
-	 * TODO by julia return a
 	 * 
 	 * @return null in case we cant shift the time anymore
 	 */

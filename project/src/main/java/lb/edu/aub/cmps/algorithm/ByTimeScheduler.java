@@ -84,7 +84,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 						// the request cannot be met
 						// unavailable professor
 						else if (best == -1) {
-							log.warning("Unavailable professor, trying to change time...");
+							log.info("Unavailable professor, trying to change time...");
 							scheduled = false;
 							// the professor is unavailable at the
 							// time => change time
@@ -92,9 +92,8 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							if (!c_to_sched.canChangeTime()) {
 								notSched.put(c_to_sched,
 										"Professor conflicts time. The class is marked not to change the time");
-								log.severe("Professor conflicts time. The class is marked not to change the time");
+								log.info("Professor conflicts time. The class " +c_to_sched.getClass_id() +" is marked not to change the time");
 
-								scheduled = false;
 							} else { // we can change the time
 								scheduled = setup.changeTime(c_to_sched);
 								if (!scheduled) {
@@ -103,8 +102,12 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 									notSched.put(c_to_sched,
 											"Professor Conflict. Failed to change the time");
 
-									log.severe("Professor Conflict. Failed to change the time");
+									log.info("Professor Conflict. Failed to change the time");
 									scheduled = false;
+								}
+								else{
+									log.info("Issue resolved");
+									scheduled_map.get(d).add(c_to_sched);
 								}
 							}
 						}
@@ -115,7 +118,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							// search for a room else if(best == -2){ //if the
 							// class is
 							// marked not to change the room
-							log.warning("Unavailable professor, trying to change time...");
+							log.info("Unavailable room, trying to change time...");
 
 							if (!c_to_sched.canChangeRoom()) {
 								scheduled = setup.changeTime(c_to_sched);
@@ -126,6 +129,9 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 									log.severe("The room is unavialable at any time! the class is marked not to change the room");
 									scheduled = false;
 								}
+								else{
+									scheduled_map.get(d).add(c_to_sched);
+								}
 							} else { // we can change room scheduled =
 								setup.changeRoom(c_to_sched); // if no rooms try
 																// tochange time
@@ -133,7 +139,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 									if (!c_to_sched.canChangeTime()) {
 										notSched.put(c_to_sched,
 												"The room is unavailable at the given time and the time can't be changed");
-										log.severe("The room is unavailable at the given time and the time can't be changed");
+										log.info("The room is unavailable at the given time and the time can't be changed");
 										scheduled = false;
 
 									} else {
@@ -142,7 +148,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 										if (!scheduled) {
 											notSched.put(c_to_sched,
 													"all rooms are not available at all times");
-											log.severe("All rooms are not available at all times");
+											log.info("All rooms are not available at all times");
 											scheduled = false;
 
 										}
