@@ -20,7 +20,8 @@ public class App {
 		for(Department d: s.getScheduled().keySet()){
 			Set<Class> classes = s.getScheduled().get(d);
 			for(Class c: classes){
-				System.out.printf("%-4d in room: %-14s at time: %-30s\n", c.getClass_id(), c.getGivenRoom().getNumber(), c.getGivenTime());
+				String met = (c.getIsMet())? "Request Met": "Request not met";
+				System.out.printf("%-4d %-18sin room: %-14s at time: %-30s\n", c.getClass_id(), "("+met+")", c.getGivenRoom().getNumber(), c.getGivenTime());
 			}
 		}
 		System.out.println("__________________________________________________________________________");

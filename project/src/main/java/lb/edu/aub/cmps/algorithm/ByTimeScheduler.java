@@ -53,7 +53,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 
 		while (remaining_classes > 0) {
 			remaining_classes--;
-			// System.out.println("*Remaining classes: " + remaining_classes);
 			int k = 0;
 			for (Department d : setup.getDeps_Classes_map().keySet()) {
 				log.info("Working on the " + d.getName()
@@ -61,20 +60,15 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 				double classes_to_sched = (d.getNum_of_classes() / num_of_iterations);
 				classes_to_sched = (floor_turn) ? Math.floor(classes_to_sched)
 						: Math.ceil(classes_to_sched);
-				// System.out.println("-Department: " + d.getName() + " >> "
-				// + classes_to_sched);
-
+				
 				floor_turn = !floor_turn;
 				Iterator<Class> it = its[k];
 				k++;
 				for (int i = 0; i < classes_to_sched; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
-						// System.out.println(c_to_sched);
 
 						int best = setup.bestScheduleClass(c_to_sched);
-						// System.out.println("best is: " + best);
-						System.out.println(c_to_sched + " > "+best);
 						boolean scheduled = true;
 
 						// request met
@@ -91,13 +85,11 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							// time => change time
 
 							if (!c_to_sched.canChangeTime()) {
-								System.out.println("we cant change the time............................");
 								notSched.put(c_to_sched,
 										"Professor conflicts time. The class is marked not to change the time");
 								log.info("Professor conflicts time. The class " +c_to_sched.getClass_id() +" is marked not to change the time");
 
 							} else { // we can change the time
-								System.out.println("We can change the time................................."+c_to_sched.getRequestedTime());
 								scheduled = setup.changeTime(c_to_sched);
 								if (!scheduled) {
 									// TODO if not scheduling keep changing the
@@ -121,7 +113,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 							// search for a room else if(best == -2){ //if the
 							// class is
 							// marked not to change the room
-							System.out.println("UNAVAILABLE ROOOOOOOOOOOOOOOOOOM" + c_to_sched.getRequestedRoom());
 							log.info("Unavailable room, trying to change time...");
 							if (!c_to_sched.canChangeRoom()) {
 								scheduled = setup.changeTime(c_to_sched);
@@ -134,12 +125,10 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 								}
 								else{
 									scheduled_map.get(d).add(c_to_sched);
-									System.out.println("finallyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 								}
 							}
 							else { // we can change room scheduled =
-								System.out.println(">>>>>>>>>>" + setup.changeRoom(c_to_sched)); // if no rooms try
-								System.out.println(">>>>>>>>>>>>>>>>>>>" + c_to_sched.getGivenRoom());
+								scheduled = setup.changeRoom(c_to_sched);
 								
 								// tochange time
 								if (!scheduled) {
@@ -167,7 +156,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 								notSched.put(c_to_sched, "");
 							else{
 								scheduled_map.get(d).add(c_to_sched);
-								System.out.println(c_to_sched.getClass_id() + " fetttttttttttttttttttttttttttttttttt"+c_to_sched.getRequestedRoom().getNumber()+" ????? "+c_to_sched.getGivenRoom().getNumber());
 								
 							}
 						}
