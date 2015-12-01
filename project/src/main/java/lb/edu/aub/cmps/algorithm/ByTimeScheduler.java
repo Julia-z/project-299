@@ -56,6 +56,8 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 			// System.out.println("*Remaining classes: " + remaining_classes);
 			int k = 0;
 			for (Department d : setup.getDeps_Classes_map().keySet()) {
+				log.info("Working on the " + d.getName()
+						+ " department.");
 				double classes_to_sched = (d.getNum_of_classes() / num_of_iterations);
 				classes_to_sched = (floor_turn) ? Math.floor(classes_to_sched)
 						: Math.ceil(classes_to_sched);
@@ -77,8 +79,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 						// request met
 						if (best == 1) {
 							scheduled_map.get(d).add(c_to_sched);
-							log.info("Request of the " + d.getName()
-									+ " department granted.");
 						}
 
 						// the request cannot be met
@@ -157,6 +157,8 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 						}
 					}
 				}
+				log.info("Done working on the " + d.getName()
+						+ " department.");
 			}
 		}
 		log.info("Scheduling done!");

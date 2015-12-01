@@ -14,6 +14,7 @@ public class Runner {
 	public static void main(String[] args) throws SecurityException, IOException {
 		MyLogger loggerWrapper = MyLogger.getInstance();
 		Logger log = loggerWrapper.getLogger();
+		long startTime = System.currentTimeMillis();
 		
 		log.info("Program started...");
 		IScheduler s = new ByTimeScheduler();
@@ -35,7 +36,8 @@ public class Runner {
 			Room r = id_room.get(i);
 			System.out.printf("%-14s: Reserved at %-30s\n", r.getNumber(), r.getReserved());
 		}
+		long endTime   = System.currentTimeMillis();
 		
-		log.info("Program terminated");
+		log.info("Program terminated in "+(endTime-startTime)+" milliseconds");
 	}
 }
