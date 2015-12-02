@@ -42,7 +42,7 @@ public class SetUp {
 	HashMap<Integer, Building> id_bldg;
 	HashMap<Integer, Class> id_class;
 	HashMap<Integer, Department> id_dep;
-	HashMap<Integer, Course> id_course;
+	public HashMap<Integer, Course> id_course;
 	HashMap<Integer, Professor> id_prof;
 	HashMap<Integer, Room> id_room;
 

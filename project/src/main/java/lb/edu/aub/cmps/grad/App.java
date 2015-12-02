@@ -1,18 +1,20 @@
 package lb.edu.aub.cmps.grad;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 
 import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
 import lb.edu.aub.cmps.algorithm.Scheduler;
 import lb.edu.aub.cmps.classes.Class;
+import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 
 public class App {
 
 	public static void main(String[] args) throws SecurityException, IOException{
 		Scheduler s = new ByTimeScheduler();
-		s.schedule();
+		Map<Class, String> not = s.schedule();
 		System.out.println("__________________________________________________________________________");
 
 		
@@ -26,7 +28,15 @@ public class App {
 		}
 		System.out.println("__________________________________________________________________________");
 
-		
+		for(Course c: s.getSetup().id_course.values()){
+			if(c.getClasses()!=null){
+				for(Class cl:c.getClasses()){
+					if(!cl.getIsMet()) System.out.println("hello " + cl.getClass_id());
+				}
+			}
+		}
+		System.out.println("__________________________________________________________________________");
+
 	}
 	
 

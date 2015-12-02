@@ -2,6 +2,7 @@ package lb.edu.aub.cmps.algorithm;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -177,9 +178,14 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 	@Override
 	public Map<Department, Set<Section>> getDep_Sections() {
 		Map<Department, Set<Section>> map = new HashMap<Department, Set<Section>>();
-		//for()
-		
-		return null;
+		for(Department d: classes_by_dep.keySet()){
+			map.put(d, new HashSet<Section>());
+			Set<Class> classes = classes_by_dep.get(d);
+			for(Class c: classes){
+				
+			}
+		}
+		return map;
 	}
 	
 	

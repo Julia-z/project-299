@@ -11,6 +11,7 @@ public class Course {
 	private int category_id;
 	private int nbr_of_sections;
 	private Set<Class> classes;
+	private Set<Section> sections;
 	private int num_of_classes;
 
 	public int getCourse_id() {
@@ -62,5 +63,17 @@ public class Course {
 	}
 	public int getNum_of_classes(){
 		return num_of_classes;
+	}
+
+	public Set<Section> getSections() {
+		return sections;
+	}
+
+	public void setSections(Set<Section> sections) {
+		this.sections = sections;
+	}
+	
+	public void addSection(Section s){
+		sections.add(s);
 	}
 }

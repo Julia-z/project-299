@@ -52,6 +52,9 @@ public abstract class Scheduler implements IScheduler{
 	public Map<Integer, Room> getIdRoomMap(){
 		return setup.getId_RoomMap();
 	}
+	public SetUp getSetup(){
+		return setup;
+	}
 	public abstract Map<Department, Set<Section>> getDep_Sections();
 	public abstract Map<Class, String> schedule();
 }
