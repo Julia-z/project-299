@@ -31,7 +31,7 @@
 	
 	<select id='getSectionsInCourse' parameterType="int" resultMap='sectionResult'>
 	
-		SELECT Section_ID from section_lecture where LECTURE_ID = #{id}
+		SELECT Section_ID from section where Course_ID = #{id}
 	</select>
 	<resultMap type='Integer' id='sectionResult'>
 		<id property='id' column ='Section_ID'></id>

@@ -78,6 +78,9 @@ public class Course {
 	}
 	
 	public void addSection(Section s){
+		if(sections == null){
+			sections = new HashSet<Section>();
+		}
 		sections.add(s);
 	}
 }

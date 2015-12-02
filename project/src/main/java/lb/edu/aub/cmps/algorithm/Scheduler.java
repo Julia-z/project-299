@@ -60,19 +60,21 @@ public abstract class Scheduler implements IScheduler{
 	
 	public Map<Department, Set<Course>> getDepCoursesMap(){
 		Map<Department, Set<Course>> map = new HashMap<Department, Set<Course>>();
-		for(Integer dep_id: setup.getId_course().keySet()){
+		for(Integer dep_id: setup.getId_dep().keySet()){
 			map.put(setup.id_dep.get(dep_id), new HashSet<Course>());
 		}
 		for(Integer course_id: setup.getId_course().keySet()){
 			Course c = setup.getId_course().get(course_id);
 			for(Integer i: c.getSectionNbrs()){
 				Section s = new Section(c.getDepartment(), setup.id_dep.get(c.getDepartment()).getName(), i, c.getCourse_name(), c.getCourse_id());
-				for(Class cl : c.getClasses()){
-					if(cl.getSection_number().contains(i)) s.addClass(cl);
+				if(c.getClasses()!=null){
+					for(Class cl : c.getClasses()){
+						if(cl.getSection_number().contains(i)) s.addClass(cl);
+					}
+					c.addSection(s);
 				}
-				c.addSection(s);
 			}
-			map.get(c.getDepartment()).add(c);
+			map.get(setup.id_dep.get(c.getDepartment())).add(c);
 		}
 		return map;
 	}

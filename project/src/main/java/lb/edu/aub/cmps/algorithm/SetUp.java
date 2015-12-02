@@ -661,11 +661,17 @@ public class SetUp {
 
 	public static void main(String[] args) throws SecurityException, IOException{
 		SetUp s = new SetUp();
-		/*for(Course c: s.id_course.values()){
-			System.out.println(c.getNbr_of_sections());
-		}*/
+		for(Course c: s.id_course.values()){
+			System.out.println(c.getSectionNbrs());
+		}
+		/*
 		for(Class cl:s.id_class.values()){
 			System.out.println(cl.getClass_id() +" > " + cl.getSection_number());
 		}
+		*/
+	}
+
+	public HashMap<Integer, Department> getId_dep() {
+		return id_dep;
 	}
 }
