@@ -2,6 +2,11 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.Set;
 
+/**
+ * Defines the object Department
+ * @author Julia El Zini
+ * @author Bilal Abi Farraj
+ */
 public class Department {
 	private int id;
 	private String name;

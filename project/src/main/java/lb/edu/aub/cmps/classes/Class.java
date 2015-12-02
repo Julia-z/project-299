@@ -3,12 +3,11 @@ package lb.edu.aub.cmps.classes;
 import java.util.HashSet;
 import java.util.Set;
 
-/*
- *	class_capacity: All sections together
- *	section_numbers: Set of section numbers
- *	room
- *	Professor
- *	type: lecture, computer_lab, none,u_chat, music, art 
+/**
+ * Defines the object Class
+ * 
+ * @author Julia El Zini
+ * @author Bilal Abi Farraj
  */
 
 public class Class implements ClassVisitable {
@@ -22,6 +21,7 @@ public class Class implements ClassVisitable {
 	private int givenRoomId;
 
 	private Time req_time;
+	private int req_day;
 	private Time given_time;
 
 	private int givenDay;
@@ -177,26 +177,32 @@ public class Class implements ClassVisitable {
 	}
 
 	public int getGivenRoomId() {
-		givenRoomId= given_room.getId(); 
+		givenRoomId= req_room.getId();
+		if (isMet) {
+			givenRoomId = given_room.getId();
+		}
 		return givenRoomId;
 	}
 
+	/**
+	 * TODO must fix the return
+	 * @return
+	 */
 	public int getGivenDay() {
 		givenDay = 0;
 		if (isMet) {
 			Day d = given_time.getTimeSlots()[0].getDay();
-			givenDay= dayToInt(d);
-		}
-		else{
+			givenDay = dayToInt(d);
+		} else {
 			Day d = req_time.getTimeSlots()[0].getDay();
-			givenDay= dayToInt(d);
+			givenDay = dayToInt(d);
 		}
 		return givenDay;
 	}
 
-	private int dayToInt(Day d){
-		int day=0;
-		
+	private int dayToInt(Day d) {
+		int day = 0;
+
 		if (d == Day.M) {
 			day = 1;
 		} else if (d == Day.T) {
@@ -216,13 +222,13 @@ public class Class implements ClassVisitable {
 		}
 		return day;
 	}
+
 	public String getGivenStart() {
 		givenStart = "";
 		if (isMet) {
 			givenStart = given_time.getTimeSlots()[0].getStart();
-		}
-		else{
-			givenStart= req_time.getTimeSlots()[0].getStart();
+		} else {
+			givenStart = req_time.getTimeSlots()[0].getStart();
 		}
 		return givenStart;
 	}
@@ -231,26 +237,33 @@ public class Class implements ClassVisitable {
 		givenEnd = "";
 		if (isMet) {
 			givenEnd = given_time.getTimeSlots()[0].getEnd();
-		}
-		else{
-			givenEnd= req_time.getTimeSlots()[0].getEnd();
+		} else {
+			givenEnd = req_time.getTimeSlots()[0].getEnd();
 		}
 		return givenEnd;
 	}
-	
+
 	/**
 	 * TODO temporary setters for testing perpouses
+	 * 
 	 * @param day
 	 */
-	public void setGivenDay(int day){
-		givenDay= day;
+	public void setGivenDay(int day) {
+		givenDay = day;
 	}
-	
-	public void setGivenStart(String start){
-		givenStart= start;
+
+	public void setGivenStart(String start) {
+		givenStart = start;
 	}
-	
-	public void setGivenEnd(String end){
-		givenEnd= end;
+
+	public void setGivenEnd(String end) {
+		givenEnd = end;
+	}
+
+	public int getReq_day() {
+		req_day=0;
+		Day d = req_time.getTimeSlots()[0].getDay();
+		req_day = dayToInt(d);
+		return req_day;
 	}
 }

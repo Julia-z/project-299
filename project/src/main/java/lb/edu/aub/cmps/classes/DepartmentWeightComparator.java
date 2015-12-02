@@ -4,6 +4,11 @@ import java.util.Comparator;
 
 import lb.edu.aub.cmps.classes.Department;
 
+/**
+ * Implements Comparator. Compares the weights of 2 given Departments.
+ * @author Julia El Zini
+ * @author Bilal Abi Farraj
+ */
 public class DepartmentWeightComparator implements Comparator<Department>{
 
 	public int compare(Department d1, Department d2) {

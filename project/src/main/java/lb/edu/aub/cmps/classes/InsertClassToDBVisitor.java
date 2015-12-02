@@ -8,27 +8,35 @@ import java.util.Set;
 import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
 import lb.edu.aub.cmps.algorithm.Scheduler;
 import lb.edu.aub.cmps.services.ClassService;
+
+/**
+ * Updates the database with the granted room and time
+ * 
+ * @author Bilal Abi Farraj
+ */
 public class InsertClassToDBVisitor implements ClassVisitor {
 
-
 	/**
-	 * TODO insert code here to insert to the database ie call on the service
+	 * @param c
+	 *            given the Class to be updated in the database with the given
+	 *            room and time
 	 */
 	public void visit(Class c) {
-		if(c.getIsMet()){
+		if (c.getIsMet()) {
 			ClassService cs = new ClassService();
 			cs.updateLecture_Classroom(c);
 			cs.updateLecture_Time(c);
 		}
 	}
-	
-	public static void main(String[] args) throws SecurityException, IOException{
+
+	public static void main(String[] args) throws SecurityException,
+			IOException {
 		ClassVisitor visitor = new InsertClassToDBVisitor();
 		Scheduler s = new ByTimeScheduler();
 		s.schedule();
 		Set<Class> classes = new HashSet<Class>();
 		Map<Department, Set<Class>> dep_classes = s.getScheduled();
-		for(Department d: dep_classes.keySet()){
+		for (Department d : dep_classes.keySet()) {
 			classes.addAll(dep_classes.get(d));
 		}
 		for (Class cl : classes) {
