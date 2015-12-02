@@ -23,7 +23,7 @@ import lb.edu.aub.cmps.classes.Class
 			System.out.println(d.getName());
 			System.out.println("__________________________________");
 			for(Course course: map.get(d)){
-				System.out.println("\t-"+course.getCourse_name());
+				System.out.println("\t*"+course.getCourse_name());
 				if(course.getSections()!=null){
 					for(Section s: course.getSections()){
 						System.out.println("\t\tSection "+s.getSection_number());
