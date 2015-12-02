@@ -62,8 +62,7 @@ public class MyTest {
 			*/
 			if(i==0 && cl.getClass_id()== 1){
 				cl.setGivenDay(2);
-				cl.setGivenStart("1000");
-				cl.setGivenEnd("1050");
+				
 				c.updateLecture_Time(cl);
 				i++;
 			}

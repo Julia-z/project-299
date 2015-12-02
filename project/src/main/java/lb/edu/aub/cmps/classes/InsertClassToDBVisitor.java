@@ -25,8 +25,46 @@ public class InsertClassToDBVisitor implements ClassVisitor {
 		if (c.getIsMet()) {
 			ClassService cs = new ClassService();
 			cs.updateLecture_Classroom(c);
-			cs.updateLecture_Time(c);
+
+			Time t = c.getGivenTime();
+			TimeSlot[] ts = t.getTimeSlots();
+
+			for (int i = 0; i < ts.length; i++) {
+				if (ts[i] != null) {
+					Day d = ts[i].getDay();
+					int day = dayToInt(d);
+					String start = ts[i].getStart();
+					String end = ts[i].getEnd();
+					c.setGivenDay(day);
+					c.setGivenEnd(start);
+					c.setGivenStart(end);
+					cs.updateLecture_Time(c);
+				}
+			}
 		}
+	}
+
+	private int dayToInt(Day d) {
+		int day = 0;
+
+		if (d == Day.M) {
+			day = 1;
+		} else if (d == Day.T) {
+			day = 2;
+		} else if (d == Day.T) {
+			day = 2;
+		} else if (d == Day.W) {
+			day = 3;
+		} else if (d == Day.R) {
+			day = 4;
+		} else if (d == Day.F) {
+			day = 5;
+		} else if (d == Day.S) {
+			day = 6;
+		} else if (d == Day.U) {
+			day = 7;
+		}
+		return day;
 	}
 
 	public static void main(String[] args) throws SecurityException,

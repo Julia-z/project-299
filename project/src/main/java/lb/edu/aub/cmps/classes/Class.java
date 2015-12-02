@@ -177,93 +177,43 @@ public class Class implements ClassVisitable {
 	}
 
 	public int getGivenRoomId() {
-		givenRoomId= req_room.getId();
+		givenRoomId = req_room.getId();
 		if (isMet) {
 			givenRoomId = given_room.getId();
 		}
 		return givenRoomId;
 	}
 
-	/**
-	 * TODO must fix the return
-	 * @return
-	 */
+	public int getReq_day() {
+		return req_day;
+	}
+
+	public void setReq_day(int req_day) {
+		this.req_day = req_day;
+	}
+
 	public int getGivenDay() {
-		givenDay = 0;
-		if (isMet) {
-			Day d = given_time.getTimeSlots()[0].getDay();
-			givenDay = dayToInt(d);
-		} else {
-			Day d = req_time.getTimeSlots()[0].getDay();
-			givenDay = dayToInt(d);
-		}
 		return givenDay;
 	}
 
-	private int dayToInt(Day d) {
-		int day = 0;
-
-		if (d == Day.M) {
-			day = 1;
-		} else if (d == Day.T) {
-			day = 2;
-		} else if (d == Day.T) {
-			day = 2;
-		} else if (d == Day.W) {
-			day = 3;
-		} else if (d == Day.R) {
-			day = 4;
-		} else if (d == Day.F) {
-			day = 5;
-		} else if (d == Day.S) {
-			day = 6;
-		} else if (d == Day.U) {
-			day = 7;
-		}
-		return day;
+	public void setGivenDay(int givenDay) {
+		this.givenDay = givenDay;
 	}
 
 	public String getGivenStart() {
-		givenStart = "";
-		if (isMet) {
-			givenStart = given_time.getTimeSlots()[0].getStart();
-		} else {
-			givenStart = req_time.getTimeSlots()[0].getStart();
-		}
 		return givenStart;
 	}
 
+	public void setGivenStart(String givenStart) {
+		this.givenStart = givenStart;
+	}
+
 	public String getGivenEnd() {
-		givenEnd = "";
-		if (isMet) {
-			givenEnd = given_time.getTimeSlots()[0].getEnd();
-		} else {
-			givenEnd = req_time.getTimeSlots()[0].getEnd();
-		}
 		return givenEnd;
 	}
 
-	/**
-	 * TODO temporary setters for testing perpouses
-	 * 
-	 * @param day
-	 */
-	public void setGivenDay(int day) {
-		givenDay = day;
+	public void setGivenEnd(String givenEnd) {
+		this.givenEnd = givenEnd;
 	}
 
-	public void setGivenStart(String start) {
-		givenStart = start;
-	}
-
-	public void setGivenEnd(String end) {
-		givenEnd = end;
-	}
-
-	public int getReq_day() {
-		req_day=0;
-		Day d = req_time.getTimeSlots()[0].getDay();
-		req_day = dayToInt(d);
-		return req_day;
-	}
 }
