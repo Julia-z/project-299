@@ -117,11 +117,15 @@ public class ExportSectionsToExcel {
 						System.out.println("\t\tSection "
 								+ s.getSection_number());
 						for (Class c : s.getClasses()) {
+	
 							Cell startTime = row1.createCell(3);
 							if (c.getGivenTime() != null && c.getGivenTime().getTimeSlots()!=null) {
 								TimeSlot[] t = c.getGivenTime().getTimeSlots();
 								Cell endTime = row1.createCell(4);
-
+								if(c.getGivenTime() != c.getRequestedTime()){
+									startTime.setCellStyle(red);
+									endTime.setCellStyle(red);
+								}
 								System.out.println(c.getGivenTime());
 								for (int i = 0; i < t.length; i++) {
 									startTime.setCellValue(t[i].getStart().substring(0,2)+":"+t[i].getStart().substring(2,4));
@@ -151,6 +155,10 @@ public class ExportSectionsToExcel {
 							if(c.getGivenRoom() != null){
 							Cell room = row1.createCell(11);
 							room.setCellValue(c.getGivenRoom().getNumber());
+							if(!c.getGivenRoom().getNumber().equals( c.getRequestedRoom().getNumber())){
+								
+								room.setCellStyle(red);
+							}
 							System.out.println(c.getGivenRoom().getNumber());
 							}
 							if (c.getProfessor() != null) {
