@@ -72,7 +72,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 
 						int best = setup.bestScheduleClass(c_to_sched);
 						boolean scheduled = true;
-
+						System.out.println(c_to_sched.getClass_id()+"--------------------> "+best);
 						// request met
 						if (best == 1) {
 							scheduled_map.get(d).add(c_to_sched);

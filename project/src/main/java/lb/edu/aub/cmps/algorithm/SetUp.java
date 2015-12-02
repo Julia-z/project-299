@@ -42,7 +42,7 @@ public class SetUp {
 	HashMap<Integer, Building> id_bldg;
 	HashMap<Integer, Class> id_class;
 	HashMap<Integer, Department> id_dep;
-	public HashMap<Integer, Course> id_course;
+	private HashMap<Integer, Course> id_course;
 	HashMap<Integer, Professor> id_prof;
 	HashMap<Integer, Room> id_room;
 
@@ -123,9 +123,9 @@ public class SetUp {
 
 		log.info("Fetching Courses...");
 		courses = (HashSet<Course>) new CourseService().getAllCourses();
-		id_course = new HashMap<Integer, Course>();
+		setId_course(new HashMap<Integer, Course>());
 		for (Course c : courses) {
-			id_course.put(c.getCourse_id(), c);
+			getId_course().put(c.getCourse_id(), c);
 			int dep_id = c.getDepartment();
 			Department d = id_dep.get(dep_id);
 			d.addCourse(c);
@@ -143,14 +143,14 @@ public class SetUp {
 			c.setCanChangeRoom(true);//by default
 			c.setCanChangeTime(true);//by default
 			int course_id = c.getCourse_id();
-			c.setCourse_name(id_course.get(course_id).getCourse_name());
-			Course course = id_course.get(course_id);
+			c.setCourse_name(getId_course().get(course_id).getCourse_name());
+			Course course = getId_course().get(course_id);
 			course.addClass(c);
 			
 			// id_dep.put(dep_id, d);
 			// id_course.put(course_id, course);
 		}
-		for(Course course: id_course.values()){
+		for(Course course: getId_course().values()){
 			int dep_id = course.getDepartment();
 			Department d = id_dep.get(dep_id);
 			d.addCourse(course);
@@ -649,6 +649,14 @@ public class SetUp {
 	
 	public Map<Integer, Room> getId_RoomMap() {
 		return id_room;
+	}
+
+	public HashMap<Integer, Course> getId_course() {
+		return id_course;
+	}
+
+	public void setId_course(HashMap<Integer, Course> id_course) {
+		this.id_course = id_course;
 	}
 	
 }
