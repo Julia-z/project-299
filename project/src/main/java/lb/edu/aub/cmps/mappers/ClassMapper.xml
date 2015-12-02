@@ -40,28 +40,31 @@
 
 	<select id='getProfessor' parameterType="int" resultMap='ProfessorsResult'>
 		SELECT
-		p.Professor_ID, p.Professor_name from lecture_professor c join professor
-		p where c.Lecture_ID= #{id} and c.Professor_ID= p.Professor_ID
+		p.Professor_ID, p.Professor_name from lecture_professor c join
+		professor
+		p where c.Lecture_ID= #{id} and c.Professor_ID=
+		p.Professor_ID
 	</select>
 
 	<resultMap type='Integer' id='AccessoriesResult'>
 		<id property='id' column='Accessory_ID'></id>
 	</resultMap>
-	
+
 	<resultMap type='Integer' id='sectionResult'>
-		<id property='id' column ='Section_ID'></id>
+		<id property='id' column='Section_ID'></id>
 	</resultMap>
 
 
 	<select id='getAccessoriesInClass' parameterType="int"
 		resultMap='AccessoriesResult'>
 		SELECT a.Accessory_ID from lecture_accessory
-		c join accessory_enum a where c.Lecture_ID= #{id} and c.Accessory_ID=
+		c join
+		accessory_enum a where c.Lecture_ID= #{id} and c.Accessory_ID=
 		a.Accessory_ID
 	</select>
-	
+
 	<select id='getSectionsInClass' parameterType="int" resultMap='sectionResult'>
-	
+
 		SELECT Section_ID from section_lecture where LECTURE_ID = #{id}
 	</select>
 
@@ -76,9 +79,24 @@
 		SELECT
 		r.Classroom_ID, r.Classroom_Number, r.Classroom_Capacity,
 		r.Building_ID from
-		classroom r join lecture c where c.Lecture_ID= #{id} and
+		classroom r join lecture c where c.Lecture_ID= #{id}
+		and
 		r.Classroom_ID= c.Classroom_ID
 	</select>
+
+	<update id="updateLecture_Classroom" parameterType="lb.edu.aub.cmps.classes.Class">
+		UPDATE
+		lecture
+		SET Classroom_ID= #{givenRoomId}
+		where LECTURE_ID= #{class_id}
+	</update>
 	
-	
+	<update id="updateLecture_Time" parameterType="lb.edu.aub.cmps.classes.Class">
+		UPDATE
+		lecture_time
+		SET Day_ID= #{givenDay},
+		Start= #{givenStart},
+		End= #{givenEnd}
+		where LECTURE_ID= #{class_id} and Day_Id=1
+	</update>
 </mapper>

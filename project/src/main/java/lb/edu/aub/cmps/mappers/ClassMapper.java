@@ -26,4 +26,7 @@ public interface ClassMapper {
 	public Room getClassroom(int id);
  
 	public String getType(int id);
+	
+	public void updateLecture_Classroom(Class c);
+	public void updateLecture_Time(Class c);
 }

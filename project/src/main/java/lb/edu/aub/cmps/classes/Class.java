@@ -11,7 +11,7 @@ import java.util.Set;
  *	type: lecture, computer_lab, none,u_chat, music, art 
  */
 
-public class Class implements ClassVisitable{
+public class Class implements ClassVisitable {
 	private int class_id;
 	private int course_id;
 	private String course_name;
@@ -19,8 +19,15 @@ public class Class implements ClassVisitable{
 	private HashSet<Integer> section_numbers;
 	private Room req_room;
 	private Room given_room;
+	private int givenRoomId;
+
 	private Time req_time;
 	private Time given_time;
+
+	private int givenDay;
+	private String givenStart;
+	private String givenEnd;
+
 	private Professor Professor;
 	private String type;
 	private boolean isMet;
@@ -59,7 +66,7 @@ public class Class implements ClassVisitable{
 		return section_numbers;
 	}
 
-	public void setSection_number(Set<Integer> section_numbers2){
+	public void setSection_number(Set<Integer> section_numbers2) {
 		this.section_numbers = (HashSet<Integer>) section_numbers2;
 	}
 
@@ -79,7 +86,8 @@ public class Class implements ClassVisitable{
 	 */
 	public String toString() {
 		return "Class id: " + class_id + ", Course id: " + course_id
-				+ ", Type :" + type;//+", Room: " +room.getNumber()+", Time: "+time.toString()+", Professor: "+Professor.getName();
+				+ ", Type :" + type;// +", Room: "
+									// +room.getNumber()+", Time: "+time.toString()+", Professor: "+Professor.getName();
 	}
 
 	public void setProfessor(Professor Professor) {
@@ -93,61 +101,62 @@ public class Class implements ClassVisitable{
 	public void setRoom(Room classroom) {
 		this.req_room = classroom;
 	}
-	
-	public Time getRequestedTime(){
+
+	public Time getRequestedTime() {
 		return req_time;
 	}
 
-	public Time getGivenTime(){
+	public Time getGivenTime() {
 		return given_time;
 	}
-	
-	public Room getGivenRoom(){
+
+	public Room getGivenRoom() {
 		return given_room;
 	}
-	public Room getRequestedRoom(){
+
+	public Room getRequestedRoom() {
 		return req_room;
 	}
-	
-	public boolean getIsMet(){
+
+	public boolean getIsMet() {
 		return isMet;
 	}
-	public void setIsMet(boolean b){
+
+	public void setIsMet(boolean b) {
 		this.isMet = b;
 	}
-
-
 
 	public void setGiven_room(Room given_room) {
 		this.given_room = given_room;
 	}
 
-	
-
 	public void setGiven_time(Time given_time) {
 		this.given_time = given_time;
 	}
-	public void setCanChangeTime(boolean canChangeTime){
+
+	public void setCanChangeTime(boolean canChangeTime) {
 		this.canChangeTime = canChangeTime;
 	}
-	
-	public void setCanChangeRoom(boolean canChangeRoom){
+
+	public void setCanChangeRoom(boolean canChangeRoom) {
 		this.canChangeRoom = canChangeRoom;
 	}
-	public void addAccessoryId(int id){
-		if(accessories_ids == null) accessories_ids = new HashSet<Integer>();
+
+	public void addAccessoryId(int id) {
+		if (accessories_ids == null)
+			accessories_ids = new HashSet<Integer>();
 		accessories_ids.add(id);
 	}
-	
-	public Set<Integer> getAccessoriesIds(){
+
+	public Set<Integer> getAccessoriesIds() {
 		return accessories_ids;
 	}
-	
-	public boolean canChangeTime(){
+
+	public boolean canChangeTime() {
 		return canChangeTime;
 	}
-	
-	public boolean canChangeRoom(){
+
+	public boolean canChangeRoom() {
 		return canChangeRoom;
 	}
 
@@ -158,8 +167,8 @@ public class Class implements ClassVisitable{
 	public void setCourse_name(String course_name) {
 		this.course_name = course_name;
 	}
-	
-	public void setAccessoriesIds(Set<Integer> ids){
+
+	public void setAccessoriesIds(Set<Integer> ids) {
 		this.accessories_ids = ids;
 	}
 
@@ -167,4 +176,81 @@ public class Class implements ClassVisitable{
 		visitor.visit(this);
 	}
 
+	public int getGivenRoomId() {
+		givenRoomId= given_room.getId(); 
+		return givenRoomId;
+	}
+
+	public int getGivenDay() {
+		givenDay = 0;
+		if (isMet) {
+			Day d = given_time.getTimeSlots()[0].getDay();
+			givenDay= dayToInt(d);
+		}
+		else{
+			Day d = req_time.getTimeSlots()[0].getDay();
+			givenDay= dayToInt(d);
+		}
+		return givenDay;
+	}
+
+	private int dayToInt(Day d){
+		int day=0;
+		
+		if (d == Day.M) {
+			day = 1;
+		} else if (d == Day.T) {
+			day = 2;
+		} else if (d == Day.T) {
+			day = 2;
+		} else if (d == Day.W) {
+			day = 3;
+		} else if (d == Day.R) {
+			day = 4;
+		} else if (d == Day.F) {
+			day = 5;
+		} else if (d == Day.S) {
+			day = 6;
+		} else if (d == Day.U) {
+			day = 7;
+		}
+		return day;
+	}
+	public String getGivenStart() {
+		givenStart = "";
+		if (isMet) {
+			givenStart = given_time.getTimeSlots()[0].getStart();
+		}
+		else{
+			givenStart= req_time.getTimeSlots()[0].getStart();
+		}
+		return givenStart;
+	}
+
+	public String getGivenEnd() {
+		givenEnd = "";
+		if (isMet) {
+			givenEnd = given_time.getTimeSlots()[0].getEnd();
+		}
+		else{
+			givenEnd= req_time.getTimeSlots()[0].getEnd();
+		}
+		return givenEnd;
+	}
+	
+	/**
+	 * TODO temporary setters for testing perpouses
+	 * @param day
+	 */
+	public void setGivenDay(int day){
+		givenDay= day;
+	}
+	
+	public void setGivenStart(String start){
+		givenStart= start;
+	}
+	
+	public void setGivenEnd(String end){
+		givenEnd= end;
+	}
 }
