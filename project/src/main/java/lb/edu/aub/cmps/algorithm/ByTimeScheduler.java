@@ -14,6 +14,7 @@ import lb.edu.aub.cmps.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.classes.MyLogger;
+import lb.edu.aub.cmps.classes.Section;
 
 public class ByTimeScheduler extends Scheduler implements IScheduler {
 
@@ -171,6 +172,14 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 
 	public Map<Department, Set<Class>> getScheduled() {
 		return scheduled_map;
+	}
+
+	@Override
+	public Map<Department, Set<Section>> getDep_Sections() {
+		Map<Department, Set<Section>> map = new HashMap<Department, Set<Section>>();
+		//for()
+		
+		return null;
 	}
 	
 	

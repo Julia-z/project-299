@@ -11,7 +11,7 @@ import java.util.Set;
  *	type: lecture, computer_lab, none,u_chat, music, art 
  */
 
-public class Class {
+public class Class implements ClassVisitable{
 	private int class_id;
 	private int course_id;
 	private String course_name;
@@ -158,6 +158,10 @@ public class Class {
 	
 	public void setAccessoriesIds(Set<Integer> ids){
 		this.accessories_ids = ids;
+	}
+
+	public void accept(ClassVisitor visitor) {
+		visitor.visit(this);
 	}
 
 }

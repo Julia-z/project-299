@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import lb.edu.aub.cmps.classes.Class;
@@ -11,6 +12,7 @@ import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.MyLogger;
 import lb.edu.aub.cmps.classes.Room;
+import lb.edu.aub.cmps.classes.Section;
 
 public class BasicScheduler extends Scheduler implements IScheduler {
 
@@ -92,6 +94,11 @@ public class BasicScheduler extends Scheduler implements IScheduler {
 	
 	public SetUp setup(){
 		return setup;
+	}
+	@Override
+	public Map<Department, Set<Section>> getDep_Sections() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
