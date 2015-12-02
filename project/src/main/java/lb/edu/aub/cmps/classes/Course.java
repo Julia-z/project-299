@@ -9,7 +9,7 @@ public class Course {
 	private int department_id;
 	private String course_name;
 	private int category_id;
-	private int nbr_of_sections;
+	private Set<Integer> sections_numbers;
 	private Set<Class> classes;
 	private Set<Section> sections;
 	private int num_of_classes;
@@ -34,8 +34,12 @@ public class Course {
 		return category_id;
 	}
 
-	public int getNbr_of_sections() {
-		return nbr_of_sections;
+	public Set<Integer> getSectionNbrs() {
+		return sections_numbers;
+	}
+	
+	public void setSectionNbrs(Set<Integer> sections_nbrs){
+		this.sections_numbers = sections_nbrs;
 	}
 	/**
 	 * 	private int course_id;

@@ -1,7 +1,6 @@
 package lb.edu.aub.cmps.grad;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Set;
 
 import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
@@ -14,7 +13,8 @@ public class App {
 
 	public static void main(String[] args) throws SecurityException, IOException{
 		Scheduler s = new ByTimeScheduler();
-		Map<Class, String> not = s.schedule();
+		//Map<Class, String> not = 
+				s.schedule();
 		System.out.println("__________________________________________________________________________");
 
 		int count = 0;

@@ -59,6 +59,9 @@ public class Class implements ClassVisitable{
 		return section_numbers;
 	}
 
+	public void setSection_number(Set<Integer> section_numbers2){
+		this.section_numbers = (HashSet<Integer>) section_numbers2;
+	}
 
 	public Professor getProfessor() {
 		return Professor;

@@ -36,6 +36,9 @@ public class ClassService implements ClassMapper {
 				
 				Set<Integer> acc = cm.getAccessoriesInClass(id);
 				c.setAccessoriesIds(acc);
+				
+				Set<Integer> section_numbers = cm.getSectionsInClass(id);
+				c.setSection_number(section_numbers);
 
 				/*System.out.println("Class id: " + c.getClass_id()
 						+ ", Course id: " + c.getCourse_id() + ", Type :"

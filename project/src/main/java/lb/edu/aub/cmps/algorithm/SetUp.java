@@ -658,5 +658,14 @@ public class SetUp {
 	public void setId_course(HashMap<Integer, Course> id_course) {
 		this.id_course = id_course;
 	}
-	
+
+	public static void main(String[] args) throws SecurityException, IOException{
+		SetUp s = new SetUp();
+		/*for(Course c: s.id_course.values()){
+			System.out.println(c.getNbr_of_sections());
+		}*/
+		for(Class cl:s.id_class.values()){
+			System.out.println(cl.getClass_id() +" > " + cl.getSection_number());
+		}
+	}
 }

@@ -28,4 +28,12 @@
 		c.Course_ID, c.Class_Capacity, t.Lecture_Type from lecture c join
 		type_enum t where c.Type_id = t.Type_id and c.Lecture_ID= #{id}
 	</select>
+	
+	<select id='getSectionsInCourse' parameterType="int" resultMap='sectionResult'>
+	
+		SELECT Section_ID from section_lecture where LECTURE_ID = #{id}
+	</select>
+	<resultMap type='Integer' id='sectionResult'>
+		<id property='id' column ='Section_ID'></id>
+	</resultMap>
 </mapper>

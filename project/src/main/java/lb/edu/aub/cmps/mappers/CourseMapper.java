@@ -9,4 +9,5 @@ public interface CourseMapper {
 
 	public Set<Course> getAllCourses();
 	public Set<Class> getAllClasses(int id);
+	public Set<Integer> getSectionsInCourse(int id);
 }

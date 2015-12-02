@@ -17,6 +17,9 @@ public class CourseService implements CourseMapper {
 			
 			CourseMapper cm = sqlSession.getMapper(CourseMapper.class);
 			Set<Course> courses = cm.getAllCourses();
+			for(Course c: cm.getAllCourses()){
+				c.setSectionNbrs(getSectionsInCourse(c.getCourse_id()));
+			}
 			return courses;
 		}
 		 catch (Exception e) {
@@ -42,6 +45,17 @@ public class CourseService implements CourseMapper {
 			sqlSession.close();
 		}
 		return null;
+	}
+
+	public Set<Integer> getSectionsInCourse(int id) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			CourseMapper cm = sqlSession.getMapper(CourseMapper.class);
+			return cm.getSectionsInCourse(id);
+		} finally {
+			sqlSession.close();
+		}
 	}
 
 

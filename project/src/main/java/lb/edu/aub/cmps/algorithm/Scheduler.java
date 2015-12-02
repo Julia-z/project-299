@@ -65,7 +65,7 @@ public abstract class Scheduler implements IScheduler{
 		}
 		for(Integer course_id: setup.getId_course().keySet()){
 			Course c = setup.getId_course().get(course_id);
-			for(int i = 0; i< c.getNbr_of_sections(); i++){
+			for(Integer i: c.getSectionNbrs()){
 				Section s = new Section(c.getDepartment(), setup.id_dep.get(c.getDepartment()).getName(), i, c.getCourse_name(), c.getCourse_id());
 				for(Class cl : c.getClasses()){
 					if(cl.getSection_number().contains(i)) s.addClass(cl);
