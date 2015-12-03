@@ -176,10 +176,12 @@ public class ExportSectionsToExcel {
 
 				if (course.getSections() != null) {
 					for (Section s : course.getSections()) {
+						
 						System.out.println("\t\tSection "
 								+ s.getSection_number());
 						Row row1 = departments.createRow(rowsCount);
 						rowsCount++;
+						
 						int classCount = 0;
 						Cell dep = row1.createCell(0);
 						dep.setCellValue(d.getName());
@@ -187,24 +189,33 @@ public class ExportSectionsToExcel {
 						crs.setCellValue(course.getCourse_name());
 						Cell section = row1.createCell(2);
 						section.setCellValue(s.getSection_number());
+						Cell mstartTime = row1.createCell(3);
+						Cell mendTime = row1.createCell(4);
+						Cell tstartTime = row1.createCell(5);
+						Cell tendTime = row1.createCell(6);
+						Cell wstartTime = row1.createCell(7);
+						Cell wendTime = row1.createCell(8);
+						Cell rstartTime = row1.createCell(9);
+						Cell rendTime = row1.createCell(10);
+						Cell fstartTime = row1.createCell(11);
+						Cell fendTime = row1.createCell(12);
+						Cell sstartTime = row1.createCell(13);
+						Cell sendTime = row1.createCell(14);
+						Cell room = row1.createCell(15);
+						Cell profCell = row1.createCell(16);
+						for (int i = 0; i < row1.getLastCellNum(); i++) {
+							if (sectionsCount % 2 == 0) {
+								row1.getCell(i).setCellStyle(gray);
+							}
+						}
 						for (Class c : s.getClasses()) {
 							// if(classCount >0){
 							// row1 =
 							// departments.createRow(rowsCount+classCount);
 							// rowsCount++;
 							// }
-							Cell mstartTime = row1.createCell(3);
-							Cell mendTime = row1.createCell(4);
-							Cell tstartTime = row1.createCell(5);
-							Cell tendTime = row1.createCell(6);
-							Cell wstartTime = row1.createCell(7);
-							Cell wendTime = row1.createCell(8);
-							Cell rstartTime = row1.createCell(9);
-							Cell rendTime = row1.createCell(10);
-							Cell fstartTime = row1.createCell(11);
-							Cell fendTime = row1.createCell(12);
-							Cell sstartTime = row1.createCell(13);
-							Cell sendTime = row1.createCell(14);
+							boolean ismet = c.getIsMet();
+							
 							if (c.getGivenTime() != null
 									&& c.getGivenTime().getTimeSlots() != null) {
 								TimeSlot[] t = c.getGivenTime().getTimeSlots();
@@ -217,7 +228,7 @@ public class ExportSectionsToExcel {
 								for (int i = 0; i < t.length; i++) {
 
 									if (t[i].getDay() == Day.M) {
-
+										
 										mstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -228,7 +239,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.T) {
-
+										
 										tstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -239,7 +250,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.W) {
-
+										
 										wstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -250,7 +261,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.R) {
-
+										
 										rstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -286,32 +297,26 @@ public class ExportSectionsToExcel {
 								}
 								classCount++;
 							}
-							Cell room = row1.createCell(15);
+							
 							if (c.getGivenRoom() != null) {
 								room.setCellValue(c.getGivenRoom().getNumber());
-								if (!c.getGivenRoom()
-										.getNumber()
-										.equals(c.getRequestedRoom()
-												.getNumber())) {
-
-									room.setCellStyle(red);
-								}
+								
 								System.out
 										.println(c.getGivenRoom().getNumber());
 							}
-
-							Cell profCell = row1.createCell(16);
+							if(!ismet){
+								for (int i = 3; i < 16; i++) {
+										row1.getCell(i).setCellStyle(red);
+								}
+							}
+							
 							if (c.getProfessor() != null) {
 								profCell.setCellValue(c.getProfessor()
 										.getName());
 								;
 							}
 						}
-						for (int i = 0; i < row1.getLastCellNum(); i++) {
-							if (sectionsCount % 2 == 0) {
-								row1.getCell(i).setCellStyle(gray);
-							}
-						}
+						
 
 						sectionsCount++;
 					}
