@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
 import lb.edu.aub.cmps.algorithm.Scheduler;
+import lb.edu.aub.cmps.algorithm.SetUp;
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Day;
@@ -414,5 +416,11 @@ public class ExportSectionsToExcel {
 		e.export(map);
 		e.generateInfo(not);
 	}
-
+	/*
+	 * SetUp s = new SetUp();
+		Map<Class, String> not = new HashMap<Class, String>();
+		for(Class c: s.getId_class().values()){
+			not.put(c, "NO more options");
+		}
+	 */
 }
