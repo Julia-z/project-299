@@ -78,6 +78,5 @@ public abstract class Scheduler implements IScheduler{
 		}
 		return map;
 	}
-	public abstract Map<Department, Set<Section>> getDep_Sections();
 	public abstract Map<Class, String> schedule();
 }

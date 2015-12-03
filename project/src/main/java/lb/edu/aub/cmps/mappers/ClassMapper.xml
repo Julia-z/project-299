@@ -7,14 +7,16 @@
 	<resultMap type='lb.edu.aub.cmps.classes.Class' id='ClassResult'>
 		<id property='class_id' column='Lecture_ID'></id>
 		<result property='course_id' column='Course_ID'></result>
-		<result property='class_capacity' column='Lecture_Capacity'></result>
+		<result property='class_capacity' column='Class_Capacity'></result>
 		<result property='type' column='Lecture_Type'></result>
+		<result property='canChangeTime' column='Time_Fixed'></result>
+		<result property='canChangeRoom' column='Classroom_Fixed'></result>
 	</resultMap>
 
 
 	<select id='getAllClasses' resultMap='ClassResult'>
 		SELECT c.LECTURE_ID,
-		c.Course_ID, c.Lecture_Capacity, t.Lecture_Type from lecture c join
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed, c.Time_Fixed from lecture c join
 		type_enum t where c.Type_id = t.Type_id
 	</select>
 

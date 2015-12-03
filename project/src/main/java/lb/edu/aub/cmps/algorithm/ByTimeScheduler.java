@@ -2,7 +2,6 @@ package lb.edu.aub.cmps.algorithm;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -15,9 +14,8 @@ import lb.edu.aub.cmps.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.classes.MyLogger;
-import lb.edu.aub.cmps.classes.Section;
 
-public class ByTimeScheduler extends Scheduler implements IScheduler {
+public class ByTimeScheduler extends Scheduler {
 
 	private Map<Department, Set<Class>> classes_by_dep;
 	private int num_of_all_classes;
@@ -54,7 +52,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 		boolean floor_turn = false;
 
 		while (remaining_classes > 0) {
-			remaining_classes--;
 			int k = 0;
 			for (Department d : setup.getDeps_Classes_map().keySet()) {
 				log.info("Working on the " + d.getName()
@@ -66,14 +63,78 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 				floor_turn = !floor_turn;
 				Iterator<Class> it = its[k];
 				k++;
-				for (int i = 0; i < classes_to_sched; i++) {
+				for (int i = 0; i < classes_to_sched + 1; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
+						remaining_classes--;
 
 						int best = setup.bestScheduleClass(c_to_sched);
-						boolean scheduled = true;
-						//System.out.println(c_to_sched.getClass_id()+"--------------------> "+best);
-						// request met
+						boolean scheduled = false;
+						if(best == 1){
+							scheduled = true;
+							c_to_sched.setIsMet(true);
+							scheduled_map.get(d).add(c_to_sched);
+						}
+						//not net
+						else{
+							//prof unavailable
+							if(best == -1){
+								//cant change time
+								if(! c_to_sched.canChangeTime()) {
+									scheduled = false;
+									notSched.put(c_to_sched, "The prof is unavailable. but we can't change the time of the class");
+								}
+								else{
+									//we can change the time
+									scheduled = setup.changeTime(c_to_sched);
+									if(scheduled) 
+										scheduled_map.get(d).add(c_to_sched);
+									else{
+										//the room is unavailable at all the times
+										if(!c_to_sched.canChangeRoom()){
+											notSched.put(c_to_sched, "Tried to move the class in the same room. but the room is reserved all the day and it can't be changed");
+
+										}
+										else{
+											scheduled = setup.changeTimeAndRoom(c_to_sched);
+											if(!scheduled) notSched.put(c_to_sched, "NO more options");
+											else scheduled_map.get(d).add(c_to_sched);
+										}
+									}
+								}
+							}
+							//the room is unavailable
+							else if(best == -2){
+								if(!c_to_sched.canChangeRoom()){
+									notSched.put(c_to_sched, "The room is unavailable and the class is marked not to change the room");
+								}
+								else{
+									scheduled = c_to_sched.canChangeRoom();
+									if(scheduled){
+										scheduled_map.get(d).add(c_to_sched);
+									}
+									else{
+										//we need to change the time
+										if(!c_to_sched.canChangeTime()){
+											notSched.put(c_to_sched, "all the rooms are busy at the requested time and the class is marked not to change the time");
+										}
+										else{
+											scheduled = setup.changeTimeAndRoom(c_to_sched);
+											if(!scheduled){
+												notSched.put(c_to_sched, "No more options");
+											}
+											else{
+												scheduled_map.get(d).add(c_to_sched);
+											}
+										}
+									}
+								}
+							}
+						}
+						
+						// request metd
+						
+						/*
 						if (best == 1) {
 							scheduled_map.get(d).add(c_to_sched);
 						}
@@ -96,10 +157,16 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 								if (!scheduled) {
 									// TODO if not scheduling keep changing the
 									// room for the new time
-									notSched.put(c_to_sched,
-											"Professor Conflict. Failed to change the time");
-
-									log.info("Professor Conflict. Failed to change the time");
+									scheduled = setup.changeTimeAndRoom(c_to_sched);
+									if(!scheduled){
+										notSched.put(c_to_sched,
+												"Professor Conflict. Failed to change the time");
+	
+										log.info("Professor Conflict. Failed to change the time");
+									}
+									else{
+										scheduled_map.get(d).add(c_to_sched);
+									}
 									scheduled = false;
 								}
 								else{
@@ -160,7 +227,7 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 								scheduled_map.get(d).add(c_to_sched);
 								
 							}
-						}
+						}*/
 					}
 				}
 				log.info("Done working on the " + d.getName()
@@ -175,18 +242,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 		return scheduled_map;
 	}
 
-	@Override
-	public Map<Department, Set<Section>> getDep_Sections() {
-		Map<Department, Set<Section>> map = new HashMap<Department, Set<Section>>();
-		for(Department d: classes_by_dep.keySet()){
-			map.put(d, new HashSet<Section>());
-			Set<Class> classes = classes_by_dep.get(d);
-			for(Class c: classes){
-				
-			}
-		}
-		return map;
-	}
-	
+
 	
 }
