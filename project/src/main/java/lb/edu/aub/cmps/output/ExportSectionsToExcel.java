@@ -35,8 +35,10 @@ public class ExportSectionsToExcel {
 
 	HSSFWorkbook wb;
 	HSSFSheet departments;
+	HSSFSheet notScheduled;
 	int depCount;
 	int rowsCount;
+	int notCount;
 	CellStyle gray;
 	CellStyle light_green;
 	CellStyle blue;
@@ -84,7 +86,7 @@ public class ExportSectionsToExcel {
 		departments.setColumnWidth(13, 1300);
 		departments.setColumnWidth(14, 1300);
 		departments.setColumnWidth(15, 3000);
-		departments.setColumnWidth(16, 3000);
+		departments.setColumnWidth(16, 5000);
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 5, 6));
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
@@ -159,6 +161,7 @@ public class ExportSectionsToExcel {
 			firstRow.getCell(i).setCellStyle(blue);
 			secondRow.getCell(i).setCellStyle(light_green);
 		}
+		notScheduled = wb.createSheet("Failed to Schedule");
 		departments.createFreezePane(0, 2);
 
 	}
@@ -176,12 +179,12 @@ public class ExportSectionsToExcel {
 
 				if (course.getSections() != null) {
 					for (Section s : course.getSections()) {
-						
+
 						System.out.println("\t\tSection "
 								+ s.getSection_number());
 						Row row1 = departments.createRow(rowsCount);
 						rowsCount++;
-						
+
 						int classCount = 0;
 						Cell dep = row1.createCell(0);
 						dep.setCellValue(d.getName());
@@ -215,7 +218,7 @@ public class ExportSectionsToExcel {
 							// rowsCount++;
 							// }
 							boolean ismet = c.getIsMet();
-							
+
 							if (c.getGivenTime() != null
 									&& c.getGivenTime().getTimeSlots() != null) {
 								TimeSlot[] t = c.getGivenTime().getTimeSlots();
@@ -228,7 +231,7 @@ public class ExportSectionsToExcel {
 								for (int i = 0; i < t.length; i++) {
 
 									if (t[i].getDay() == Day.M) {
-										
+
 										mstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -239,7 +242,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.T) {
-										
+
 										tstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -250,7 +253,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.W) {
-										
+
 										wstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -261,7 +264,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.R) {
-										
+
 										rstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -297,26 +300,25 @@ public class ExportSectionsToExcel {
 								}
 								classCount++;
 							}
-							
+
 							if (c.getGivenRoom() != null) {
 								room.setCellValue(c.getGivenRoom().getNumber());
-								
+
 								System.out
 										.println(c.getGivenRoom().getNumber());
 							}
-							if(!ismet){
+							if (!ismet) {
 								for (int i = 3; i < 16; i++) {
-										row1.getCell(i).setCellStyle(red);
+									row1.getCell(i).setCellStyle(red);
 								}
 							}
-							
+
 							if (c.getProfessor() != null) {
 								profCell.setCellValue(c.getProfessor()
 										.getName());
 								;
 							}
 						}
-						
 
 						sectionsCount++;
 					}
@@ -331,7 +333,42 @@ public class ExportSectionsToExcel {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-		
+
+			e.printStackTrace();
+		}
+	}
+
+	public void generateInfo(Map<Class, String> noSched) {
+		// loop through all the not scheduled classes and print them and the
+		// cause they couldn't be scheduled
+		// the string in the map actually hides the reason why the class was not
+		// scheduled
+		notScheduled.setColumnWidth(0, 5000);
+		notScheduled.setColumnWidth(1, 10000);
+		notCount = 0;
+		Row firstRow = notScheduled.createRow(0);
+		Cell cName = firstRow.createCell(0);
+		cName.setCellStyle(blue);
+		cName.setCellValue("Class not Scheduled");
+		Cell reasons = firstRow.createCell(1);
+		reasons.setCellStyle(blue);
+		reasons.setCellValue("Reason");
+		notCount++;
+		for (Class c : noSched.keySet()) {
+			Row row = notScheduled.createRow(notCount);
+			Cell className = row.createCell(0);
+			className.setCellValue(c.getCourse_name());
+			Cell reason = row.createCell(1);
+			reason.setCellValue(noSched.get(c));
+			notCount++;
+		}
+		try {
+			output = new FileOutputStream(new File(excelFileName));
+			wb.write(output);
+			output.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -346,11 +383,11 @@ public class ExportSectionsToExcel {
 	public static void main(String[] args) throws SecurityException,
 			IOException {
 		Scheduler s = new ByTimeScheduler();
-		s.schedule();
+		Map<Class, String> not = s.schedule();
 		Map<Department, Set<Course>> map = s.getDepCoursesMap();
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
 		e.export(map);
-
+		e.generateInfo(not);
 	}
 
 }
