@@ -185,7 +185,7 @@ public class ExportSectionsToExcel {
 						Row row1 = departments.createRow(rowsCount);
 						rowsCount++;
 
-						int classCount = 0;
+						
 						Cell dep = row1.createCell(0);
 						dep.setCellValue(d.getName());
 						Cell crs = row1.createCell(1);
@@ -211,12 +211,14 @@ public class ExportSectionsToExcel {
 								row1.getCell(i).setCellStyle(gray);
 							}
 						}
+						int classCount = 0;
 						for (Class c : s.getClasses()) {
-							// if(classCount >0){
-							// row1 =
-							// departments.createRow(rowsCount+classCount);
-							// rowsCount++;
-							// }
+
+							 System.out.println("INHERRRRRRRRRRRRRRRRRRRRRRRRRRRRR"+ s.getClasses());
+							 if(classCount >0){
+							 row1 = departments.createRow(rowsCount);
+							 rowsCount++;
+							}
 							boolean ismet = c.getIsMet();
 
 							if (c.getGivenTime() != null
@@ -298,7 +300,6 @@ public class ExportSectionsToExcel {
 												+ t[i].getEnd().substring(2, 4));
 									}
 								}
-								classCount++;
 							}
 
 							if (c.getGivenRoom() != null) {
@@ -318,6 +319,7 @@ public class ExportSectionsToExcel {
 										.getName());
 								;
 							}
+							classCount=5;
 						}
 
 						sectionsCount++;
