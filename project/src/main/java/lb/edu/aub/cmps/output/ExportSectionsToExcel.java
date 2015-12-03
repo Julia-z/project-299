@@ -166,8 +166,6 @@ public class ExportSectionsToExcel {
 	}
 
 	/**
-	 * TODO YASMIN
-	 * 
 	 * @param dep_sections
 	 */
 	public void export(Map<Department, Set<Course>> map) {
@@ -180,9 +178,15 @@ public class ExportSectionsToExcel {
 				
 				if (course.getSections() != null) {
 					for (Section s : course.getSections()) {
+						
 						System.out.println("\t\tSection "
 								+ s.getSection_number());
 						Row row1 = departments.createRow(rowsCount);
+						for (int i = 0; i < row1.getLastCellNum(); i++) {
+							if (sectionsCount % 2 == 0) {
+								row1.getCell(i).setCellStyle(gray);
+							}
+						}
 						rowsCount++;
 						int classCount = 0;
 						Cell dep = row1.createCell(0);
@@ -330,11 +334,7 @@ public class ExportSectionsToExcel {
 							Cell id = row1.createCell(17);
 							id.setCellValue(c.getClass_id());
 						}
-						for (int i = 0; i < row1.getLastCellNum(); i++) {
-							if (sectionsCount % 2 == 0) {
-								row1.getCell(i).setCellStyle(gray);
-							}
-						}
+						
 						
 						sectionsCount++;
 					}
@@ -347,10 +347,8 @@ public class ExportSectionsToExcel {
 			wb.write(output);
 			output.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

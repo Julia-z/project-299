@@ -24,12 +24,14 @@ public class App {
 			for(Class c: classes){
 				count++;
 				String met = (c.getIsMet())? "Request Met": "Request not met";
-				System.out.printf("%-4d %-10s %-10s in room: %-14s at time: %-30s\n",
-						c.getClass_id(), 
-						c.getCourse_name(),
-						"("+met+")",
-						c.getGivenRoom().getNumber(),
-						c.getGivenTime());
+				if(!c.getIsMet()){
+					System.out.printf("%-4d %-10s %-10s in room: %-14s at time: %-30s\n",
+							c.getClass_id(), 
+							c.getCourse_name(),
+							"("+met+")",
+							c.getGivenRoom().getNumber(),
+							c.getGivenTime());
+				}
 			}
 		}
 		System.out.println(count);
