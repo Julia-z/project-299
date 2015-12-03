@@ -23,7 +23,7 @@
 
 
 	<select id='getClassesGiven' parameterType="int" resultMap='classesResult'>
-		SELECT c.Lecture_ID, c.Course_ID, c.Lecture_Capacity, t.Lecture_Type from
+		SELECT c.Lecture_ID, c.Course_ID, c.Class_Capacity, t.Lecture_Type from
 		lecture c join lecture_professor p join
 		type_enum t where c.Type_id =
 		t.Type_id and p.Professor_ID = #{id}

@@ -24,6 +24,8 @@ public class ClassService implements ClassMapper {
 			Set<Class> allClasses = cm.getAllClasses();
 			for (Class c : allClasses) {
 				int id = c.getClass_id();
+				c.setCanChangeRoom(!c.canChangeRoom());
+				c.setCanChangeTime(!c.canChangeTime());
 				TimeSlot[] times = cm.getClassTimes(id);
 				c.setTime(new Time(times));
 

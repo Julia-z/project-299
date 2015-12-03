@@ -139,9 +139,7 @@ public class SetUp {
 
 		log.info("Mapping classes to their corresponding courses...");
 		for (Class c : id_class.values()) {
-			//TODO remove these two lines if the booleans are read from the database
-			c.setCanChangeRoom(true);//by default
-			c.setCanChangeTime(true);//by default
+			
 			int course_id = c.getCourse_id();
 			c.setCourse_name(getId_course().get(course_id).getCourse_name());
 			Course course = getId_course().get(course_id);
