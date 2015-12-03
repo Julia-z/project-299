@@ -172,7 +172,7 @@ public class ByTimeScheduler extends Scheduler {
 							} else { // we can change the time
 								scheduled = setup.changeTime(c_to_sched);
 								if (!scheduled) {
-									// TODO if not scheduling keep changing the
+									//  if not scheduling keep changing the
 									// room for the new time
 									scheduled = setup.changeTimeAndRoom(c_to_sched);
 									if(!scheduled){

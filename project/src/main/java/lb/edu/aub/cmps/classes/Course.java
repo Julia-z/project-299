@@ -2,6 +2,7 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Defines the object Course
@@ -85,7 +86,7 @@ public class Course {
 	
 	public void addSection(Section s){
 		if(sections == null){
-			sections = new HashSet<Section>();
+			sections = new TreeSet<Section>(new SectionComparator());
 		}
 		sections.add(s);
 	}

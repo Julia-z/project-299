@@ -24,9 +24,9 @@ public class App {
 			for(Class c: classes){
 				count++;
 				String met = (c.getIsMet())? "Request Met": "Request not met";
-				System.out.println(c.getClass_id());
-				System.out.printf("%-4d %-18sin room: %-14s at time: %-30s\n",
+				System.out.printf("%-4d %-10s %-10s in room: %-14s at time: %-30s\n",
 						c.getClass_id(), 
+						c.getCourse_name(),
 						"("+met+")",
 						c.getGivenRoom().getNumber(),
 						c.getGivenTime());

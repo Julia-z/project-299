@@ -32,9 +32,6 @@ public class Class implements ClassVisitable {
 	private String type;
 	private boolean isMet;
 	private Set<Integer> accessories_ids;
-	/**
-	 * TODO read them from the db
-	 */
 	private boolean canChangeTime;
 	private boolean canChangeRoom;
 
