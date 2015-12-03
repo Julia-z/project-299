@@ -65,7 +65,6 @@ public class ByTimeScheduler extends Scheduler {
 		int remaining_classes = num_of_all_classes;
 
 		boolean floor_turn = false;
-
 		while (remaining_classes > 0) {
 			int k = 0;
 			for (Department d : setup.getDeps_Classes_map().keySet()) {
@@ -78,13 +77,13 @@ public class ByTimeScheduler extends Scheduler {
 				floor_turn = !floor_turn;
 				Iterator<Class> it = its[k];
 				k++;
+				
 				for (int i = 0; i < classes_to_sched + 1; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
 						remaining_classes--;
 
 						int best = setup.bestScheduleClass(c_to_sched);
-						System.out.println(c_to_sched.getClass_id()+" -> "+ best);
 						boolean scheduled = false;
 						if(best == 1){
 							scheduled = true;
@@ -121,7 +120,6 @@ public class ByTimeScheduler extends Scheduler {
 							}
 							//the room is unavailable
 							else if(best == -2){
-								System.out.println(c_to_sched.canChangeRoom());
 								if(!c_to_sched.canChangeRoom()){
 									notSched.put(c_to_sched, "The room is unavailable and the class is marked not to change the room");
 								}

@@ -1,10 +1,10 @@
 package lb.edu.aub.cmps.output;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
-import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
-import lb.edu.aub.cmps.algorithm.Scheduler;
+import lb.edu.aub.cmps.algorithm.SetUp;
 import lb.edu.aub.cmps.classes.Class;
 /**
  * Generates not scheduled classes info
@@ -23,9 +23,12 @@ public class GenerateNotScheduledInfo {
 	}
 	
 	public static void main(String[] args) throws SecurityException, IOException{
-		Scheduler s = new ByTimeScheduler();
-		Map<Class, String> not = s.schedule();
-		generateInfo(not);
+		SetUp s = new SetUp();
+		Map<Class, String> not = new HashMap<Class, String>();
+		for(Class c: s.getId_class().values()){
+			not.put(c, "NO more options");
+		}
+		
 	}
 	
 }

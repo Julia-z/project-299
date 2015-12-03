@@ -721,4 +721,8 @@ public class SetUp {
 		return false;
 	}
 
+	public Map<Integer, Class> getId_class() {
+		return id_class;
+	}
+
 }

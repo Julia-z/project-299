@@ -69,10 +69,6 @@ public abstract class Scheduler implements IScheduler{
 	}
 	
 	public Map<Department, Set<Course>> getDepCoursesMap(){
-		int julia = 0;
-		for(Class ju: setup.id_class.values()){
-			if(ju.getIsMet() == false) julia ++;
-		}
 		Map<Department, Set<Course>> map = new HashMap<Department, Set<Course>>();
 		for(Integer dep_id: setup.getId_dep().keySet()){
 			map.put(setup.id_dep.get(dep_id), new HashSet<Course>());
@@ -90,7 +86,6 @@ public abstract class Scheduler implements IScheduler{
 			}
 			map.get(setup.id_dep.get(c.getDepartment())).add(c);
 		}
-		System.out.println("Julia isssssssssssssssssssssssssss: ................. " + julia);
 		return map;
 	}
 	public abstract Map<Class, String> schedule();

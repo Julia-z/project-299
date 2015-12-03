@@ -22,7 +22,7 @@ public class InsertClassToDBVisitor implements ClassVisitor {
 	 *            room and time
 	 */
 	public void visit(Class c) {
-		if (c.getIsMet()) {
+		if (!c.getIsMet()) {
 			ClassService cs = new ClassService();
 			cs.updateLecture_Classroom(c);
 
