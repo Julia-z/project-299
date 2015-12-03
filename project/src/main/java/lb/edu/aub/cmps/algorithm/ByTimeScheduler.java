@@ -2,7 +2,6 @@ package lb.edu.aub.cmps.algorithm;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -15,9 +14,8 @@ import lb.edu.aub.cmps.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.classes.MyLogger;
-import lb.edu.aub.cmps.classes.Section;
 
-public class ByTimeScheduler extends Scheduler implements IScheduler {
+public class ByTimeScheduler extends Scheduler {
 
 	private Map<Department, Set<Class>> classes_by_dep;
 	private int num_of_all_classes;
@@ -54,7 +52,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 		boolean floor_turn = false;
 
 		while (remaining_classes > 0) {
-			remaining_classes--;
 			int k = 0;
 			for (Department d : setup.getDeps_Classes_map().keySet()) {
 				log.info("Working on the " + d.getName()
@@ -66,14 +63,15 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 				floor_turn = !floor_turn;
 				Iterator<Class> it = its[k];
 				k++;
-				for (int i = 0; i < classes_to_sched; i++) {
+				for (int i = 0; i < classes_to_sched + 1; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
+						remaining_classes--;
 
 						int best = setup.bestScheduleClass(c_to_sched);
 						boolean scheduled = true;
-						//System.out.println(c_to_sched.getClass_id()+"--------------------> "+best);
-						// request met
+						System.out.printf("%-2d -> %-2d .... remaining classes: %-3d\n", c_to_sched.getClass_id(), best, remaining_classes);
+						// request metd
 						if (best == 1) {
 							scheduled_map.get(d).add(c_to_sched);
 						}
@@ -175,18 +173,6 @@ public class ByTimeScheduler extends Scheduler implements IScheduler {
 		return scheduled_map;
 	}
 
-	@Override
-	public Map<Department, Set<Section>> getDep_Sections() {
-		Map<Department, Set<Section>> map = new HashMap<Department, Set<Section>>();
-		for(Department d: classes_by_dep.keySet()){
-			map.put(d, new HashSet<Section>());
-			Set<Class> classes = classes_by_dep.get(d);
-			for(Class c: classes){
-				
-			}
-		}
-		return map;
-	}
-	
+
 	
 }
