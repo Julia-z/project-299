@@ -327,13 +327,15 @@ public class ExportSectionsToExcel {
 										.getName());
 								;
 							}
+							Cell id = row1.createCell(17);
+							id.setCellValue(c.getClass_id());
 						}
 						for (int i = 0; i < row1.getLastCellNum(); i++) {
 							if (sectionsCount % 2 == 0) {
 								row1.getCell(i).setCellStyle(gray);
 							}
 						}
-
+						
 						sectionsCount++;
 					}
 				}
