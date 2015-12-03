@@ -411,17 +411,17 @@ public class SetUp {
 		Professor p = cl.getProfessor();
 		if(p!=null) p = id_prof.get(cl.getProfessor().getId());
 		for(Room room2: get_all_rooms_in_same_building(room, t.getTimeSlots())){
-			if(room2.is_available(t.getTimeSlots())){
+			if(room2.is_available(t.getTimeSlots()) && room2.hasAccessory(cl.getAccessoriesIds())){
 				if((p==null) || (p!=null && p.isAvailable(t)))
 					return room2;
 			}
 		}
 		for(Room room2 : get_all_rooms_in_all_near_buildings(room, t.getTimeSlots()))
-			if(room2.is_available(t.getTimeSlots())){
+			if(room2.is_available(t.getTimeSlots())&& room2.hasAccessory(cl.getAccessoriesIds())){
 				if((p==null) || (p!=null && p.isAvailable(t)))
 					return room2;			}
 		for(Room room2 : get_all_rooms(room, t.getTimeSlots()))
-			if(room2.is_available(t.getTimeSlots())) {
+			if(room2.is_available(t.getTimeSlots())&& room2.hasAccessory(cl.getAccessoriesIds())) {
 				if((p==null) || (p!=null && p.isAvailable(t)))
 					return room2;			}
 		return null;
@@ -670,6 +670,15 @@ public class SetUp {
 
 	public HashMap<Integer, Department> getId_dep() {
 		return id_dep;
+	}
+
+	public boolean changeTimeAndRoom(Class c_to_sched) {
+		Room r2 = otherAvailableRoom(c_to_sched);
+		if(r2 == null) return false;
+		else{
+			
+		}
+		return false;
 	}
 	
 
