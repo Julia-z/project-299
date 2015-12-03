@@ -84,6 +84,7 @@ public class ByTimeScheduler extends Scheduler {
 						remaining_classes--;
 
 						int best = setup.bestScheduleClass(c_to_sched);
+						System.out.println(c_to_sched.getClass_id()+" -> "+ best);
 						boolean scheduled = false;
 						if(best == 1){
 							scheduled = true;
@@ -120,11 +121,12 @@ public class ByTimeScheduler extends Scheduler {
 							}
 							//the room is unavailable
 							else if(best == -2){
+								System.out.println(c_to_sched.canChangeRoom());
 								if(!c_to_sched.canChangeRoom()){
 									notSched.put(c_to_sched, "The room is unavailable and the class is marked not to change the room");
 								}
 								else{
-									scheduled = c_to_sched.canChangeRoom();
+									scheduled = setup.changeRoom(c_to_sched);
 									if(scheduled){
 										scheduled_map.get(d).add(c_to_sched);
 									}

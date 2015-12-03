@@ -53,7 +53,7 @@
 	</resultMap>
 
 	<resultMap type='Integer' id='sectionResult'>
-		<id property='id' column='Section_ID'></id>
+		<id property='id' column='Section_Number'></id>
 	</resultMap>
 
 
@@ -67,7 +67,8 @@
 
 	<select id='getSectionsInClass' parameterType="int" resultMap='sectionResult'>
 
-		SELECT Section_ID from section_lecture where LECTURE_ID = #{id}
+		SELECT s.Section_Number from section_lecture l 
+		join section s where s.Section_ID = l.Section_ID and LECTURE_ID = #{id}
 	</select>
 
 	<resultMap type='lb.edu.aub.cmps.classes.Room' id='RoomResult'>
