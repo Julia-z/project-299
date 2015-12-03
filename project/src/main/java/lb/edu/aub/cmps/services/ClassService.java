@@ -51,11 +51,7 @@ public class ClassService implements ClassMapper {
 				Set<Integer> section_numbers = cm.getSectionsInClass(id);
 				c.setSection_number(section_numbers);
 
-				/*
-				 * System.out.println("Class id: " + c.getClass_id() +
-				 * ", Course id: " + c.getCourse_id() + ", Type :" + c.getType()
-				 * + ", Time: " + c.getTime().toString());
-				 */
+				
 			}
 
 			/**
@@ -165,9 +161,6 @@ public class ClassService implements ClassMapper {
 		try {
 			ClassMapper classMapper = sqlSession.getMapper(ClassMapper.class);
 			classMapper.updateLecture_Classroom(c);
-			System.out.println("Class " + c.getClass_id() + " was in room "
-					+ c.getRequestedRoom() + "\n now in room "
-					+ c.getGivenRoomId());
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();
@@ -183,8 +176,6 @@ public class ClassService implements ClassMapper {
 		try {
 			ClassMapper classMapper = sqlSession.getMapper(ClassMapper.class);
 			classMapper.updateLecture_Time(c);
-			System.out.println("Class " + c.getClass_id() + " now starts at "
-					+ c.getGivenStart());
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();

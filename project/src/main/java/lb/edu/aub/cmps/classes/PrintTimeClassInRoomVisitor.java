@@ -3,10 +3,6 @@ package lb.edu.aub.cmps.classes;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Map;
-
-import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
-import lb.edu.aub.cmps.algorithm.IScheduler;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -22,9 +18,7 @@ import org.apache.poi.ss.usermodel.Row;
  * @author Yasmin Kadah
  */
 public class PrintTimeClassInRoomVisitor implements RoomVisitor {
-	/**
-	 * Julia's fields
-	 */
+
 	HSSFWorkbook wb;
 	HSSFSheet Rooms;
 	int rowsCount;
@@ -40,7 +34,7 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 	public PrintTimeClassInRoomVisitor() {
 		wb = new HSSFWorkbook();
 		Rooms = wb.createSheet("Rooms");
-		excelFileName = "Outputs\\Test.xls";
+		excelFileName = "Outputs\\Rooms.xls";
 		rowsCount = 1;
 		Rooms.setColumnWidth(0, 4000);
 		Rooms.setColumnWidth(1, 3000);
@@ -137,18 +131,4 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 		}
 
 	}
-
-	public static void main(String[] args) throws SecurityException,
-			IOException {
-		IScheduler s = new ByTimeScheduler();
-		s.schedule();
-		RoomVisitor visitor = new PrintTimeClassInRoomVisitor();
-		Map<Integer, Room> id_room = s.getIdRoomMap();
-		for (Integer i : id_room.keySet()) {
-			Room r = id_room.get(i);
-			r.accept(visitor);
-		}
-		
-	}
-
 }

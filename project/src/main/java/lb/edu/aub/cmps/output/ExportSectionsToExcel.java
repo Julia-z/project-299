@@ -4,13 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
-import lb.edu.aub.cmps.algorithm.Scheduler;
-import lb.edu.aub.cmps.algorithm.SetUp;
 import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Day;
@@ -33,6 +29,7 @@ import org.apache.poi.ss.usermodel.Row;
  * 
  * @author Yasmin Kadah
  */
+@SuppressWarnings("deprecation")
 public class ExportSectionsToExcel {
 
 	HSSFWorkbook wb;
@@ -107,12 +104,12 @@ public class ExportSectionsToExcel {
 		section.setCellValue("Sec");
 		Cell mon = firstRow.createCell(3);
 		mon.setCellValue("Monday");
-		Cell emp1 = firstRow.createCell(4);
-		Cell emp2 = firstRow.createCell(6);
-		Cell emp3 = firstRow.createCell(8);
-		Cell emp4 = firstRow.createCell(10);
-		Cell emp5 = firstRow.createCell(12);
-		Cell emp6 = firstRow.createCell(14);
+		firstRow.createCell(4);
+		firstRow.createCell(6);
+		firstRow.createCell(8);
+		firstRow.createCell(10);
+		firstRow.createCell(12);
+		firstRow.createCell(14);
 		Cell tues = firstRow.createCell(5);
 		tues.setCellValue("Tuesday");
 		Cell wed = firstRow.createCell(7);
@@ -130,11 +127,11 @@ public class ExportSectionsToExcel {
 		prof.setCellValue("Prof");
 
 		Row secondRow = departments.createRow(1);
-		Cell empty1 = secondRow.createCell(0);
-		Cell empty2 = secondRow.createCell(1);
-		Cell empty3 = secondRow.createCell(2);
-		Cell empty4 = secondRow.createCell(15);
-		Cell empty5 = secondRow.createCell(16);
+		secondRow.createCell(0);
+		secondRow.createCell(1);
+		secondRow.createCell(2);
+		secondRow.createCell(15);
+		secondRow.createCell(16);
 		Cell mS = secondRow.createCell(3);
 		mS.setCellValue("Start");
 		Cell mE = secondRow.createCell(4);
@@ -177,11 +174,15 @@ public class ExportSectionsToExcel {
 		int sectionsCount = 0;
 		for (Department d : map.keySet()) {
 			for (Course course : map.get(d)) {
+
 				if (course.getSections() != null) {
 					for (Section s : course.getSections()) {
+
+						
 						Row row1 = departments.createRow(rowsCount);
 						rowsCount++;
 
+						
 						Cell dep = row1.createCell(0);
 						dep.setCellValue(d.getName());
 						Cell crs = row1.createCell(1);
@@ -202,38 +203,17 @@ public class ExportSectionsToExcel {
 						Cell sendTime = row1.createCell(14);
 						Cell room = row1.createCell(15);
 						Cell profCell = row1.createCell(16);
-						
+						for (int i = 0; i < row1.getLastCellNum(); i++) {
+							if (sectionsCount % 2 == 0) {
+								row1.getCell(i).setCellStyle(gray);
+							}
+						}
 						int classCount = 0;
 						for (Class c : s.getClasses()) {
-							if (classCount > 0) {
-								row1 = departments.createRow(rowsCount);
-								rowsCount++;
-								dep = row1.createCell(0);
-								dep.setCellValue(d.getName());
-								crs = row1.createCell(1);
-								crs.setCellValue(course.getCourse_name());
-								section = row1.createCell(2);
-								section.setCellValue(s.getSection_number());
-								mstartTime = row1.createCell(3);
-								mendTime = row1.createCell(4);
-								tstartTime = row1.createCell(5);
-								tendTime = row1.createCell(6);
-								wstartTime = row1.createCell(7);
-								wendTime = row1.createCell(8);
-								rstartTime = row1.createCell(9);
-								rendTime = row1.createCell(10);
-								fstartTime = row1.createCell(11);
-								fendTime = row1.createCell(12);
-								sstartTime = row1.createCell(13);
-								sendTime = row1.createCell(14);
-								room = row1.createCell(15);
-								profCell = row1.createCell(16);
 
-							}
-							for (int i = 0; i < row1.getLastCellNum(); i++) {
-								if (sectionsCount % 2 == 0) {
-									row1.getCell(i).setCellStyle(gray);
-								}
+							 if(classCount >0){
+							 row1 = departments.createRow(rowsCount);
+							 rowsCount++;
 							}
 							boolean ismet = c.getIsMet();
 
@@ -332,7 +312,7 @@ public class ExportSectionsToExcel {
 										.getName());
 								;
 							}
-							classCount++;
+							classCount=5;
 						}
 
 						sectionsCount++;
@@ -388,27 +368,5 @@ public class ExportSectionsToExcel {
 		}
 	}
 
-	/**
-	 * thats how u call on it
-	 * 
-	 * @param args
-	 * @throws SecurityException
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws SecurityException,
-			IOException {
-		Scheduler s = new ByTimeScheduler();
-		Map<Class, String> not = s.schedule();
-		Map<Department, Set<Course>> map = s.getDepCoursesMap();
-		ExportSectionsToExcel e = new ExportSectionsToExcel();
-		e.export(map);
-		e.generateInfo(not);
-	}
-	/*
-	 * SetUp s = new SetUp();
-		Map<Class, String> not = new HashMap<Class, String>();
-		for(Class c: s.getId_class().values()){
-			not.put(c, "NO more options");
-		}
-	 */
+
 }
