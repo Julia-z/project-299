@@ -6,8 +6,15 @@ import lb.edu.aub.cmps.mappers.AccessoryMapper;
 
 import org.apache.ibatis.session.SqlSession;
 
+/**
+ * Uses the mappers to build a set of the accessories used.
+ * @author Bilal Abi Farraj
+ */
 public class AccessoryService implements AccessoryMapper {
 
+	/**
+	 * @return a set of all accessories in the database
+	 */
 	public Set<Integer> getAllAccessories() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();

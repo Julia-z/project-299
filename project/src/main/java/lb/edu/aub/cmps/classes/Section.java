@@ -3,6 +3,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+/**
+ * Defines the object Section
+ * 
+ * @author Julia El Zini
+ */
 public class Section {
 
 	private int dep_id;

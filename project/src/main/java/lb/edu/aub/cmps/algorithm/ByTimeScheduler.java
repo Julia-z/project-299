@@ -15,6 +15,12 @@ import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.classes.MyLogger;
 
+/**
+ * Starts with a specific time and schedules all the classes in their best or
+ * second best rooms.
+ * 
+ * @author Julia El Zini
+ */
 public class ByTimeScheduler extends Scheduler {
 
 	private Map<Department, Set<Class>> classes_by_dep;
@@ -24,6 +30,12 @@ public class ByTimeScheduler extends Scheduler {
 	private MyLogger loggerWrapper = MyLogger.getInstance();
 	Logger log = loggerWrapper.getLogger();
 
+	/**
+	 * Constructor. Sets the needed fields for the schedule method
+	 * 
+	 * @throws SecurityException
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	public ByTimeScheduler() throws SecurityException, IOException {
 		super();
@@ -43,6 +55,9 @@ public class ByTimeScheduler extends Scheduler {
 		log.info("ByTimeScheduler created.");
 	}
 
+	/**
+	 * Runs the byTime scheduling algorithm and returns the unscheduled rooms
+	 */
 	public Map<Class, String> schedule() {
 		log.info("BasicScheduler initiated.... Schedule method running");
 		Map<Class, String> notSched = new HashMap<Class, String>();

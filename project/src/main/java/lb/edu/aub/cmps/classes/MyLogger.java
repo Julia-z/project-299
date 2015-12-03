@@ -6,6 +6,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * Defines the logging system in the program
+ * 
+ * @author Bilal Abi Farraj
+ */
+
 public class MyLogger {
 	public final static Logger myLogger = Logger.getLogger("Test");
 

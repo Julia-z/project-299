@@ -8,8 +8,17 @@ import lb.edu.aub.cmps.mappers.ProfessorMapper;
 import org.apache.ibatis.session.SqlSession;
 import lb.edu.aub.cmps.classes.Class;
 
+/**
+ * Uses the mappers to build a set of the professors saved in the database, with
+ * all the classes each one is giving.
+ * 
+ * @author Bilal Abi Farraj
+ */
 public class ProfessorService implements ProfessorMapper {
 
+	/**
+	 * @return a set of all professors in the database with their details
+	 */
 	public Set<Professor> getAllProfessors() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
@@ -29,6 +38,9 @@ public class ProfessorService implements ProfessorMapper {
 		return null;
 	}
 
+	/**
+	 * @return the classes given by a certain professor
+	 */
 	public Set<Class> getClassesGiven(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();

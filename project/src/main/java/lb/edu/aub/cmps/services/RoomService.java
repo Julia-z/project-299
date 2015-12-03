@@ -7,8 +7,17 @@ import lb.edu.aub.cmps.mappers.RoomMapper;
 
 import org.apache.ibatis.session.SqlSession;
 
+/**
+ * Uses the mappers to build a set of the rooms saved in the database, with
+ * their corresponding accessories.
+ * 
+ * @author Bilal Abi Farraj
+ */
 public class RoomService implements RoomMapper {
-
+	
+	/**
+	 * @return a set of all the rooms in the database with their details 
+	 */
 	public Set<Room> getAllRooms() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
@@ -27,7 +36,10 @@ public class RoomService implements RoomMapper {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * @return a set of accessories in a given room
+	 */
 	public Set<Integer> getAccessoriesInRoom(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();

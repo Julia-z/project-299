@@ -3,6 +3,12 @@ package lb.edu.aub.cmps.classes;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Defines the object Professor.
+ * 
+ * @author Bilal Abi Farraj
+ */
+
 public class Professor {
 	private int id;
 	private String name;

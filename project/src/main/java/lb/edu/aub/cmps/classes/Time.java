@@ -2,6 +2,12 @@ package lb.edu.aub.cmps.classes;
 
 import java.util.Arrays;
 
+/**
+ * Defines the object Time
+ * 
+ * @author Julia El Zini
+ * @author Bilal Abi Farraj
+ */
 public class Time{
 	private TimeSlot[] timeSlots;
 

@@ -11,9 +11,16 @@ import lb.edu.aub.cmps.mappers.ClassMapper;
 
 import org.apache.ibatis.session.SqlSession;
 
+/**
+ * Uses the mappers to build a set of the classes saved in the database, with
+ * all its details: Professor, Classroom, Time etc…
+ * 
+ * @author Bilal Abi Farraj
+ */
 public class ClassService implements ClassMapper {
+
 	/**
-	 * Gets all classes and puts them in a set
+	 * @return a set of all classes in the database with all their details
 	 */
 	public Set<Class> getAllClasses() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
@@ -80,6 +87,9 @@ public class ClassService implements ClassMapper {
 		}
 	}
 
+	/**
+	 * @return class times of a certain class
+	 */
 	public TimeSlot[] getClassTimes(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
@@ -92,7 +102,7 @@ public class ClassService implements ClassMapper {
 	}
 
 	/**
-	 * Gets class's professor
+	 * @return class's prozfessor
 	 */
 	public Professor getProfessor(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
@@ -105,9 +115,9 @@ public class ClassService implements ClassMapper {
 			sqlSession.close();
 		}
 	}
-
+	
 	/**
-	 * Creates a set of all accessories in a certain class
+	 * @return a set of all accessories in a certain class
 	 */
 	public Set<Integer> getAccessoriesInClass(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
@@ -121,7 +131,7 @@ public class ClassService implements ClassMapper {
 	}
 
 	/**
-	 * Gets class's room
+	 * @return class's room
 	 */
 	public Room getClassroom(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
@@ -134,6 +144,9 @@ public class ClassService implements ClassMapper {
 		}
 	}
 
+	/**
+	 * @return the type of the class
+	 */
 	public String getType(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
@@ -145,26 +158,35 @@ public class ClassService implements ClassMapper {
 		}
 	}
 
+	/**
+	 * Updates the room of class c in the database based on the new given room
+	 */
 	public void updateLecture_Classroom(Class c) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
 			ClassMapper classMapper = sqlSession.getMapper(ClassMapper.class);
 			classMapper.updateLecture_Classroom(c);
-			System.out.println("Class "+c.getClass_id()+" was in room "+c.getRequestedRoom()+"\n now in room "+c.getGivenRoomId());
+			System.out.println("Class " + c.getClass_id() + " was in room "
+					+ c.getRequestedRoom() + "\n now in room "
+					+ c.getGivenRoomId());
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();
 		}
 	}
 
+	/**
+	 * Updates the time of class c in the database based on the new given time
+	 */
 	public void updateLecture_Time(Class c) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
 			ClassMapper classMapper = sqlSession.getMapper(ClassMapper.class);
 			classMapper.updateLecture_Time(c);
-			System.out.println("Class "+c.getClass_id()+" now starts at "+c.getGivenStart());
+			System.out.println("Class " + c.getClass_id() + " now starts at "
+					+ c.getGivenStart());
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();

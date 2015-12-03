@@ -6,6 +6,11 @@ import lb.edu.aub.cmps.classes.Class;
 import lb.edu.aub.cmps.classes.Professor;
 import lb.edu.aub.cmps.classes.Room;
 import lb.edu.aub.cmps.classes.TimeSlot;
+
+/**
+ * @author Bilal Abi Farraj
+ */
+
 public interface ClassMapper {
 
 	public Set<Class> getAllClasses();

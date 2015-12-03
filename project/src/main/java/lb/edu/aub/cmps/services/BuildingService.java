@@ -7,8 +7,15 @@ import lb.edu.aub.cmps.mappers.BuildingMapper;
 
 import org.apache.ibatis.session.SqlSession;
 
+/**
+ * Uses the mappers to build a set of the buildings saved in the database.
+ * @author Bilal Abi Farraj
+ */
 public class BuildingService implements BuildingMapper {
 
+	/**
+	 * @return a set of all buildings in the database
+	 */
 	public Set<Building> getAllBuildings() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();

@@ -4,6 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
+/**
+ * Defines the object Room
+ * 
+ * @author Bilal Abi Farraj
+ * @author Julia El Zini
+ */
+
 public class Room implements RoomVisitable{
 	private int id;
 	private String number;

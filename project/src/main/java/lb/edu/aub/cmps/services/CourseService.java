@@ -8,8 +8,18 @@ import lb.edu.aub.cmps.mappers.CourseMapper;
 
 import org.apache.ibatis.session.SqlSession;
 
+/**
+ * Uses the mappers to build a set of the courses found in the database, with
+ * their corresponding classes.
+ * 
+ * @author Bilal Abi Farraj
+ */
+
 public class CourseService implements CourseMapper {
 
+	/**
+	 * @return a set of all the courses in the database with their details
+	 */
 	public Set<Course> getAllCourses() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
@@ -30,6 +40,9 @@ public class CourseService implements CourseMapper {
 		return null;
 	}
 
+	/**
+	 * @return a set of all the classes of a given course
+	 */
 	public Set<Class> getAllClasses(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
@@ -47,6 +60,9 @@ public class CourseService implements CourseMapper {
 		return null;
 	}
 
+	/**
+	 * @return a set of sections of a given class
+	 */
 	public Set<Integer> getSectionsInCourse(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();

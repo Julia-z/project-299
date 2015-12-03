@@ -15,6 +15,12 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 
+/**
+ * Prints the output to an excel file
+ * 
+ * @author Julia El Zini
+ * @author Yasmin Kadah
+ */
 public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 	/**
 	 * Julia's fields

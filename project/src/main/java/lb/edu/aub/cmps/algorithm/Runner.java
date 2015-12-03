@@ -11,6 +11,10 @@ import lb.edu.aub.cmps.classes.Room;
 
 public class Runner {
 
+	/**
+	 * The program’s entry point. Main method exists here.
+	 * @author Julia El Zini
+	 */
 	public static void main(String[] args) throws SecurityException, IOException {
 		MyLogger loggerWrapper = MyLogger.getInstance();
 		Logger log = loggerWrapper.getLogger();

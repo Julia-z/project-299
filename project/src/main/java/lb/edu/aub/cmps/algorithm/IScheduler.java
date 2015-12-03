@@ -8,6 +8,9 @@ import lb.edu.aub.cmps.classes.Course;
 import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.Room;
 
+/**
+ * @author Julia El Zini
+ */
 public interface IScheduler {
 
 	public Map<Class, String> schedule();

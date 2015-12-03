@@ -6,7 +6,10 @@ import java.util.Map;
 import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
 import lb.edu.aub.cmps.algorithm.Scheduler;
 import lb.edu.aub.cmps.classes.Class;
-
+/**
+ * Generates not scheduled classes info
+ * @author Yasmin Kadah
+ */
 public class GenerateNotScheduledInfo {
 
 

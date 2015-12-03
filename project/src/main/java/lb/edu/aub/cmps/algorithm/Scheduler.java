@@ -14,6 +14,11 @@ import lb.edu.aub.cmps.classes.Department;
 import lb.edu.aub.cmps.classes.Room;
 import lb.edu.aub.cmps.classes.Section;
 
+/**
+ * Abstract class implementing IScheduler. Defines the object Scheduler.
+ * 
+ * @author Julia El Zini
+ */
 public abstract class Scheduler implements IScheduler{
 	protected SetUp setup;
 	protected int num_of_iterations;
@@ -48,6 +53,11 @@ public abstract class Scheduler implements IScheduler{
 			count_all_courses += d.getCourses_offered().size();
 		}
 	}
+	
+	/**
+	 * @return the schedule: a map between the departments and their
+	 *         corresponding set of classes
+	 */
 	public Map<Department, Set<Class>> getScheduled(){
 		return scheduled_map;
 	}

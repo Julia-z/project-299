@@ -1,4 +1,10 @@
 package lb.edu.aub.cmps.classes;
+/**
+ * Defines the object TimeSlot
+ * 
+ * @author Julia El Zini
+ * @author Bilal Abi Farraj
+ */
 
 public class TimeSlot {
 	private Day day;

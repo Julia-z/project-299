@@ -7,6 +7,15 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
+import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
+import lb.edu.aub.cmps.algorithm.Scheduler;
+import lb.edu.aub.cmps.classes.Class;
+import lb.edu.aub.cmps.classes.Course;
+import lb.edu.aub.cmps.classes.Day;
+import lb.edu.aub.cmps.classes.Department;
+import lb.edu.aub.cmps.classes.Section;
+import lb.edu.aub.cmps.classes.TimeSlot;
+
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -17,15 +26,11 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 
-import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
-import lb.edu.aub.cmps.algorithm.Scheduler;
-import lb.edu.aub.cmps.classes.Course;
-import lb.edu.aub.cmps.classes.Day;
-import lb.edu.aub.cmps.classes.Department;
-import lb.edu.aub.cmps.classes.Section;
-import lb.edu.aub.cmps.classes.Class;
-import lb.edu.aub.cmps.classes.TimeSlot;
-
+/**
+ * Exports the results received from the scheduler to an excel file.
+ * 
+ * @author Yasmin Kadah
+ */
 public class ExportSectionsToExcel {
 
 	HSSFWorkbook wb;
@@ -57,8 +62,8 @@ public class ExportSectionsToExcel {
 		palette2.setColorAtIndex(HSSFColor.GREEN.index, (byte) 228, (byte) 248,
 				(byte) 233);
 		HSSFPalette palette3 = wb.getCustomPalette();
-		palette3.setColorAtIndex(HSSFColor.GREY_25_PERCENT.index, (byte) 220, (byte) 220,
-				(byte) 220);
+		palette3.setColorAtIndex(HSSFColor.GREY_25_PERCENT.index, (byte) 220,
+				(byte) 220, (byte) 220);
 		red = wb.createCellStyle();
 		red.setFillForegroundColor(IndexedColors.RED.getIndex());
 		red.setFillPattern(CellStyle.SOLID_FOREGROUND);
@@ -170,7 +175,7 @@ public class ExportSectionsToExcel {
 		for (Department d : map.keySet()) {
 			for (Course course : map.get(d)) {
 				System.out.println("\t*" + course.getCourse_name());
-				
+
 				if (course.getSections() != null) {
 					for (Section s : course.getSections()) {
 						System.out.println("\t\tSection "
@@ -185,10 +190,11 @@ public class ExportSectionsToExcel {
 						Cell section = row1.createCell(2);
 						section.setCellValue(s.getSection_number());
 						for (Class c : s.getClasses()) {
-							//if(classCount >0){
-								//row1 = departments.createRow(rowsCount+classCount);
-								//rowsCount++;
-							//}
+							// if(classCount >0){
+							// row1 =
+							// departments.createRow(rowsCount+classCount);
+							// rowsCount++;
+							// }
 							Cell mstartTime = row1.createCell(3);
 							Cell mendTime = row1.createCell(4);
 							Cell tstartTime = row1.createCell(5);
@@ -209,11 +215,11 @@ public class ExportSectionsToExcel {
 
 								}
 								System.out.println(c.getGivenTime());
-								
+
 								for (int i = 0; i < t.length; i++) {
-									
+
 									if (t[i].getDay() == Day.M) {
-										
+
 										mstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -224,7 +230,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.T) {
-										
+
 										tstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -235,7 +241,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.W) {
-										
+
 										wstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -246,7 +252,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.R) {
-										
+
 										rstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -257,7 +263,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.F) {
-										
+
 										fstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -268,7 +274,7 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.S) {
-										
+
 										sstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -303,12 +309,12 @@ public class ExportSectionsToExcel {
 								;
 							}
 						}
-						for(int i=0; i<row1.getLastCellNum(); i++){
-							if(sectionsCount %2 == 0){
+						for (int i = 0; i < row1.getLastCellNum(); i++) {
+							if (sectionsCount % 2 == 0) {
 								row1.getCell(i).setCellStyle(gray);
 							}
 						}
-						
+
 						sectionsCount++;
 					}
 				}
