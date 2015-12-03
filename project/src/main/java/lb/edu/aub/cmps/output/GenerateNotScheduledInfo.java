@@ -19,6 +19,7 @@ public class GenerateNotScheduledInfo {
 	public static void generateInfo(Map<Class, String> noSched){
 		//loop through all the not scheduled classes and print them and the cause they couldn't be scheduled
 		//the string in the map actually hides the reason why the class was not scheduled
+		
 	}
 	
 	public static void main(String[] args) throws SecurityException, IOException{

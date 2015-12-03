@@ -35,8 +35,10 @@ public class ExportSectionsToExcel {
 
 	HSSFWorkbook wb;
 	HSSFSheet departments;
+	HSSFSheet notScheduled;
 	int depCount;
 	int rowsCount;
+	int notCount;
 	CellStyle gray;
 	CellStyle light_green;
 	CellStyle blue;
@@ -84,7 +86,7 @@ public class ExportSectionsToExcel {
 		departments.setColumnWidth(13, 1300);
 		departments.setColumnWidth(14, 1300);
 		departments.setColumnWidth(15, 3000);
-		departments.setColumnWidth(16, 3000);
+		departments.setColumnWidth(16, 5000);
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 5, 6));
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
@@ -160,7 +162,7 @@ public class ExportSectionsToExcel {
 			secondRow.getCell(i).setCellStyle(light_green);
 		}
 		departments.createFreezePane(0, 2);
-
+		notScheduled = wb.createSheet("Failed to Schedule");
 	}
 
 	/**
@@ -175,7 +177,7 @@ public class ExportSectionsToExcel {
 		for (Department d : map.keySet()) {
 			for (Course course : map.get(d)) {
 				System.out.println("\t*" + course.getCourse_name());
-
+				
 				if (course.getSections() != null) {
 					for (Section s : course.getSections()) {
 						System.out.println("\t\tSection "
@@ -190,6 +192,7 @@ public class ExportSectionsToExcel {
 						Cell section = row1.createCell(2);
 						section.setCellValue(s.getSection_number());
 						for (Class c : s.getClasses()) {
+							boolean isMet = c.getIsMet();
 							// if(classCount >0){
 							// row1 =
 							// departments.createRow(rowsCount+classCount);
@@ -211,15 +214,16 @@ public class ExportSectionsToExcel {
 									&& c.getGivenTime().getTimeSlots() != null) {
 								TimeSlot[] t = c.getGivenTime().getTimeSlots();
 
-								if (c.getGivenTime() != c.getRequestedTime()) {
-
-								}
+								
 								System.out.println(c.getGivenTime());
 
 								for (int i = 0; i < t.length; i++) {
 
 									if (t[i].getDay() == Day.M) {
-
+										if (!isMet) {
+											mstartTime.setCellStyle(red);
+											mendTime.setCellStyle(red);
+										}
 										mstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -230,7 +234,10 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.T) {
-
+										if (!isMet) {
+											tstartTime.setCellStyle(red);
+											tendTime.setCellStyle(red);
+										}
 										tstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -241,7 +248,10 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.W) {
-
+										if (!isMet) {
+											wstartTime.setCellStyle(red);
+											wendTime.setCellStyle(red);
+										}
 										wstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -252,7 +262,10 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.R) {
-
+										if (!isMet) {
+											rstartTime.setCellStyle(red);
+											rendTime.setCellStyle(red);
+										}
 										rstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -263,7 +276,10 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.F) {
-
+										if (!isMet) {
+											fstartTime.setCellStyle(red);
+											fendTime.setCellStyle(red);
+										}
 										fstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -274,7 +290,10 @@ public class ExportSectionsToExcel {
 												+ ":"
 												+ t[i].getEnd().substring(2, 4));
 									} else if (t[i].getDay() == Day.S) {
-
+										if(!isMet) {
+											sstartTime.setCellStyle(red);
+											sendTime.setCellStyle(red);
+										}
 										sstartTime.setCellValue(t[i].getStart()
 												.substring(0, 2)
 												+ ":"
@@ -333,7 +352,24 @@ public class ExportSectionsToExcel {
 			e.printStackTrace();
 		}
 	}
-
+	public void generateInfo(Map<Class, String> noSched){
+		//loop through all the not scheduled classes and print them and the cause they couldn't be scheduled
+		//the string in the map actually hides the reason why the class was not scheduled
+		Row firstRow = notScheduled.createRow(notCount); 
+		Cell cName = firstRow.createCell(0);
+		cName.setCellValue("Class not Scheduled");
+		Cell reasons = firstRow.createCell(1);
+		reasons.setCellValue("Reason");
+		notCount++;
+		for(Class c : noSched.keySet()){
+			System.out.println("JHHHHHHHHHHHHHHHHHHJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+			Row row = notScheduled.createRow(notCount); 
+			Cell className = row.createCell(0);
+			className.setCellValue(c.getCourse_name());
+			Cell reason = row.createCell(1);
+			reason.setCellValue(noSched.get(c));
+		}
+	}
 	/**
 	 * thats how u call on it
 	 * 
@@ -344,10 +380,11 @@ public class ExportSectionsToExcel {
 	public static void main(String[] args) throws SecurityException,
 			IOException {
 		Scheduler s = new ByTimeScheduler();
-		s.schedule();
+		Map<Class, String> not = s.schedule();
 		Map<Department, Set<Course>> map = s.getDepCoursesMap();
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
 		e.export(map);
+		e.generateInfo(not);
 
 	}
 
