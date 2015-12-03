@@ -73,9 +73,7 @@ public class ClassService implements ClassMapper {
 		}
 	}
 
-	/**
-	 * TODO mapper not implemented Gets the sections of a certain class
-	 */
+
 	public Set<Integer> getSectionsInClass(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();

@@ -35,9 +35,7 @@ public class TimeSlot {
 
 	public void setDay_id(int day_id) {
 		this.day_id = day_id;
-		/**
-		 * TODO we can add this here for the sake of toString. Works well
-		 */
+
 		if (day_id == 1) {
 			day = Day.M;
 		} else if (day_id == 2) {
