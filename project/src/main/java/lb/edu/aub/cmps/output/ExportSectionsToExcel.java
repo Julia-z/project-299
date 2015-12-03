@@ -38,7 +38,7 @@ public class ExportSectionsToExcel {
 	public ExportSectionsToExcel() {
 		wb = new HSSFWorkbook();
 		departments = wb.createSheet("Deparments");
-		departments.setColumnWidth(0, 2000);
+		departments.setColumnWidth(0, 5000);
 		departments.setColumnWidth(1, 3000);
 		departments.setColumnWidth(2, 1000);
 		departments.setColumnWidth(3, 2000);
