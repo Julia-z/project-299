@@ -177,13 +177,8 @@ public class ExportSectionsToExcel {
 		int sectionsCount = 0;
 		for (Department d : map.keySet()) {
 			for (Course course : map.get(d)) {
-				System.out.println("\t*" + course.getCourse_name());
-
 				if (course.getSections() != null) {
 					for (Section s : course.getSections()) {
-
-						System.out.println("\t\tSection "
-								+ s.getSection_number());
 						Row row1 = departments.createRow(rowsCount);
 						rowsCount++;
 
@@ -210,10 +205,6 @@ public class ExportSectionsToExcel {
 						
 						int classCount = 0;
 						for (Class c : s.getClasses()) {
-							
-							System.out
-									.println("INHERRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
-											+ s.getClasses());
 							if (classCount > 0) {
 								row1 = departments.createRow(rowsCount);
 								rowsCount++;
@@ -253,7 +244,6 @@ public class ExportSectionsToExcel {
 								if (c.getGivenTime() != c.getRequestedTime()) {
 
 								}
-								System.out.println(c.getGivenTime());
 
 								for (int i = 0; i < t.length; i++) {
 
@@ -330,8 +320,6 @@ public class ExportSectionsToExcel {
 							if (c.getGivenRoom() != null) {
 								room.setCellValue(c.getGivenRoom().getNumber());
 
-								System.out
-										.println(c.getGivenRoom().getNumber());
 							}
 							if (!ismet) {
 								for (int i = 3; i < 16; i++) {
