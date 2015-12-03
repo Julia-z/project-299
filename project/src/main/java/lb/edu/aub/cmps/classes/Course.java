@@ -3,6 +3,12 @@ package lb.edu.aub.cmps.classes;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Defines the object Course
+ * @author Julia El Zini
+ * @author Bilal Abi Farraj
+ * 
+ */
 
 public class Course {
 	private int course_id;

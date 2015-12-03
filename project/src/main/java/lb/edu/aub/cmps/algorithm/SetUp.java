@@ -29,6 +29,15 @@ import lb.edu.aub.cmps.services.DepartmentService;
 import lb.edu.aub.cmps.services.ProfessorService;
 import lb.edu.aub.cmps.services.RoomService;
 
+
+/**
+ * A class that retrieves all the info from the database and stores them in the
+ * necessary datatypes. It calls on object services from package “services”, so
+ * that they can be used in finding the solution later in the Schedulers.
+ * 
+ * @author Julia El Zini
+ * 
+ */
 // calls on all the services and initialize all the data members
 public class SetUp {
 	private HashSet<Building> bldgs;
@@ -139,18 +148,19 @@ public class SetUp {
 
 		log.info("Mapping classes to their corresponding courses...");
 		for (Class c : id_class.values()) {
-			//TODO remove these two lines if the booleans are read from the database
-			c.setCanChangeRoom(true);//by default
-			c.setCanChangeTime(true);//by default
+			// TODO remove these two lines if the booleans are read from the
+			// database
+			c.setCanChangeRoom(true);// by default
+			c.setCanChangeTime(true);// by default
 			int course_id = c.getCourse_id();
 			c.setCourse_name(getId_course().get(course_id).getCourse_name());
 			Course course = getId_course().get(course_id);
 			course.addClass(c);
-			
+
 			// id_dep.put(dep_id, d);
 			// id_course.put(course_id, course);
 		}
-		for(Course course: getId_course().values()){
+		for (Course course : getId_course().values()) {
 			int dep_id = course.getDepartment();
 			Department d = id_dep.get(dep_id);
 			d.addCourse(course);
@@ -308,8 +318,8 @@ public class SetUp {
 					&& r.getRoom_capacity() >= room.getRoom_capacity() // greater
 																		// capacity
 					&& r.getType() == room.getType()// same type
-					&& room.is_available(times)){// available
-				sameBuilding.add(r);				
+					&& room.is_available(times)) {// available
+				sameBuilding.add(r);
 			}
 		}
 		return sameBuilding;
@@ -378,7 +388,8 @@ public class SetUp {
 
 		Time t = c.getRequestedTime();
 		Professor p = c.getProfessor();
-		if(p!= null)	p = id_prof.get(p.getId());
+		if (p != null)
+			p = id_prof.get(p.getId());
 
 		boolean av_room = r.is_available(t.getTimeSlots());
 		boolean av_prof = (p == null) ? true : p.isAvailable(t);
@@ -396,47 +407,54 @@ public class SetUp {
 	/**
 	 * TODO handle accessories
 	 */
-	public Room otherAvailableRoom(Class cl){
+	public Room otherAvailableRoom(Class cl) {
 		Room room = cl.getRequestedRoom();
 		Time t = cl.getRequestedTime();
 		Professor p = cl.getProfessor();
-		if(p!=null) p = id_prof.get(cl.getProfessor().getId());
-		for(Room room2: get_all_rooms_in_same_building(room, t.getTimeSlots())){
-			if(room2.is_available(t.getTimeSlots())){
-				if((p==null) || (p!=null && p.isAvailable(t)))
+		if (p != null)
+			p = id_prof.get(cl.getProfessor().getId());
+		for (Room room2 : get_all_rooms_in_same_building(room, t.getTimeSlots())) {
+			if (room2.is_available(t.getTimeSlots())) {
+				if ((p == null) || (p != null && p.isAvailable(t)))
 					return room2;
 			}
 		}
-		for(Room room2 : get_all_rooms_in_all_near_buildings(room, t.getTimeSlots()))
-			if(room2.is_available(t.getTimeSlots())){
-				if((p==null) || (p!=null && p.isAvailable(t)))
-					return room2;			}
-		for(Room room2 : get_all_rooms(room, t.getTimeSlots()))
-			if(room2.is_available(t.getTimeSlots())) {
-				if((p==null) || (p!=null && p.isAvailable(t)))
-					return room2;			}
+		for (Room room2 : get_all_rooms_in_all_near_buildings(room,
+				t.getTimeSlots()))
+			if (room2.is_available(t.getTimeSlots())) {
+				if ((p == null) || (p != null && p.isAvailable(t)))
+					return room2;
+			}
+		for (Room room2 : get_all_rooms(room, t.getTimeSlots()))
+			if (room2.is_available(t.getTimeSlots())) {
+				if ((p == null) || (p != null && p.isAvailable(t)))
+					return room2;
+			}
 		return null;
 	}
-	public Time otherAvailableTime(Class cl){
+
+	public Time otherAvailableTime(Class cl) {
 		return otherAvailableTime(cl, cl.getRequestedRoom());
 	}
-	public Time otherAvailableTime(Class cl, Room r){
+
+	public Time otherAvailableTime(Class cl, Room r) {
 		Time t = cl.getRequestedTime();
 		r = id_room.get(cl.getRequestedRoom().getId());
 		Professor p = cl.getProfessor();
-		if(p != null) p = id_prof.get(cl.getProfessor().getId());
-		
+		if (p != null)
+			p = id_prof.get(cl.getProfessor().getId());
+
 		boolean done = false;
-		
+
 		Time next = t.nextTime();
 		Time prev = t.previousTime();
-		
+
 		if (next == null) {
 			while (!done && prev != null) {
 				// check the prof and the room during previous time
-				if ( r.is_available(prev.getTimeSlots())) {
-					if((p == null) || (p!=null && p.isAvailable(next)))
-					done = true;
+				if (r.is_available(prev.getTimeSlots())) {
+					if ((p == null) || (p != null && p.isAvailable(next)))
+						done = true;
 					return prev;
 				}
 				prev = prev.previousTime();
@@ -444,9 +462,9 @@ public class SetUp {
 			return null;
 		} else if (prev == null) {
 			while (!done && next != null) {
-				if ( r.is_available(next.getTimeSlots())) {
-					if((p == null) || (p!=null && p.isAvailable(prev)))
-					done = true;
+				if (r.is_available(next.getTimeSlots())) {
+					if ((p == null) || (p != null && p.isAvailable(prev)))
+						done = true;
 					return prev;
 				}
 				next = next.nextTime();
@@ -457,10 +475,10 @@ public class SetUp {
 		else {
 			while (!done) {
 				// try to schedule it next
-				if (next != null&& ( r.is_available(next.getTimeSlots()))) {
-						if((p == null) || (p!=null && p.isAvailable(next))){
-							done = true;
-							return next;
+				if (next != null && (r.is_available(next.getTimeSlots()))) {
+					if ((p == null) || (p != null && p.isAvailable(next))) {
+						done = true;
+						return next;
 					}
 					done = true;
 				}
@@ -484,11 +502,12 @@ public class SetUp {
 		}
 		return null;
 	}
-	
+
 	public boolean changeRoom(Class cl) {
 		Time t = cl.getRequestedTime();
 		Professor p = cl.getProfessor();
-		if(p!=null) p = id_prof.get(cl.getProfessor().getId());
+		if (p != null)
+			p = id_prof.get(cl.getProfessor().getId());
 		/*
 		 * Room r2 = getSimilar_available_rooms(r, t.getTimeSlots()); if (r2 !=
 		 * null) { if (p.isAvailable(t)) { reserve(p, r, t, cl); } return true;
@@ -526,32 +545,29 @@ public class SetUp {
 		return scheduled;
 	}
 
-	public boolean changeTime(Class cl){
+	public boolean changeTime(Class cl) {
 		return changeTime(cl, cl.getRequestedRoom());
 	}
+
 	public boolean changeTime(Class cl, Room r) {
 		Time t = cl.getRequestedTime();
 		r = id_room.get(cl.getRequestedRoom().getId());
 		Professor p = cl.getProfessor();
-		if(p != null) p = id_prof.get(cl.getProfessor().getId());
-		
+		if (p != null)
+			p = id_prof.get(cl.getProfessor().getId());
+
 		boolean done = false;
 		Time next = t.nextTime();
 		/** this code works **/
 		/*
-		while(next != null && !done){
-			if(r.is_available(next.getTimeSlots())){
-				if(p != null && p.isAvailable(next)) {
-					done = true;
-					reserve(p, r, next, cl);
-					cl.setIsMet(false);
-				}
-			}
-			next = next.nextTime();
-		}
-		if(!done) return false;*/
+		 * while(next != null && !done){
+		 * if(r.is_available(next.getTimeSlots())){ if(p != null &&
+		 * p.isAvailable(next)) { done = true; reserve(p, r, next, cl);
+		 * cl.setIsMet(false); } } next = next.nextTime(); } if(!done) return
+		 * false;
+		 */
 		Time prev = t.previousTime();
-		
+
 		if (next == null) {
 			while (!done && prev != null) {
 				// check the prof and the room during previous time
@@ -606,23 +622,16 @@ public class SetUp {
 		// }
 		return true;
 	}
-	
-	
-/*
-	public boolean changeRoomAndTime(Class cl) {
-		boolean done = false;
-		done = changeTime(cl);
-		if(done) return true;
-		Room r = id_room.get(cl.getRequestedRoom().getId());
-		while(!done && r != null){
-			for(Room room2: get_all_rooms_in_same_building(r, cl.getRequestedTime().getTimeSlots())){
-				done = changeTime(cl, room2);
-				if(done)return true;
-			}
-			for(Room room2: get_all_rooms_in_all_near_buildings(r, cl.getc))
-		}
-		return false;
-	}*/
+
+	/*
+	 * public boolean changeRoomAndTime(Class cl) { boolean done = false; done =
+	 * changeTime(cl); if(done) return true; Room r =
+	 * id_room.get(cl.getRequestedRoom().getId()); while(!done && r != null){
+	 * for(Room room2: get_all_rooms_in_same_building(r,
+	 * cl.getRequestedTime().getTimeSlots())){ done = changeTime(cl, room2);
+	 * if(done)return true; } for(Room room2:
+	 * get_all_rooms_in_all_near_buildings(r, cl.getc)) } return false; }
+	 */
 
 	public void reserve(Professor p, Room r, Time t, Class c) {
 		c.setGiven_time(t);
@@ -631,7 +640,7 @@ public class SetUp {
 			p.addClass(c);
 			p.addUnavailable(c.getGivenTime());
 		}
-		r.reserveRoom(t.getTimeSlots(), c);		
+		r.reserveRoom(t.getTimeSlots(), c);
 	}
 
 	public TreeMap<Department, Set<Course>> getDeps_courses_map() {
@@ -646,7 +655,6 @@ public class SetUp {
 		return bldg_rooms;
 	}
 
-	
 	public Map<Integer, Room> getId_RoomMap() {
 		return id_room;
 	}
@@ -659,16 +667,17 @@ public class SetUp {
 		this.id_course = id_course;
 	}
 
-	public static void main(String[] args) throws SecurityException, IOException{
+	public static void main(String[] args) throws SecurityException,
+			IOException {
 		SetUp s = new SetUp();
-		for(Course c: s.id_course.values()){
+		for (Course c : s.id_course.values()) {
 			System.out.println(c.getSectionNbrs());
 		}
 		/*
-		for(Class cl:s.id_class.values()){
-			System.out.println(cl.getClass_id() +" > " + cl.getSection_number());
-		}
-		*/
+		 * for(Class cl:s.id_class.values()){
+		 * System.out.println(cl.getClass_id() +" > " + cl.getSection_number());
+		 * }
+		 */
 	}
 
 	public HashMap<Integer, Department> getId_dep() {

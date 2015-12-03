@@ -51,12 +51,20 @@ public class MyTest {
 		ClassService c = new ClassService();
 		HashSet<Class> classes = (HashSet<Class>) c.getAllClasses();
 
+		int i =0;
 		for (Class cl : classes) {
-			int id = cl.getClass_id();
+/*			int id = cl.getClass_id();
 			HashSet<Integer> ids= (HashSet<Integer>) c.getAccessoriesInClass(id);
 			System.out.println(ids.size());
 			for(Integer i: ids){
 				System.out.println(i.toString());
+			}
+			*/
+			if(i==0 && cl.getClass_id()== 1){
+				cl.setGivenDay(2);
+				
+				c.updateLecture_Time(cl);
+				i++;
 			}
 		}
 

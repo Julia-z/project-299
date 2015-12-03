@@ -28,28 +28,32 @@ public class ClassService implements ClassMapper {
 				c.setTime(new Time(times));
 
 				Professor p = cm.getProfessor(id);
-				if(p!=null)	p.initializeUnavailable();
+				if (p != null)
+					p.initializeUnavailable();
 				c.setProfessor(p);
 				Room r = cm.getClassroom(id);
-				if(r!=null)	r.initializeReserved();
+				if (r != null)
+					r.initializeReserved();
 				c.setRoom(r);
-				
+
 				Set<Integer> acc = cm.getAccessoriesInClass(id);
 				c.setAccessoriesIds(acc);
-				
+
 				Set<Integer> section_numbers = cm.getSectionsInClass(id);
 				c.setSection_number(section_numbers);
 
-				/*System.out.println("Class id: " + c.getClass_id()
-						+ ", Course id: " + c.getCourse_id() + ", Type :"
-						+ c.getType() + ", Time: " + c.getTime().toString());*/
+				/*
+				 * System.out.println("Class id: " + c.getClass_id() +
+				 * ", Course id: " + c.getCourse_id() + ", Type :" + c.getType()
+				 * + ", Time: " + c.getTime().toString());
+				 */
 			}
 
 			/**
-			 * In case we wanna loop over all professors and such ProfessorMapper
-			 * pm = sqlSession.getMapper(ProfessorMapper.class); Set<Professor>
-			 * allProfessors= pm.getAllProfessors(); RoomMapper rm =
-			 * sqlSession.getMapper(RoomMapper.class); Set<Room> allRooms=
+			 * In case we wanna loop over all professors and such
+			 * ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
+			 * Set<Professor> allProfessors= pm.getAllProfessors(); RoomMapper
+			 * rm = sqlSession.getMapper(RoomMapper.class); Set<Room> allRooms=
 			 * rm.getAllRooms();
 			 * 
 			 * for(Professor p: allProfessors){ if(p.getC) }
@@ -134,6 +138,32 @@ public class ClassService implements ClassMapper {
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
 			return cm.getType(id);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public void updateLecture_Classroom(Class c) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper classMapper = sqlSession.getMapper(ClassMapper.class);
+			classMapper.updateLecture_Classroom(c);
+			System.out.println("Class "+c.getClass_id()+" was in room "+c.getRequestedRoom()+"\n now in room "+c.getGivenRoomId());
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public void updateLecture_Time(Class c) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper classMapper = sqlSession.getMapper(ClassMapper.class);
+			classMapper.updateLecture_Time(c);
+			System.out.println("Class "+c.getClass_id()+" now starts at "+c.getGivenStart());
+			sqlSession.commit();
 		} finally {
 			sqlSession.close();
 		}
