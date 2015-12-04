@@ -3,6 +3,8 @@ package lb.edu.aub.cmps.test;
 import java.util.HashSet;
 
 import lb.edu.aub.cmps.classes.Class;
+import lb.edu.aub.cmps.classes.Day;
+import lb.edu.aub.cmps.classes.TimeSlot;
 import lb.edu.aub.cmps.services.ClassService;
 
 public class MyTest {
@@ -49,25 +51,50 @@ public class MyTest {
 
 		
 		ClassService c = new ClassService();
+		
+		Class cl = new Class();
+		cl.setClass_id(35);
+		cl.setReq_day(1);
+		cl.setGivenDay(1);
+		cl.setGivenStart("1000");
+		cl.setGivenEnd("1100");
+		
+		c.updateLecture_Time(cl);
+		/*
 		HashSet<Class> classes = (HashSet<Class>) c.getAllClasses();
+	
+		Class[] array= new Class[classes.size()];//= (Class[]) classes.toArray();
+		
+		int i= 0;
+		for(Class cs: classes){
+			array[i]= cs;
+			i++;
+		}
+		
+		Class current= array[0];
+		
+		TimeSlot[] slots= current.getRequestedTime().getTimeSlots();
+		
+		for(int j=0; j<slots.length; j++){
+			if(slots[j]!= null){
+				int day= dayToInt(slots[j].getDay());
+				String start= slots[j].getStart();
+				String end= slots[j].getEnd();
 
-		int i =0;
-		for (Class cl : classes) {
-/*			int id = cl.getClass_id();
-			HashSet<Integer> ids= (HashSet<Integer>) c.getAccessoriesInClass(id);
-			System.out.println(ids.size());
-			for(Integer i: ids){
-				System.out.println(i.toString());
-			}
-			*/
-			if(i==0 && cl.getClass_id()== 1){
-				cl.setGivenDay(2);
+				System.out.println(day+" "+ start+" "+ end);
+
+				current.setGivenDay(day);
+				current.setGivenStart("1100");
+				current.setGivenEnd("1200");
 				
-				c.updateLecture_Time(cl);
-				i++;
+				c.updateLecture_Time(current);
+				
+				System.out.println(current.getGivenDay()+ " "+ current.getGivenStart()+" "+current.getGivenEnd());
+			//	System.out.println(day+" "+ start+" "+ end);
+				System.out.println(array[0]);
 			}
 		}
-
+	
 		/*
 		System.out.println(cs.toString());
 
@@ -98,5 +125,28 @@ public class MyTest {
 		 * Room room= clm.getClassroom(1); System.out.println("Room: "+
 		 * room.getNumber());
 		 */
+	}
+
+	private  static int dayToInt(Day d) {
+		int day = 0;
+
+		if (d == Day.M) {
+			day = 1;
+		} else if (d == Day.T) {
+			day = 2;
+		} else if (d == Day.T) {
+			day = 2;
+		} else if (d == Day.W) {
+			day = 3;
+		} else if (d == Day.R) {
+			day = 4;
+		} else if (d == Day.F) {
+			day = 5;
+		} else if (d == Day.S) {
+			day = 6;
+		} else if (d == Day.U) {
+			day = 7;
+		}
+		return day;
 	}
 }

@@ -100,6 +100,7 @@
 		SET Day_ID= #{givenDay},
 		Start= #{givenStart},
 		End= #{givenEnd}
-		where LECTURE_ID= #{class_id} and Day_Id=#{req_day}
+		where LECTURE_ID= #{class_id}
+        AND Day_Id=#{req_day}
 	</update>
 </mapper>

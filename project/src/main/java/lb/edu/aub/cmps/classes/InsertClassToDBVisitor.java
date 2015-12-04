@@ -28,12 +28,15 @@ public class InsertClassToDBVisitor implements ClassVisitor {
 					int day = dayToInt(d);
 					String start = ts[i].getStart();
 					String end = ts[i].getEnd();
+					
+					c.setReq_day(day);
 					c.setGivenDay(day);
-					c.setGivenEnd(start);
-					c.setGivenStart(end);
+					c.setGivenEnd(end);
+					c.setGivenStart(start);
 					cs.updateLecture_Time(c);
 				}
 			}
+			cs.updateLecture_Classroom(c);
 		}
 	}
 
