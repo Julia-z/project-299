@@ -176,7 +176,6 @@ public class ClassService implements ClassMapper {
 		try {
 			ClassMapper classMapper = sqlSession.getMapper(ClassMapper.class);
 			classMapper.updateLecture_Time(c);
-			System.out.println("updating "+c.getCourse_name()+" section "+c.getSection_number());
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();
