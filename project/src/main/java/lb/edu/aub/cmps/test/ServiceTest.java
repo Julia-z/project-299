@@ -1,6 +1,6 @@
 package lb.edu.aub.cmps.test;
 
-import lb.edu.aub.cmps.services.BuildingService;
+import lb.edu.aub.cmps.grad.services.BuildingService;
 
 public class ServiceTest {
 

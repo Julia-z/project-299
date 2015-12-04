@@ -2,10 +2,10 @@ package lb.edu.aub.cmps.test;
 
 import java.util.HashSet;
 
-import lb.edu.aub.cmps.classes.Class;
-import lb.edu.aub.cmps.classes.Day;
-import lb.edu.aub.cmps.classes.TimeSlot;
-import lb.edu.aub.cmps.services.ClassService;
+import lb.edu.aub.cmps.grad.classes.Class;
+import lb.edu.aub.cmps.grad.classes.Day;
+import lb.edu.aub.cmps.grad.classes.TimeSlot;
+import lb.edu.aub.cmps.grad.services.ClassService;
 
 public class MyTest {
 	public static void main(String[] args) {

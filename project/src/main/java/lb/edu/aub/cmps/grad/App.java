@@ -5,21 +5,22 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import lb.edu.aub.cmps.algorithm.ByTimeScheduler;
-import lb.edu.aub.cmps.algorithm.Scheduler;
-import lb.edu.aub.cmps.classes.Class;
-import lb.edu.aub.cmps.classes.ClassVisitor;
-import lb.edu.aub.cmps.classes.Course;
-import lb.edu.aub.cmps.classes.Department;
-import lb.edu.aub.cmps.classes.InsertClassToDBVisitor;
-import lb.edu.aub.cmps.classes.PrintTimeClassInRoomVisitor;
-import lb.edu.aub.cmps.classes.Room;
-import lb.edu.aub.cmps.classes.RoomVisitor;
-import lb.edu.aub.cmps.output.ExportSectionsToExcel;
+import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
+import lb.edu.aub.cmps.grad.algorithm.Scheduler;
+import lb.edu.aub.cmps.grad.classes.Class;
+import lb.edu.aub.cmps.grad.classes.ClassVisitor;
+import lb.edu.aub.cmps.grad.classes.Course;
+import lb.edu.aub.cmps.grad.classes.Department;
+import lb.edu.aub.cmps.grad.classes.InsertClassToDBVisitor;
+import lb.edu.aub.cmps.grad.classes.PrintTimeClassInRoomVisitor;
+import lb.edu.aub.cmps.grad.classes.Room;
+import lb.edu.aub.cmps.grad.classes.RoomVisitor;
+import lb.edu.aub.cmps.grad.output.ExportSectionsToExcel;
 
 public class App {
 
 	public static void main(String[] args) throws SecurityException, IOException{
+
 		Scheduler s = new ByTimeScheduler();
 		Map<Class, String> not = s.schedule();
 		Map<Department, Set<Course>> scheduled = s.getDepCoursesMap();

@@ -20,6 +20,7 @@
 			<artifactId>mybatis</artifactId>
 			<version>3.1.1</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -46,7 +47,7 @@
 		</developer>
 
 		<developer>
-			<email>jwe04@mail.aub.edu</email>
+			<email>juliaelzini@gmail.com</email>
 			<name>Julia El Zini</name>
 			<id>jwe04</id>
 		</developer>

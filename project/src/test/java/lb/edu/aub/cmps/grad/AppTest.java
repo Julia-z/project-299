@@ -3,11 +3,11 @@ package lb.edu.aub.cmps.grad;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import lb.edu.aub.cmps.classes.Day;
-import lb.edu.aub.cmps.classes.Professor;
-import lb.edu.aub.cmps.classes.Room;
-import lb.edu.aub.cmps.classes.Time;
-import lb.edu.aub.cmps.classes.TimeSlot;
+import lb.edu.aub.cmps.grad.classes.Day;
+import lb.edu.aub.cmps.grad.classes.Professor;
+import lb.edu.aub.cmps.grad.classes.Room;
+import lb.edu.aub.cmps.grad.classes.Time;
+import lb.edu.aub.cmps.grad.classes.TimeSlot;
 
 /**
  * Unit test for simple App.
