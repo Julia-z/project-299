@@ -2,6 +2,10 @@ package lb.edu.aub.cmps.grad.services;
 
 import java.io.IOException;
 import java.io.Reader;
+
+import lb.edu.aub.cmps.grad.mappers.DepartmentMapper;
+import lb.edu.aub.cmps.grad.mappers.RoomMapper;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -20,6 +24,7 @@ public class MyBatisUtil {
 			throw new RuntimeException(e.getMessage());
 		}
 		factory = new SqlSessionFactoryBuilder().build(reader);
+		
 	}
 
 	public static SqlSessionFactory getSqlSessionFactory() {

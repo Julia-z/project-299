@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
   'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 
-<mapper namespace='lb.edu.aub.cmps.mappers.AccessoryMapper'>
+<mapper namespace='lb.edu.aub.cmps.grad.mappers.AccessoryMapper'>
 	<resultMap type='Integer' id='AccessoryResult'>
 		<id property='id' column='Accessory_ID'></id>
 	</resultMap>

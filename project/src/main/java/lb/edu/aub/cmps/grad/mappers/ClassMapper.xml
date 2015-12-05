@@ -3,8 +3,8 @@
   'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 
 
-<mapper namespace='lb.edu.aub.cmps.mappers.ClassMapper'>
-	<resultMap type='lb.edu.aub.cmps.classes.Class' id='ClassResult'>
+<mapper namespace='lb.edu.aub.cmps.grad.mappers.ClassMapper'>
+	<resultMap type='lb.edu.aub.cmps.grad.classes.Class' id='ClassResult'>
 		<id property='class_id' column='Lecture_ID'></id>
 		<result property='course_id' column='Course_ID'></result>
 		<result property='class_capacity' column='Class_Capacity'></result>
@@ -22,7 +22,7 @@
 
 	<!-- write a method to get sections after creating a class section -->
 
-	<resultMap type='lb.edu.aub.cmps.classes.TimeSlot' id='ClassTimeResult'>
+	<resultMap type='lb.edu.aub.cmps.grad.classes.TimeSlot' id='ClassTimeResult'>
 		<!-- id property='class_id' column='Class_ID'></id -->
 		<id property='day_id' column='Day_ID'></id>
 		<result property='start' column='Start'></result>
@@ -34,7 +34,7 @@
 		Day_ID, Start, End from lecture_time where Lecture_ID= #{id}
 	</select>
 
-	<resultMap type='lb.edu.aub.cmps.classes.Professor' id='ProfessorsResult'>
+	<resultMap type='lb.edu.aub.cmps.grad.classes.Professor' id='ProfessorsResult'>
 		<id property='id' column='Professor_ID'></id>
 		<result property='name' column='Professor_Name'></result>
 	</resultMap>
@@ -71,7 +71,7 @@
 		join section s where s.Section_ID = l.Section_ID and LECTURE_ID = #{id}
 	</select>
 
-	<resultMap type='lb.edu.aub.cmps.classes.Room' id='RoomResult'>
+	<resultMap type='lb.edu.aub.cmps.grad.classes.Room' id='RoomResult'>
 		<id property='id' column='Classroom_ID'></id>
 		<result property='number' column='Classroom_Number'></result>
 		<result property='room_capacity' column='Classroom_Capacity'></result>
@@ -87,14 +87,14 @@
 		r.Classroom_ID= c.Classroom_ID
 	</select>
 
-	<update id="updateLecture_Classroom" parameterType="lb.edu.aub.cmps.classes.Class">
+	<update id="updateLecture_Classroom" parameterType="lb.edu.aub.cmps.grad.classes.Class">
 		UPDATE
 		lecture
 		SET Classroom_ID= #{givenRoomId}
 		where LECTURE_ID= #{class_id}
 	</update>
 	
-	<update id="updateLecture_Time" parameterType="lb.edu.aub.cmps.classes.Class">
+	<update id="updateLecture_Time" parameterType="lb.edu.aub.cmps.grad.classes.Class">
 		UPDATE
 		lecture_time
 		SET Day_ID= #{givenDay},

@@ -18,12 +18,12 @@
 	<!-- Mappers -->
 
 	<mappers>
-		<mapper resource='lb/edu/aub/cmps/mappers/BuildingMapper.xml' />
-		<mapper resource='lb/edu/aub/cmps/mappers/RoomMapper.xml' />
-		<mapper resource='lb/edu/aub/cmps/mappers/CourseMapper.xml' />
-		<mapper resource='lb/edu/aub/cmps/mappers/DepartmentMapper.xml' />
-		<mapper resource='lb/edu/aub/cmps/mappers/ProfessorMapper.xml' />
-		<mapper resource='lb/edu/aub/cmps/mappers/AccessoryMapper.xml' />
-		<mapper resource='lb/edu/aub/cmps/mappers/ClassMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/grad/mappers/BuildingMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/grad/mappers/RoomMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/grad/mappers/CourseMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/grad/mappers/DepartmentMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/grad/mappers/ProfessorMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/grad/mappers/AccessoryMapper.xml' />
+		<mapper resource='lb/edu/aub/cmps/grad/mappers/ClassMapper.xml' />
 	</mappers>
 </configuration>

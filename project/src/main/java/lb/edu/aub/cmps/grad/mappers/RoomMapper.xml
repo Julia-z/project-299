@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
   'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 
-<mapper namespace='lb.edu.aub.cmps.mappers.RoomMapper'>
-	<resultMap type='lb.edu.aub.cmps.classes.Room' id='RoomResult'>
+<mapper namespace='lb.edu.aub.cmps.grad.mappers.RoomMapper'>
+	<resultMap type='lb.edu.aub.cmps.grad.classes.Room' id='RoomResult'>
 	
 		<id property='id' column='Classroom_ID'></id>
 		<result property='number' column='Classroom_Number'></result>
