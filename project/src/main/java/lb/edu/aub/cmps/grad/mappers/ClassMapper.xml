@@ -91,7 +91,7 @@
 		UPDATE
 		lecture
 		SET Classroom_ID= #{givenRoomId}
-		where LECTURE_ID= #{class_id}
+		where Lecture_ID= #{class_id}
 	</update>
 	
 	<update id="updateLecture_Time" parameterType="lb.edu.aub.cmps.grad.classes.Class">

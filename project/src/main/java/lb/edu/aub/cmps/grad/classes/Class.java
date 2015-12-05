@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.grad.classes;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -169,13 +170,13 @@ public class Class implements ClassVisitable {
 		this.accessories_ids = ids;
 	}
 
-	public void accept(ClassVisitor visitor) {
+	public void accept(ClassVisitor visitor) throws SecurityException, IOException {
 		visitor.visit(this);
 	}
 
 	public int getGivenRoomId() {
 		givenRoomId = req_room.getId();
-		if (isMet) {
+		if (!isMet) {
 			givenRoomId = given_room.getId();
 		}
 		return givenRoomId;

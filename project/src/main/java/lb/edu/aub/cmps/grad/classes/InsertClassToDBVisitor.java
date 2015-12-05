@@ -1,5 +1,8 @@
 package lb.edu.aub.cmps.grad.classes;
 
+import java.io.IOException;
+import java.util.logging.Logger;
+
 import lb.edu.aub.cmps.grad.services.ClassService;
 
 /**
@@ -13,8 +16,14 @@ public class InsertClassToDBVisitor implements ClassVisitor {
 	 * @param c
 	 *            given the Class to be updated in the database with the given
 	 *            room and time
+	 * @throws IOException
+	 * @throws SecurityException
 	 */
-	public void visit(Class c) {
+
+	public void visit(Class c) throws SecurityException, IOException {
+		MyLogger loggerWrapper = MyLogger.getInstance();
+		Logger log = loggerWrapper.getLogger();
+
 		if (!c.getIsMet()) {
 			ClassService cs = new ClassService();
 			cs.updateLecture_Classroom(c);
@@ -28,12 +37,22 @@ public class InsertClassToDBVisitor implements ClassVisitor {
 					int day = dayToInt(d);
 					String start = ts[i].getStart();
 					String end = ts[i].getEnd();
-					
 					c.setReq_day(day);
 					c.setGivenDay(day);
 					c.setGivenEnd(end);
 					c.setGivenStart(start);
 					cs.updateLecture_Time(c);
+					
+					log.info("----------------------------------\nUpdating "
+							+ c.getCourse_name() + ": ID: " + c.getClass_id()
+							+ ", Section: " + c.getSection_number() + " DAY: "
+							+ day + ", START: " + start + ", END: " + end
+							+ ", Room: " + c.getGivenRoom().getNumber()
+							+ ". \nInitially requested START: "
+							+ c.getRequestedTime().getTimeSlots()[i].getStart()
+							+ ", END: "
+							+ c.getRequestedTime().getTimeSlots()[i].getEnd()
+							+ ", Room: " + c.getRequestedRoom().getNumber());
 				}
 			}
 			cs.updateLecture_Classroom(c);
