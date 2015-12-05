@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -92,21 +91,15 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 		String Previous = "";
 		for (TimeSlot t : r.getReserved().keySet()) {
 			String timeSlot = t.toString().substring(3,17);
-			//System.out.println("--" +timeSlot);
 			if(!timeSlotWithoutDay.containsKey(timeSlot)){
-				//System.out.println("doesn't exist: " + rowsCount);
 				row1 = Rooms.createRow(rowsCount);
 				timeSlotWithoutDay.put(t.toString().substring(3, 17), rowsCount);
 				rowsCount++;
 			}
 			else{
 				row1 = Rooms.getRow(timeSlotWithoutDay.get(t.toString().substring(3, 17)));
-				//System.out.println(Rooms.getRow(0));
-				//System.out.println("hellooooooooooooooooooooo "+(t.toString().substring(3, 17))+" -> "+timeSlotWithoutDay.get(t.toString().substring(3, 17)));
 			}
 			if (!t.toString().substring(3, 17).equals(Previous)) {
-				System.out.println("dunooooooooooo what to do");
-				//row1 = Rooms.createRow(rowsCount);
 				Cell firstCell = row1.createCell(0);
 				firstCell.setCellValue(t.toString().substring(3, 17));
 				if (r.getReserved().get(t).getGivenRoom() != r.getReserved()
@@ -115,7 +108,6 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 					firstCell.setCellStyle(red);
 				}
 				Previous = t.toString().substring(3, 17);
-			//	rowsCount++;
 			}
 
 			if (t.getDay() == Day.M) {

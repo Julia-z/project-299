@@ -1,10 +1,7 @@
 package lb.edu.aub.cmps.test;
 
-import java.util.HashSet;
-
 import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.Day;
-import lb.edu.aub.cmps.grad.classes.TimeSlot;
 import lb.edu.aub.cmps.grad.services.ClassService;
 
 public class MyTest {
@@ -127,7 +124,7 @@ public class MyTest {
 		 */
 	}
 
-	private  static int dayToInt(Day d) {
+	public  static int dayToInt(Day d) {
 		int day = 0;
 
 		if (d == Day.M) {
