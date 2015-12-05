@@ -3,6 +3,9 @@ package lb.edu.aub.cmps.grad.classes;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -79,17 +82,31 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 
 	public void visit(Room r) {
 
+		Map<String, Integer> timeSlotWithoutDay = new HashMap<String, Integer>();
 		Row row = Rooms.createRow(rowsCount);
 		rowsCount++;
 		Cell name = row.createCell(0);
 		name.setCellValue(r.getNumber());
 		name.setCellStyle(light_blue);
-		Row row1 = Rooms.createRow(rowsCount);
-
+		Row row1;
 		String Previous = "";
 		for (TimeSlot t : r.getReserved().keySet()) {
-			if (!t.toString().substring(3, 17).equals(Previous)) {
+			String timeSlot = t.toString().substring(3,17);
+			//System.out.println("--" +timeSlot);
+			if(!timeSlotWithoutDay.containsKey(timeSlot)){
+				//System.out.println("doesn't exist: " + rowsCount);
 				row1 = Rooms.createRow(rowsCount);
+				timeSlotWithoutDay.put(t.toString().substring(3, 17), rowsCount);
+				rowsCount++;
+			}
+			else{
+				row1 = Rooms.getRow(timeSlotWithoutDay.get(t.toString().substring(3, 17)));
+				//System.out.println(Rooms.getRow(0));
+				//System.out.println("hellooooooooooooooooooooo "+(t.toString().substring(3, 17))+" -> "+timeSlotWithoutDay.get(t.toString().substring(3, 17)));
+			}
+			if (!t.toString().substring(3, 17).equals(Previous)) {
+				System.out.println("dunooooooooooo what to do");
+				//row1 = Rooms.createRow(rowsCount);
 				Cell firstCell = row1.createCell(0);
 				firstCell.setCellValue(t.toString().substring(3, 17));
 				if (r.getReserved().get(t).getGivenRoom() != r.getReserved()
@@ -98,7 +115,7 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 					firstCell.setCellStyle(red);
 				}
 				Previous = t.toString().substring(3, 17);
-				rowsCount++;
+			//	rowsCount++;
 			}
 
 			if (t.getDay() == Day.M) {
@@ -120,7 +137,8 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 				Cell course = row1.createCell(6);
 				course.setCellValue(r.getReserved().get(t).getCourse_name());
 			}
-
+			
+			
 		}
 
 		try {
