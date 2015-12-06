@@ -84,12 +84,12 @@ public class TimeSlot {
 				conflict = true;
 			} else if (Integer.parseInt(this.getStart()) > Integer
 					.parseInt(time2.getStart())
-					&& (Integer.parseInt(this.getStart()) <= Integer
+					&& (Integer.parseInt(this.getStart()) < Integer
 							.parseInt(time2.getEnd()))) {
 				conflict = true;
 			} else if (Integer.parseInt(this.getStart()) < Integer
 					.parseInt(time2.getStart())
-					&& (Integer.parseInt(this.getEnd()) >= Integer
+					&& (Integer.parseInt(this.getEnd()) > Integer
 							.parseInt(time2.getStart()))) {
 
 				conflict = true;
