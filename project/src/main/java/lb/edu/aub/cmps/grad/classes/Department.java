@@ -17,6 +17,9 @@ public class Department {
 	public int getId() {
 		return id;
 	}
+	public void setNumOfClasses(int num){
+		this.num_of_classes = num;
+	}
 
 	public String getName() {
 		return name;

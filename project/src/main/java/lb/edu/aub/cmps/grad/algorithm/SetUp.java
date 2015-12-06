@@ -191,6 +191,7 @@ public class SetUp {
 					classes.addAll(c.getClasses());
 			}
 			deps_classes_map.put(d, classes);
+			d.setNumOfClasses(classes.size());
 		}
 		log.info("Mapping courses to departments. Done");
 	}

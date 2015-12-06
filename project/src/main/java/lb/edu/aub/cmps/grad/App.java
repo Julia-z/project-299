@@ -29,6 +29,7 @@ public class App {
 		e.generateInfo(not);
 		
 		//update the database
+		/*
 		ClassVisitor visitor = new InsertClassToDBVisitor();
 		Set<Class> classes = new HashSet<Class>();
 		Map<Department, Set<Class>> dep_classes = s.getScheduled();
@@ -38,7 +39,7 @@ public class App {
 		for (Class cl : classes) {
 			cl.accept(visitor);
 		}
-		
+		*/
 		//generate room info
 		RoomVisitor roomvisitor = new PrintTimeClassInRoomVisitor();
 		Map<Integer, Room> id_room = s.getIdRoomMap();
@@ -46,7 +47,12 @@ public class App {
 			Room r = id_room.get(i);
 			r.accept(roomvisitor);
 		}
+		
+		//statistics
+		Map<Department, Double> statByDep = s.getStatisticsByDepartment();
+		System.out.println(statByDep);
 
+		System.out.println(s.getOverallStatistics());
 	}
 	
 

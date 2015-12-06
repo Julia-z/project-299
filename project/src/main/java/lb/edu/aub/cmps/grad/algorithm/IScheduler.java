@@ -17,4 +17,6 @@ public interface IScheduler {
 	public Map<Department, Set<Class>> getScheduled();
 	public Map<Integer, Room> getIdRoomMap();
 	public Map<Department, Set<Course>> getDepCoursesMap();
+	public Map<Department, Double> getStatisticsByDepartment();
+	public double getOverallStatistics();
 }

@@ -27,6 +27,8 @@ public class ByTimeScheduler extends Scheduler {
 	private int num_of_all_classes;
 
 	private Iterator<Class>[] its;
+	private double overallStat;
+	private Map<Department, Double> statByDep;
 	private MyLogger loggerWrapper = MyLogger.getInstance();
 	Logger log = loggerWrapper.getLogger();
 
@@ -255,6 +257,27 @@ public class ByTimeScheduler extends Scheduler {
 
 	public Map<Department, Set<Class>> getScheduled() {
 		return scheduled_map;
+	}
+
+	public Map<Department, Double> getStatisticsByDepartment() {
+		
+		statByDep = new HashMap<Department, Double>();
+		for(Department d: scheduled_map.keySet()){
+			if(d.getNum_of_classes() != 0){ //only for the departments that actually have classes
+				double met = 0;
+				for(Class c: scheduled_map.get(d)){
+					if(c.getIsMet()) met++;
+				}
+				statByDep.put(d, met / d.getNum_of_classes());
+				overallStat += met;
+			}
+		}
+		overallStat = overallStat*1.0 / num_of_all_classes;
+		return statByDep;
+	}
+
+	public double getOverallStatistics() {
+		return overallStat;
 	}
 
 
