@@ -203,18 +203,39 @@ public class ExportSectionsToExcel {
 						Cell sendTime = row1.createCell(14);
 						Cell room = row1.createCell(15);
 						Cell profCell = row1.createCell(16);
-						for (int i = 0; i < row1.getLastCellNum(); i++) {
-							if (sectionsCount % 2 == 0) {
-								row1.getCell(i).setCellStyle(gray);
-							}
-						}
+						
 						int classCount = 0;
 						for (Class c : s.getClasses()) {
 
 							 if(classCount >0){
 							 row1 = departments.createRow(rowsCount);
 							 rowsCount++;
+							 dep = row1.createCell(0);
+								dep.setCellValue(d.getName());
+								crs = row1.createCell(1);
+								crs.setCellValue(course.getCourse_name());
+								section = row1.createCell(2);
+								section.setCellValue(s.getSection_number());
+								mstartTime = row1.createCell(3);
+								mendTime = row1.createCell(4);
+								tstartTime = row1.createCell(5);
+								tendTime = row1.createCell(6);
+								wstartTime = row1.createCell(7);
+								wendTime = row1.createCell(8);
+								rstartTime = row1.createCell(9);
+								rendTime = row1.createCell(10);
+								fstartTime = row1.createCell(11);
+								fendTime = row1.createCell(12);
+								sstartTime = row1.createCell(13);
+								sendTime = row1.createCell(14);
+								room = row1.createCell(15);
+								profCell = row1.createCell(16);
 							}
+							 for (int i = 0; i < row1.getLastCellNum(); i++) {
+									if (sectionsCount % 2 == 0) {
+										row1.getCell(i).setCellStyle(gray);
+									}
+								}
 							boolean ismet = c.getIsMet();
 
 							if (c.getGivenTime() != null

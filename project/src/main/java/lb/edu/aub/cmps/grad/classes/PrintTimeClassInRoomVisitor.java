@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -25,8 +27,10 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 	HSSFSheet Rooms;
 	int rowsCount;
 	CellStyle gray;
-	CellStyle light_blue;
+	CellStyle dark_green;
+	CellStyle light_green;
 	CellStyle red;
+	CellStyle blue;
 	/**
 	 * Yasmin's fields
 	 */
@@ -48,10 +52,24 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 		gray
 				.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
 		gray.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		light_blue = wb.createCellStyle();
-		light_blue.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE
-				.getIndex());
-		light_blue.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		light_green = wb.createCellStyle();
+		light_green.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		light_green.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		dark_green = wb.createCellStyle();
+		dark_green.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+		dark_green.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		blue = wb.createCellStyle();
+		blue.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+		blue.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		HSSFPalette palette = wb.getCustomPalette();
+		palette.setColorAtIndex(HSSFColor.BLUE.index, (byte) 224, (byte) 248,
+				(byte) 255);
+		HSSFPalette palette2 = wb.getCustomPalette();
+		palette2.setColorAtIndex(HSSFColor.GREEN.index, (byte) 228, (byte) 248,
+				(byte) 233);
+		HSSFPalette palette3 = wb.getCustomPalette();
+		palette3.setColorAtIndex(HSSFColor.LIGHT_CORNFLOWER_BLUE.index, (byte) 169, (byte) 229,
+				(byte) 182);
 		red = wb.createCellStyle();
 		red.setFillForegroundColor(IndexedColors.RED
 				.getIndex());
@@ -71,12 +89,12 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 		thurs.setCellValue("Thursday");
 		Cell sat = firstRow.createCell(6);
 		sat.setCellValue("Saturday");
-		mon.setCellStyle(gray);
-		wed.setCellStyle(gray);
-		fri.setCellStyle(gray);
-		tues.setCellStyle(gray);
-		thurs.setCellStyle(gray);
-		sat.setCellStyle(gray);
+		mon.setCellStyle(dark_green);
+		wed.setCellStyle(dark_green);
+		fri.setCellStyle(dark_green);
+		tues.setCellStyle(dark_green);
+		thurs.setCellStyle(dark_green);
+		sat.setCellStyle(dark_green);
 	}
 
 	public void visit(Room r) {
@@ -86,7 +104,7 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 		rowsCount++;
 		Cell name = row.createCell(0);
 		name.setCellValue(r.getNumber());
-		name.setCellStyle(light_blue);
+		name.setCellStyle(light_green);
 		Row row1;
 		String Previous = "";
 		for (TimeSlot t : r.getReserved().keySet()) {
@@ -102,31 +120,33 @@ public class PrintTimeClassInRoomVisitor implements RoomVisitor {
 			if (!t.toString().substring(3, 17).equals(Previous)) {
 				Cell firstCell = row1.createCell(0);
 				firstCell.setCellValue(t.toString().substring(3, 17));
-				if (r.getReserved().get(t).getGivenRoom() != r.getReserved()
-						.get(t).getRequestedRoom()
-						|| r.getReserved().get(t).getGivenTime() != r.getReserved().get(t).getRequestedTime()) {
-					firstCell.setCellStyle(red);
-				}
+				
 				Previous = t.toString().substring(3, 17);
 			}
 
 			if (t.getDay() == Day.M) {
 				Cell course = row1.createCell(1);
 				course.setCellValue(r.getReserved().get(t).getCourse_name());
+				course.setCellStyle(blue);
 			} else if (t.getDay() == Day.W) {
 				Cell course = row1.createCell(2);
+				course.setCellStyle(blue);
 				course.setCellValue(r.getReserved().get(t).getCourse_name());
 			} else if (t.getDay() == Day.F) {
 				Cell course = row1.createCell(3);
+				course.setCellStyle(blue);
 				course.setCellValue(r.getReserved().get(t).getCourse_name());
 			} else if (t.getDay() == Day.T) {
 				Cell course = row1.createCell(4);
+				course.setCellStyle(blue);
 				course.setCellValue(r.getReserved().get(t).getCourse_name());
 			} else if (t.getDay() == Day.R) {
 				Cell course = row1.createCell(5);
+				course.setCellStyle(blue);
 				course.setCellValue(r.getReserved().get(t).getCourse_name());
 			}else if (t.getDay() == Day.S) {
 				Cell course = row1.createCell(6);
+				course.setCellStyle(blue);
 				course.setCellValue(r.getReserved().get(t).getCourse_name());
 			}
 			
