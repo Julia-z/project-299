@@ -24,6 +24,9 @@ public class App {
 		Scheduler s = new ByTimeScheduler();
 		Map<Class, String> not = s.schedule();
 		Map<Department, Set<Course>> scheduled = s.getDepCoursesMap();
+		for(Department d: scheduled.keySet()){
+			System.out.println(d.getName() + " -> "+d.getNum_of_classes());
+		}
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
 		e.export(scheduled);
 		e.generateInfo(not);

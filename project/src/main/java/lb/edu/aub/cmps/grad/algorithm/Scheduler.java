@@ -1,6 +1,7 @@
 package lb.edu.aub.cmps.grad.algorithm;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.TreeSet;
 import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.Course;
 import lb.edu.aub.cmps.grad.classes.Department;
+import lb.edu.aub.cmps.grad.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.grad.classes.Room;
 import lb.edu.aub.cmps.grad.classes.Section;
 
@@ -69,7 +71,7 @@ public abstract class Scheduler implements IScheduler{
 	}
 	
 	public Map<Department, Set<Course>> getDepCoursesMap(){
-		Map<Department, Set<Course>> map = new HashMap<Department, Set<Course>>();
+		Map<Department, Set<Course>> map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
 		for(Integer dep_id: setup.getId_dep().keySet()){
 			map.put(setup.id_dep.get(dep_id), new HashSet<Course>());
 		}

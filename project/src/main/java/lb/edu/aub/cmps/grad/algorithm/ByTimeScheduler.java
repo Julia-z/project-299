@@ -23,7 +23,7 @@ import lb.edu.aub.cmps.grad.classes.MyLogger;
  */
 public class ByTimeScheduler extends Scheduler {
 
-	private Map<Department, Set<Class>> classes_by_dep;
+	private TreeMap<Department, Set<Class>> classes_by_dep;
 	private int num_of_all_classes;
 
 	private Iterator<Class>[] its;
