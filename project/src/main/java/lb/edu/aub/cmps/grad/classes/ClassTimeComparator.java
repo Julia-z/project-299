@@ -10,6 +10,8 @@ import java.util.Comparator;
 public class ClassTimeComparator implements Comparator<Class> {
 
 	public int compare(Class c1, Class c2) {
+		if(!c1.canChangeTime() || !c1.canChangeRoom()) return -1;
+		if(!c2.canChangeTime() || !c2.canChangeRoom()) return 1;
 		int diff = c1.getRequestedTime().compareTo(c2.getRequestedTime());
 		if (diff != 0)
 			return diff;
