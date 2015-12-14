@@ -16,6 +16,7 @@ import lb.edu.aub.cmps.grad.classes.PrintTimeClassInRoomVisitor;
 import lb.edu.aub.cmps.grad.classes.Room;
 import lb.edu.aub.cmps.grad.classes.RoomVisitor;
 import lb.edu.aub.cmps.grad.output.ExportSectionsToExcel;
+import lb.edu.aub.cmps.grad.output.GenerateStatisticsInfo;
 
 public class App {
 
@@ -24,15 +25,13 @@ public class App {
 		Scheduler s = new ByTimeScheduler();
 		Map<Class, String> not = s.schedule();
 		Map<Department, Set<Course>> scheduled = s.getDepCoursesMap();
-		for(Department d: scheduled.keySet()){
-			System.out.println(d.getName() + " -> "+d.getNum_of_classes());
-		}
+		
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
 		e.export(scheduled);
 		e.generateInfo(not);
 		
 		//update the database
-		/*
+		
 		ClassVisitor visitor = new InsertClassToDBVisitor();
 		Set<Class> classes = new HashSet<Class>();
 		Map<Department, Set<Class>> dep_classes = s.getScheduled();
@@ -42,7 +41,7 @@ public class App {
 		for (Class cl : classes) {
 			cl.accept(visitor);
 		}
-		*/
+		
 		//generate room info
 		RoomVisitor roomvisitor = new PrintTimeClassInRoomVisitor();
 		Map<Integer, Room> id_room = s.getIdRoomMap();
@@ -53,9 +52,9 @@ public class App {
 		
 		//statistics
 		Map<Department, Double> statByDep = s.getStatisticsByDepartment();
-		System.out.println(statByDep);
-
-		System.out.println(s.getOverallStatistics());
+		double stat = s.getOverallStatistics();
+		GenerateStatisticsInfo statistics = new GenerateStatisticsInfo();
+		statistics.generate(statByDep, stat);
 	}
 	
 

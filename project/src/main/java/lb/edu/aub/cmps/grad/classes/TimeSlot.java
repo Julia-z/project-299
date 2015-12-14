@@ -14,13 +14,7 @@ public class TimeSlot {
 	private static int maxHours = 19;
 	private static int minHours = 8;
 
-	/**
-	 * commented so that the mapper can function normally
-	 */
-	/*
-	 * TimeSlot(Day day, String start, String end) { this.day = day; this.start
-	 * = start; this.end = end; }
-	 */
+
 	public Day getDay() {
 		return day;
 	}

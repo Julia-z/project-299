@@ -6,8 +6,9 @@ import java.util.logging.Logger;
 import lb.edu.aub.cmps.grad.services.ClassService;
 
 /**
- * Updates the database with the granted room and time
- * 
+ * implementing the visitor pattern
+ * inserts the class/lecture with its granted room and time to the database
+ * @author Julia
  * @author Bilal Abi Farraj
  */
 public class InsertClassToDBVisitor implements ClassVisitor {
@@ -16,8 +17,8 @@ public class InsertClassToDBVisitor implements ClassVisitor {
 	 * @param c
 	 *            given the Class to be updated in the database with the given
 	 *            room and time
-	 * @throws IOException
-	 * @throws SecurityException
+	 * @throws IOException for the logger
+	 * @throws SecurityException for the logger 
 	 */
 
 	public void visit(Class c) throws SecurityException, IOException {

@@ -1,27 +1,30 @@
 package lb.edu.aub.cmps.grad.output;
 
-import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
+import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
+import lb.edu.aub.cmps.grad.algorithm.Scheduler;
+import lb.edu.aub.cmps.grad.classes.Department;
+
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 
-import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
-import lb.edu.aub.cmps.grad.algorithm.Scheduler;
-import lb.edu.aub.cmps.grad.classes.Department;
-
+/**
+ * 
+ * @author Yasmin Kadah
+ * generates an excel file showing statistics info by department and overall percentage
+ */
 public class GenerateStatisticsInfo {
 	HSSFWorkbook wb;
 	HSSFSheet statistics;

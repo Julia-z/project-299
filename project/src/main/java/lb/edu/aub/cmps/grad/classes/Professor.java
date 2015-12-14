@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  * Defines the object Professor.
- * 
+ * @author Julia El Zini
  * @author Bilal Abi Farraj
  */
 
@@ -53,7 +53,7 @@ public class Professor {
 	/**
 	 * Checks if Professor is Available during Slots
 	 * 
-	 * @param slots
+	 * @param slots the time slots
 	 * @return true if Professor is available false if professor already has a
 	 *         class during that time
 	 */

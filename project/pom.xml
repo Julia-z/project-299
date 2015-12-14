@@ -5,7 +5,7 @@
 	<artifactId>project</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>project</name>
+	<name>FAS Scheduler</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -41,7 +41,7 @@
 
 	<developers>
 		<developer>
-			<email>fyk08@mail.aub.edu</email>
+			<email>kadahyasmin@gmail.com</email>
 			<name>Yasmin Kadah</name>
 			<id>fyk08</id>
 		</developer>
@@ -58,4 +58,12 @@
 			<id>bya03</id>
 		</developer>
 	</developers>
+	
+	
+	<description>
+	The Class Scheduler is a well needed software at the faculty of arts and sciences at the American University of Beirut in particular, and in any academic department in general. It finds the best fit solution to schedule classes in rooms based on variables, including room availability, capacity, accessories, professor’s availability and more. 
+	This program has two parts: front end, takes input from departments at the university. Back end, finds the best combination possible among the classes requested by the departments.
+	
+	</description>
+	
 </project>

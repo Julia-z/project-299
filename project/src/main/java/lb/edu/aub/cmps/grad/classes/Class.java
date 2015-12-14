@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Defines the object Class
+ * Defines the object Class or lecture where a class encapsulate the
+ * requested/given room/time
  * 
  * @author Julia El Zini
  * @author Bilal Abi Farraj
@@ -76,16 +77,9 @@ public class Class implements ClassVisitable {
 		return type;
 	}
 
-	/**
-	 * For the sake of testing private int class_id; private int course_id;
-	 * private int class_capacity; private HashSet<Integer> section_numbers;
-	 * private Room room; private Time time; private Professor Professor;
-	 * private String type; private int type_id;
-	 */
 	public String toString() {
 		return "Class id: " + class_id + ", Course id: " + course_id
-				+ ", Type :" + type;// +", Room: "
-									// +room.getNumber()+", Time: "+time.toString()+", Professor: "+Professor.getName();
+				+ ", Type :" + type;
 	}
 
 	public void setProfessor(Professor Professor) {
@@ -170,7 +164,8 @@ public class Class implements ClassVisitable {
 		this.accessories_ids = ids;
 	}
 
-	public void accept(ClassVisitor visitor) throws SecurityException, IOException {
+	public void accept(ClassVisitor visitor) throws SecurityException,
+			IOException {
 		visitor.visit(this);
 	}
 

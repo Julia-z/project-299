@@ -5,7 +5,11 @@ import java.util.Comparator;
 import lb.edu.aub.cmps.grad.classes.Department;
 
 /**
- * Implements Comparator. Compares the weights of 2 given Departments.
+ * Implements Comparator. 
+ * compares two departments given their weights 
+ * the weight is proportinal to the number of classes they offer
+ * if the two departments give the same number of classes they will be compared according to their ids 
+ * (fetched from the database) to ensure uniqueness so that all the departments will appear in the scheduling even if they have the same weight
  * @author Julia El Zini
  * @author Bilal Abi Farraj
  */

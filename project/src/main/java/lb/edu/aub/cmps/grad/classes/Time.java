@@ -45,7 +45,7 @@ public class Time{
 	/**
 	 * This Method checks whether there is time conflict between this and time2
 	 * 
-	 * @param time2
+	 * @param time2 the time to check conflict
 	 * @return boolean with true if conflict, false if no conflict
 	 */
 	public boolean conflicts(Time time2) {
@@ -82,7 +82,7 @@ public class Time{
 		return new Time(ts);
 	}
 	/**
-	 * @param t2
+	 * @param t2 to compare the time (this) against
 	 * @return -1, 0, 1
 	 */
 	public int compareTo(Time t2){

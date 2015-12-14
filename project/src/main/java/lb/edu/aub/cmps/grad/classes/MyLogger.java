@@ -8,7 +8,6 @@ import java.util.logging.SimpleFormatter;
 
 /**
  * Defines the logging system in the program
- * 
  * @author Bilal Abi Farraj
  */
 

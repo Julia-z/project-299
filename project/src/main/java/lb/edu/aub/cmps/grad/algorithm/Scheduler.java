@@ -2,7 +2,6 @@ package lb.edu.aub.cmps.grad.algorithm;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +16,10 @@ import lb.edu.aub.cmps.grad.classes.Room;
 import lb.edu.aub.cmps.grad.classes.Section;
 
 /**
- * Abstract class implementing IScheduler. Defines the object Scheduler.
+ * Abstract class implementing IScheduler.
+ * Has an instance of SetUp i.e. fetches requests from the database.
+ * Has an abstract method schedule() Where all the scheduling should be done 
+ * according to the class that extends it
  * 
  * @author Julia El Zini
  */
@@ -40,12 +42,10 @@ public abstract class Scheduler implements IScheduler{
 		return requests_by_dep;
 	}
 	/**
-	 * constructor
-	 * @param num_of_iterations
-	 * @throws IOException 
-	 * @throws SecurityException 
+	 * constructor that class instantiate the setup to fetch data from database
+	 * @author Julia El Zini
 	 */
-	public Scheduler() throws SecurityException, IOException {
+	public Scheduler(){
 		setup = new SetUp();
 		this.num_of_iterations = 10;
 		this.requests_by_dep = setup.getDeps_courses_map();
@@ -70,15 +70,20 @@ public abstract class Scheduler implements IScheduler{
 		return setup;
 	}
 	
+	/**
+	 * @return a map of Department as key and the set of courses offered by the department as value
+	 *  Needed for the output
+	 *  @author Julia El Zini
+	 */
 	public Map<Department, Set<Course>> getDepCoursesMap(){
 		Map<Department, Set<Course>> map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
 		for(Integer dep_id: setup.getId_dep().keySet()){
-			map.put(setup.id_dep.get(dep_id), new HashSet<Course>());
+			map.put(setup.getId_dep().get(dep_id), new HashSet<Course>());
 		}
 		for(Integer course_id: setup.getId_course().keySet()){
 			Course c = setup.getId_course().get(course_id);
 			for(Integer i: c.getSectionNbrs()){
-				Section s = new Section(c.getDepartment(), setup.id_dep.get(c.getDepartment()).getName(), i, c.getCourse_name(), c.getCourse_id());
+				Section s = new Section(c.getDepartment(), setup.getId_dep().get(c.getDepartment()).getName(), i, c.getCourse_name(), c.getCourse_id());
 				if(c.getClasses()!=null){
 					for(Class cl : c.getClasses()){
 						if(cl.getSection_number().contains(i)) s.addClass(cl);
@@ -86,9 +91,13 @@ public abstract class Scheduler implements IScheduler{
 					c.addSection(s);
 				}
 			}
-			map.get(setup.id_dep.get(c.getDepartment())).add(c);
+			map.get(setup.getId_dep().get(c.getDepartment())).add(c);
 		}
 		return map;
 	}
+	
+	/**
+	 * abstract method where the scheduling should be done
+	 */
 	public abstract Map<Class, String> schedule();
 }

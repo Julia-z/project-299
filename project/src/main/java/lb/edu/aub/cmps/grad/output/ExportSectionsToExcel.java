@@ -26,7 +26,9 @@ import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Exports the results received from the scheduler to an excel file.
- * 
+ * representing every department with the classes that were scheduled 
+ * if a class was changed(room/time) it will be gighlighted with red
+ * the second sheet in the workbook represents the not scheduled classes and the reason
  * @author Yasmin Kadah
  */
 @SuppressWarnings("deprecation")
@@ -166,7 +168,7 @@ public class ExportSectionsToExcel {
 	}
 
 	/**
-	 * @param dep_sections
+	 * @param map the map from dep to a set of given courses
 	 */
 	public void export(Map<Department, Set<Course>> map) {
 		// here you can refer to course.getSections() that returns a set of

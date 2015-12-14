@@ -16,8 +16,11 @@ import lb.edu.aub.cmps.grad.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.grad.classes.MyLogger;
 
 /**
- * Starts with a specific time and schedules all the classes in their best or
- * second best rooms.
+ * This class is the first implemetation of the ISchedler
+ * It tries to satisfy the request of the department
+ * if the request couldn't be satisfied it tries to change the room or the time 
+ * respectign the location of the department (for the room chnage)
+ * and the type of the class (if its time/rooom should be fixed)
  * 
  * @author Julia El Zini
  */
@@ -35,8 +38,8 @@ public class ByTimeScheduler extends Scheduler {
 	/**
 	 * Constructor. Sets the needed fields for the schedule method
 	 * 
-	 * @throws SecurityException
-	 * @throws IOException
+	 * @throws SecurityException for the database connection
+	 * @throws IOException for the ouptput file
 	 */
 	@SuppressWarnings("unchecked")
 	public ByTimeScheduler() throws SecurityException, IOException {
@@ -58,7 +61,7 @@ public class ByTimeScheduler extends Scheduler {
 	}
 
 	/**
-	 * Runs the byTime scheduling algorithm and returns the unscheduled rooms
+	 * Runs the byTime scheduling algorithm and returns the unscheduled classes and a string denoting the reason
 	 */
 	public Map<Class, String> schedule() {
 		log.info("BasicScheduler initiated.... Schedule method running");
@@ -259,6 +262,10 @@ public class ByTimeScheduler extends Scheduler {
 		return scheduled_map;
 	}
 
+	/**
+	 * @author Julia
+	 * @return a map from a department to a double denoting the percentage of requests that were satisfied
+	 */
 	public Map<Department, Double> getStatisticsByDepartment() {
 		
 		statByDep = new HashMap<Department, Double>();
@@ -275,6 +282,10 @@ public class ByTimeScheduler extends Scheduler {
 		overallStat = overallStat*1.0 / num_of_all_classes;
 		return statByDep;
 	}
+	/**
+	 * @return a double denoting the overall percentage of requests that were satisfied
+	 * @author Julia
+	 */
 
 	public double getOverallStatistics() {
 		return overallStat;

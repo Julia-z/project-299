@@ -3,7 +3,9 @@ package lb.edu.aub.cmps.grad.classes;
 import java.util.Comparator;
 
 /**
- * Implements Comparator. Compares the times of 2 given Classes
+ * Implements Comparator. 
+ * compares the two classes given their time
+ * if they have the same time it returns the difference between their id
  * @author Julia El Zini
  */
 

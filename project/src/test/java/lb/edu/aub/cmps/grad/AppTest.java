@@ -10,6 +10,7 @@ import lb.edu.aub.cmps.grad.classes.Time;
 import lb.edu.aub.cmps.grad.classes.TimeSlot;
 
 /**
+ * @author Yasmin Kadah
  * Unit test for simple App.
  */
 public class AppTest 

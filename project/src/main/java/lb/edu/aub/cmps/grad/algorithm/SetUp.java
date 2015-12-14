@@ -29,42 +29,58 @@ import lb.edu.aub.cmps.grad.services.DepartmentService;
 import lb.edu.aub.cmps.grad.services.ProfessorService;
 import lb.edu.aub.cmps.grad.services.RoomService;
 
-// calls on all the services and initialize all the data members
 /**
- * A class that retrieves all the info from the database and stores them in the
- * necessary datatypes. It calls on object services from package “services”, so
- * that they can be used in finding the solution later in the Schedulers.
+ * A class that retrieves all the requested classes from the database specified
+ * in the jdbc.properties file in src/main/resources.
+ * 
+ * The getters provide all the necessary data types filled with data from the
+ * database for the scheduler to work.
+ * 
+ * The class is also provided with some methods used in the scheduling:
+ * get_all_rooms_in_all_near_buildings() get_all_rooms_in_all_near_buildings()
+ * best_schedule_class() otherAvailableRoom() otherAvailableTime()
  * 
  * @author Julia El Zini
- * @author Bilal Abi Farraj
  * @author Yasmin Kadah
  */
 
 public class SetUp {
 	private HashSet<Building> bldgs;
-	private HashSet<Class> classes; // still needs many fields
+	private HashSet<Class> classes;
 	private HashSet<Department> deps;
-	private HashSet<Course> courses; // still needs the classes
+	private HashSet<Course> courses;
 	private HashSet<Professor> profs;
-	private HashSet<Room> rooms;// still needs the type
+	private HashSet<Room> rooms;
 	private HashSet<Integer> accessories;
 
-	HashMap<Integer, Building> id_bldg;
-	HashMap<Integer, Class> id_class;
-	HashMap<Integer, Department> id_dep;
+	private HashMap<Integer, Building> id_bldg;
+	private HashMap<Integer, Class> id_class;
+	private HashMap<Integer, Department> id_dep;
 	private HashMap<Integer, Course> id_course;
-	HashMap<Integer, Professor> id_prof;
-	HashMap<Integer, Room> id_room;
+	private HashMap<Integer, Professor> id_prof;
+	private HashMap<Integer, Room> id_room;
 
-	HashMap<Building, Set<Integer>> bldg_rooms;
+	private HashMap<Building, Set<Integer>> bldg_rooms;
 
-	TreeMap<Department, Set<Course>> deps_courses_map;
-	TreeMap<Department, Set<Class>> deps_classes_map;
+	private TreeMap<Department, Set<Course>> deps_courses_map;
+	private TreeMap<Department, Set<Class>> deps_classes_map;
 	private MyLogger loggerWrapper;
 
-	// fills in the needed sets before starting the computation
-	public SetUp() throws SecurityException, IOException {
-		loggerWrapper = MyLogger.getInstance();
+	/**
+	 * constructor that initializes all the data types and fills them with the
+	 * necessary data fetched from the database
+
+	 * @author Julia El Zini
+	 */
+	public SetUp() {
+		try {
+			loggerWrapper = MyLogger.getInstance();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Logger log = loggerWrapper.getLogger();
 
 		// buildings
@@ -178,10 +194,6 @@ public class SetUp {
 		}
 		log.info("Mapping classes to their corresponding courses. Done");
 
-		// ____________________________________________________________________________________
-
-		// initialize the deps_courses_map;
-
 		log.info("Mapping courses to departments...");
 		for (Department d : deps) {
 			deps_courses_map.put(d, d.getCourses_offered());
@@ -196,44 +208,11 @@ public class SetUp {
 		log.info("Mapping courses to departments. Done");
 	}
 
-	// getteres
-	public HashSet<Building> getBldgs() {
-		return bldgs;
-	}
-
-	public HashSet<Class> getClasses() {
-		return classes;
-	}
-
-	public HashSet<Course> getCourses() {
-		return courses;
-	}
-
-	public HashSet<Department> getDeps() {
-		return deps;
-	}
-
-	public HashSet<Professor> getProfs() {
-		return profs;
-	}
-
-	public HashSet<Room> getRooms() {
-		return rooms;
-	}
-
-	public HashSet<Integer> getAccessories() {
-		return accessories;
-	}
-
-	public int getNumOfClasses() {
-		return classes.size();
-	}
-
-	// DONE
 	/**
-	 * Finds Buildings that have the same location as the passed bldg DONE
+	 * Finds Buildings that have the same location as the passed bldg
 	 * 
-	 * @param bldgs
+	 * @param b the building to search for near by
+	 * @author yasmin Kadah
 	 * @return Set of buildings with same location.
 	 */
 	public Set<Building> getNearBuildings(Building b) {
@@ -254,15 +233,16 @@ public class SetUp {
 	 * @return NULL if no rooms are left during a certain time slot
 	 * 
 	 *         the choice of the room SHOULD respect the capacity i.e. the room
-	 *         returned should be of capacity >= to the capacity of the passed
+	 *         returned should be of capacity greater than or equal to the capacity of the passed
 	 *         room
 	 * 
 	 *         should first check for available rooms in the same bldg if there
 	 *         no rooms left check for the other buildings that have the same
 	 *         location else check in other buildings
-	 * 
-	 *         You can change the params to getSimilar_available_rooms(Room
-	 *         room, Time time)
+	 * @author Julia El Zini
+	 * @author Yasmin Kadah
+	 * @param room the room to search for its similar 
+	 * @param times the time during which the room should be available
 	 */
 	public Room getSimilar_available_rooms(Room room, TimeSlot[] times) {
 		Set<Room> sameBuilding = get_all_rooms_in_same_building(room, times);
@@ -320,6 +300,9 @@ public class SetUp {
 	 * @author Yasmin Kadah
 	 * @return all the rooms in the same building SHOULD respect the capacity
 	 *         and the type of the room
+	 *  
+	 * @param room the room to search for its similar 
+	 * @param times the time during which the room should be available
 	 */
 	public Set<Room> get_all_rooms_in_same_building(Room room, TimeSlot[] times) {
 		Set<Room> sameBuilding = new HashSet<Room>();
@@ -339,11 +322,12 @@ public class SetUp {
 
 	/**
 	 * @author Yasmin Kadah
-	 * @param room
-	 * @param times
-	 * @return all rooms in near buildings SHOULD respect capacity
-	 * and type SHOULD NOT return the rooms in the same building as the passes
-	 * room
+	 * @param room the room to search for its similar
+	 * 
+	 * @param times the time slots during which the room should be available
+	 * @return all rooms in near buildings SHOULD respect capacity and type
+	 *         SHOULD NOT return the rooms in the same building as the passes
+	 *         room
 	 */
 	public Set<Room> get_all_rooms_in_all_near_buildings(Room room,
 			TimeSlot[] times) {
@@ -367,9 +351,11 @@ public class SetUp {
 
 	/**
 	 * @author Yasmin Kadah
-	 * @return SHOULD respect capacity and type SHOULD NOT return the rooms
-	 * in the same building as the passes room neither the rooms in the nearby
-	 * buildings
+	 * @return SHOULD respect capacity and type SHOULD NOT return the rooms in
+	 *         the same building as the passes room neither the rooms in the
+	 *         nearby buildings
+	 * @param room the room to search for its similar
+	 * @param times the time slots during which the room should be available
 	 */
 	public Set<Room> get_all_rooms(Room room, TimeSlot[] times) {
 		Set<Room> allRooms = new HashSet<Room>();
@@ -391,9 +377,9 @@ public class SetUp {
 
 	/**
 	 * @author Julia El Zini
-	 * @param c
-	 * @return 1 in case of success -1 in case of unavailable prof -2 in
-	 * case of unavailable room
+	 * @param c the class to schedule
+	 * @return 1 in case of success -1 in case of unavailable prof -2 in case of
+	 *         unavailable room
 	 */
 	public int bestScheduleClass(Class c) {
 		Room r = c.getRequestedRoom();
@@ -418,7 +404,11 @@ public class SetUp {
 	}
 
 	/**
-	 * TODO handle accessories
+	 * @author Julia El Zini
+	 * 
+	 * @param cl the class to search for available rooms for 
+	 * @return another room that is similar to the room requested by cl and
+	 *         which is available during cl.requestedTime
 	 */
 	public Room otherAvailableRoom(Class cl) {
 		Room room = cl.getRequestedRoom();
@@ -449,16 +439,22 @@ public class SetUp {
 		return null;
 	}
 
-
 	/**
-	 * @param cl
-	 * @param r
+	 * @param cl the class
 	 * @return available times
 	 */
 	public Time otherAvailableTime(Class cl) {
 		return otherAvailableTime(cl, cl.getRequestedRoom());
 	}
 
+	/**
+	 * @author Julia El Zini
+	 * 
+	 * @param cl the class 
+	 * @param r the room t start the search from
+	 * @return the nearest time t2 to t1 such that t1 is the requested time for
+	 *         the class cl and that the room r is available during t2
+	 */
 	public Time otherAvailableTime(Class cl, Room r) {
 		Time t = cl.getRequestedTime();
 		r = id_room.get(cl.getRequestedRoom().getId());
@@ -527,8 +523,10 @@ public class SetUp {
 
 	/**
 	 * Changes room for the given class
-	 * @param cl
+	 * 
+	 * @param cl the class 
 	 * @return true if scheduled
+	 * @author Julia El ZIni
 	 */
 	public boolean changeRoom(Class cl) {
 		Time t = cl.getRequestedTime();
@@ -572,14 +570,20 @@ public class SetUp {
 		return scheduled;
 	}
 
+	/**
+	 * 
+	 * @param cl the class for which the time should be changed
+	 * @return true if the time of the class cl could be changed
+	 */
 	public boolean changeTime(Class cl) {
 		return changeTime(cl, cl.getRequestedRoom());
 	}
 
 	/**
 	 * Changes time of the class in a given room
-	 * @param cl
-	 * @param r
+	 * 
+	 * @param cl the class for which the time should be changed
+	 * @param r the room to start with
 	 * @return true if scheduled
 	 */
 	public boolean changeTime(Class cl, Room r) {
@@ -624,7 +628,7 @@ public class SetUp {
 		}
 		// next and prev are both not null
 		else {
-			while (!done) {// TODO need to add more
+			while (!done) {
 				// try to schedule it next
 				if (next != null
 						&& (p.isAvailable(next) && r.is_available(next
@@ -655,24 +659,30 @@ public class SetUp {
 		// }
 		return true;
 	}
-
-	/*
-	 * public boolean changeRoomAndTime(Class cl) { boolean done = false; done =
-	 * changeTime(cl); if(done) return true; Room r =
-	 * id_room.get(cl.getRequestedRoom().getId()); while(!done && r != null){
-	 * for(Room room2: get_all_rooms_in_same_building(r,
-	 * cl.getRequestedTime().getTimeSlots())){ done = changeTime(cl, room2);
-	 * if(done)return true; } for(Room room2:
-	 * get_all_rooms_in_all_near_buildings(r, cl.getc)) } return false; }
+	/**
+	 * @author Julia El Zini
+	 * 
+	 * @param c_to_sched the class to schedule
+	 * @return true if the time and the rooom could be changed
 	 */
+	public boolean changeTimeAndRoom(Class c_to_sched) {
+		Room r2 = otherAvailableRoom(c_to_sched);
+		if (r2 == null)
+			return false;
+		else {
 
+		}
+		return false;
+	}
 
 	/**
 	 * Reserves a class with a given Professor, Room and Time
-	 * @param p
-	 * @param r
-	 * @param t
-	 * @param c
+	 * 
+	 * @param p the professor giving the class
+	 * @param r the room r granted for the class
+	 * @param t the time  for the class
+	 * @param c the class 
+	 * @author Julia El Zini
 	 */
 	public void reserve(Professor p, Room r, Time t, Class c) {
 		c.setGiven_time(t);
@@ -682,6 +692,39 @@ public class SetUp {
 			p.addUnavailable(c.getGivenTime());
 		}
 		r.reserveRoom(t.getTimeSlots(), c);
+	}
+
+	// getteres
+	public HashSet<Building> getBldgs() {
+		return bldgs;
+	}
+
+	public HashSet<Class> getClasses() {
+		return classes;
+	}
+
+	public HashSet<Course> getCourses() {
+		return courses;
+	}
+
+	public HashSet<Department> getDeps() {
+		return deps;
+	}
+
+	public HashSet<Professor> getProfs() {
+		return profs;
+	}
+
+	public HashSet<Room> getRooms() {
+		return rooms;
+	}
+
+	public HashSet<Integer> getAccessories() {
+		return accessories;
+	}
+
+	public int getNumOfClasses() {
+		return classes.size();
 	}
 
 	public TreeMap<Department, Set<Course>> getDeps_courses_map() {
@@ -712,19 +755,10 @@ public class SetUp {
 		return id_dep;
 	}
 
-	public boolean changeTimeAndRoom(Class c_to_sched) {
-		Room r2 = otherAvailableRoom(c_to_sched);
-		if (r2 == null)
-			return false;
-		else {
 
-		}
-		return false;
-	}
 
 	public Map<Integer, Class> getId_class() {
 		return id_class;
 	}
-	
 
 }

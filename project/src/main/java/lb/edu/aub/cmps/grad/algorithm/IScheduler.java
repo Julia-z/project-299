@@ -11,6 +11,12 @@ import lb.edu.aub.cmps.grad.classes.Room;
 /**
  * @author Julia El Zini
  */
+
+/**
+ * Interface for the scheduling
+ * @author Julia
+ *
+ */
 public interface IScheduler {
 
 	public Map<Class, String> schedule();

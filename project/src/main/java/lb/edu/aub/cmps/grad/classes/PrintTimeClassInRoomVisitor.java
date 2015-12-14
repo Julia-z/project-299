@@ -17,8 +17,8 @@ import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Prints the output to an excel file
- * 
- * @author Julia El Zini
+ * implements the visitor pattern
+ * visits the room and prints the corresponding rows in an excel file
  * @author Yasmin Kadah
  */
 public class PrintTimeClassInRoomVisitor implements RoomVisitor {
