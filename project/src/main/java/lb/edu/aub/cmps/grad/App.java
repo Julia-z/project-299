@@ -20,12 +20,13 @@ import lb.edu.aub.cmps.grad.output.GenerateStatisticsInfo;
 
 public class App {
 
+	//test
 	public static void main(String[] args) throws SecurityException, IOException{
 
 		Scheduler s = new ByTimeScheduler();
 		Map<Class, String> not = s.schedule();
 		Map<Department, Set<Course>> scheduled = s.getDepCoursesMap();
-		
+	
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
 		e.export(scheduled);
 		e.generateInfo(not);
