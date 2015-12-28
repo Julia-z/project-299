@@ -2,8 +2,10 @@ package lb.edu.aub.cmps.grad.services;
 
 import java.util.Set;
 
+import lb.edu.aub.cmps.grad.classes.Building;
 import lb.edu.aub.cmps.grad.classes.Course;
 import lb.edu.aub.cmps.grad.classes.Department;
+import lb.edu.aub.cmps.grad.classes.Room;
 import lb.edu.aub.cmps.grad.mappers.DepartmentMapper;
 
 import org.apache.ibatis.session.SqlSession;
@@ -56,4 +58,35 @@ public class DepartmentService implements DepartmentMapper {
 		return null;
 	}
 
+	public Room getGradClass(int id) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+
+			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
+			Room gradClass = pm.getGradClass(id);
+			return gradClass;
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			sqlSession.close();
+		}
+		return null;
+	}
+
+	public Building getBuildingByPriority(int id, int priority) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+
+			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
+			Building building = pm.getBuildingByPriority(id, priority);
+			return building;
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			sqlSession.close();
+		}
+		return null;
+	}
 }

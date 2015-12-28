@@ -51,5 +51,4 @@ public class Department {
 		return num_of_classes;
 	}
 	
-	
 }

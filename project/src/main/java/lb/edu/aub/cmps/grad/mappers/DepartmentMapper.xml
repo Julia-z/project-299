@@ -23,6 +23,41 @@
 	</resultMap>
 
 	<select id='getGivenCourses' parameterType="int" resultMap='coursesGivenResult'>
-		SELECT Course_Id, Course_Name, Level_ID, Department_ID from course where Department_ID = #{id}
+		SELECT Course_Id, Course_Name, Level_ID, Department_ID from course
+		where Department_ID = #{id}
+	</select>
+
+	<resultMap type='lb.edu.aub.cmps.grad.classes.Room' id='gradClassResult'>
+		<id property='id' column='Classroom_ID'></id>
+		<result property='number' column='Classroom_Number'></result>
+		<result property='room_capacity' column='Classroom_Capacity'></result>
+		<result property='building_id' column='Building_ID'></result>
+	</resultMap>
+
+
+	<select id='getGradClass' parameterType="int" resultMap='gradClassResult'>
+		SELECT
+		c.Classroom_ID, c.Classroom_Number,
+		c.Classroom_Capacity, c.Building_ID
+		from classroom c join grad_classroom g where c.Classroom_ID=
+		g.Classroom_ID and g.Department_ID= #{id}
+	</select>
+
+
+
+
+	<resultMap type='lb.edu.aub.cmps.grad.classes.Building' id='buildingPriorityResult'>
+		<id property='id' column='Building_ID'></id>
+		<result property='name' column='Building_Name'></result>
+		<result property='location_id' column='Sector_ID'></result>
+	</resultMap>
+
+
+	<select id='getBuildingByPriority' resultMap='buildingPriorityResult'>
+		SELECT
+		b.Building_ID, b.Building_Name, b.Sector_ID from building b join
+		department_building_priority d where b.Building_ID=d.Building_ID and
+		d.Department_ID= #{id}
+		and d.Priority= #{priority}
 	</select>
 </mapper>
