@@ -51,7 +51,6 @@ public class ClassService implements ClassMapper {
 				Set<Integer> section_numbers = cm.getSectionsInClass(id);
 				c.setSection_number(section_numbers);
 
-				
 			}
 
 			/**
@@ -68,7 +67,6 @@ public class ClassService implements ClassMapper {
 			sqlSession.close();
 		}
 	}
-
 
 	public Set<Integer> getSectionsInClass(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
@@ -109,7 +107,7 @@ public class ClassService implements ClassMapper {
 			sqlSession.close();
 		}
 	}
-	
+
 	/**
 	 * @return a set of all accessories in a certain class
 	 */
@@ -177,6 +175,50 @@ public class ClassService implements ClassMapper {
 			ClassMapper classMapper = sqlSession.getMapper(ClassMapper.class);
 			classMapper.updateLecture_Time(c);
 			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public Set<Class> getLowerCampusLectures() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getLowerCampusLectures();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public Set<Class> getLabs() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getLabs();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public Set<Class> getUpperCampusLectures() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getUpperCampusLectures();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public Set<Class> getRecitations() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getRecitations();
 		} finally {
 			sqlSession.close();
 		}

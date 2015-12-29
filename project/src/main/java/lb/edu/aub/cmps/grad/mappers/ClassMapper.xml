@@ -16,10 +16,57 @@
 
 	<select id='getAllClasses' resultMap='ClassResult'>
 		SELECT c.LECTURE_ID,
-		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed, c.Time_Fixed from lecture c join
-		type_enum t where c.Type_id = t.Type_id
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
+		c.Time_Fixed from lecture c join
+		type_enum t where c.Type_id =
+		t.Type_id
 	</select>
 
+	<select id='getLabs' resultMap='ClassResult'>
+		SELECT c.LECTURE_ID,
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
+		c.Time_Fixed from lecture c join
+		type_enum t where c.type_id=2 and c.Type_id =
+		t.Type_id
+	</select>
+	
+	<select id='getRecitations' resultMap='ClassResult'>
+		SELECT c.LECTURE_ID,
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
+		c.Time_Fixed from lecture c join
+		type_enum t where c.type_id=3 and c.Type_id =
+		t.Type_id
+	</select>
+	
+	<select id='getLowerCampusLectures' resultMap='ClassResult'>
+		SELECT
+		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
+		l.Classroom_Fixed,
+		l.Time_Fixed
+		FROM lecture l join classroom c join
+		building b join
+		type_enum t where (l.Type_id=1 or l.Type_id=4) and l.Type_id =
+		t.Type_id and l.classroom_id=
+		c.classroom_id and
+		c.building_id=b.building_id and (b.sector_id=3 or
+		b.sector_id=4)
+	</select>
+
+	<select id='getUpperCampusLectures' resultMap='ClassResult'>
+		SELECT
+		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
+		l.Classroom_Fixed,
+		l.Time_Fixed
+		FROM lecture l join classroom c join
+		building b join
+		type_enum t where (l.Type_id=1 or l.Type_id=4) and
+		l.Type_id =
+		t.Type_id and l.classroom_id=
+		c.classroom_id and
+		c.building_id=b.building_id and (b.sector_id=1 or
+		b.sector_id=2 or b.sector_id=5 or b.sector_id=6)
+	</select>
+	
 	<!-- write a method to get sections after creating a class section -->
 
 	<resultMap type='lb.edu.aub.cmps.grad.classes.TimeSlot' id='ClassTimeResult'>
@@ -67,8 +114,9 @@
 
 	<select id='getSectionsInClass' parameterType="int" resultMap='sectionResult'>
 
-		SELECT s.Section_Number from section_lecture l 
-		join section s where s.Section_ID = l.Section_ID and LECTURE_ID = #{id}
+		SELECT s.Section_Number from section_lecture l
+		join section s where
+		s.Section_ID = l.Section_ID and LECTURE_ID = #{id}
 	</select>
 
 	<resultMap type='lb.edu.aub.cmps.grad.classes.Room' id='RoomResult'>
@@ -93,14 +141,15 @@
 		SET Classroom_ID= #{givenRoomId}
 		where Lecture_ID= #{class_id}
 	</update>
-	
+
 	<update id="updateLecture_Time" parameterType="lb.edu.aub.cmps.grad.classes.Class">
 		UPDATE
 		lecture_time
 		SET Day_ID= #{givenDay},
 		Start= #{givenStart},
-		End= #{givenEnd}
+		End=
+		#{givenEnd}
 		where LECTURE_ID= #{class_id}
-        AND Day_Id=#{req_day}
+		AND Day_Id=#{req_day}
 	</update>
 </mapper>
