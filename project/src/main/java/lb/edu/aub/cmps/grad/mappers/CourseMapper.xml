@@ -14,7 +14,12 @@
 	<select id='getAllCourses' resultMap='CourseResult'>
 		SELECT * from course
 	</select>
-	
+
+	<select id='getGradCourses' resultMap='CourseResult'>
+		SELECT * from course where
+		level_id != 1 and level_id != 2
+	</select>
+
 	<resultMap type='lb.edu.aub.cmps.grad.classes.Class' id='ClassResult'>
 		<id property='class_id' column='Lecture_ID'></id>
 		<result property='course_id' column='Course_ID'></result>
@@ -24,16 +29,18 @@
 
 
 	<select id='getAllClasses' parameterType='int' resultMap='ClassResult'>
-		SELECT c.Class_ID,
-		c.Course_ID, c.Class_Capacity, t.Lecture_Type from lecture c join
+		SELECT
+		c.Class_ID,
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type from lecture
+		c join
 		type_enum t where c.Type_id = t.Type_id and c.Lecture_ID= #{id}
 	</select>
-	
+
 	<select id='getSectionsInCourse' parameterType="int" resultMap='sectionResult'>
-	
+
 		SELECT Section_Number from section where Course_ID = #{id}
 	</select>
 	<resultMap type='Integer' id='sectionResult'>
-		<id property='id' column ='Section_Number'></id>
+		<id property='id' column='Section_Number'></id>
 	</resultMap>
 </mapper>

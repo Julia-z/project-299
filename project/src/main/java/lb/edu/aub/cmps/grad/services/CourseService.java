@@ -74,5 +74,14 @@ public class CourseService implements CourseMapper {
 		}
 	}
 
-
+	public Set<Course> getGradCourses() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			CourseMapper cm = sqlSession.getMapper(CourseMapper.class);
+			return cm.getGradCourses();
+		} finally {
+			sqlSession.close();
+		}
+	}
 }
