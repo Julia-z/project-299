@@ -21,5 +21,7 @@ public interface DepartmentMapper {
 
 	public Room getGradClass(int id);
 	
+	public int getPreferedBuildingsCount(int id);
+	
 	public Building getBuildingByPriority(@Param("id") int id, @Param("priority") int priority);
 }

@@ -89,4 +89,18 @@ public class DepartmentService implements DepartmentMapper {
 		}
 		return null;
 	}
+
+	public int getPreferedBuildingsCount(int id) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
+			return pm.getPreferedBuildingsCount(id);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			sqlSession.close();
+		}
+		return 0;
+	}
 }

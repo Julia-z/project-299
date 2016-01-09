@@ -60,4 +60,12 @@
 		d.Department_ID= #{id}
 		and d.Priority= #{priority}
 	</select>
+
+	<select id="getPreferedBuildingsCount" parameterType="int"
+		resultType="int">
+		select count(*) priority
+		from department_building_priority
+		where
+		department_id= #{id}
+	</select>
 </mapper>
