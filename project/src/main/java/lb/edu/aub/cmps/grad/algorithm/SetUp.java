@@ -564,8 +564,9 @@ public class SetUp {
 				else if (step == 2)
 					rooms = get_all_rooms(cl.getRequestedRoom(), cl
 							.getRequestedTime().getTimeSlots());
-				step++;
 			}
+			step++;
+
 		}
 		return scheduled;
 	}

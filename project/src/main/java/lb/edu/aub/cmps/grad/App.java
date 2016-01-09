@@ -23,16 +23,21 @@ public class App {
 	//test
 	public static void main(String[] args) throws SecurityException, IOException{
 
+		System.out.println("starting...");
 		Scheduler s = new ByTimeScheduler();
+		System.out.println("scheduler created...");
 		Map<Class, String> not = s.schedule();
+		System.out.println("all classes scheduled...");
 		Map<Department, Set<Course>> scheduled = s.getDepCoursesMap();
 	
+		System.out.println("the map is got");
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
 		e.export(scheduled);
+		System.out.println("exported to excel");
 		e.generateInfo(not);
 		
 		//update the database
-		
+		/*
 		ClassVisitor visitor = new InsertClassToDBVisitor();
 		Set<Class> classes = new HashSet<Class>();
 		Map<Department, Set<Class>> dep_classes = s.getScheduled();
@@ -42,7 +47,7 @@ public class App {
 		for (Class cl : classes) {
 			cl.accept(visitor);
 		}
-		
+		*/
 		//generate room info
 		RoomVisitor roomvisitor = new PrintTimeClassInRoomVisitor();
 		Map<Integer, Room> id_room = s.getIdRoomMap();

@@ -86,11 +86,14 @@ public class ByTimeScheduler extends Scheduler {
 				for (int i = 0; i < classes_to_sched + 1; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();
+						System.out.println(c_to_sched.getClass_id());
 						remaining_classes--;
 
 						int best = setup.bestScheduleClass(c_to_sched);
 						boolean scheduled = false;
+						
 						if(best == 1){
+							System.out.println("met..");
 							scheduled = true;
 							c_to_sched.setIsMet(true);
 							scheduled_map.get(d).add(c_to_sched);
@@ -99,6 +102,7 @@ public class ByTimeScheduler extends Scheduler {
 						else{
 							//prof unavailable
 							if(best == -1){
+								System.out.println("the prof is unavailable...");
 								//cant change time
 								if(! c_to_sched.canChangeTime()) {
 									scheduled = false;
@@ -125,11 +129,15 @@ public class ByTimeScheduler extends Scheduler {
 							}
 							//the room is unavailable
 							else if(best == -2){
+								System.out.println("the room is unavailable...");
 								if(!c_to_sched.canChangeRoom()){
 									notSched.put(c_to_sched, "The room is unavailable and the class is marked not to change the room");
 								}
 								else{
+									System.out.println("we can chage room");
+
 									scheduled = setup.changeRoom(c_to_sched);
+									System.out.println("the room is changed");
 									if(scheduled){
 										scheduled_map.get(d).add(c_to_sched);
 									}
