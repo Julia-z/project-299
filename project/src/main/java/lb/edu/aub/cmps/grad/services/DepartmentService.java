@@ -27,7 +27,7 @@ public class DepartmentService implements DepartmentMapper {
 		try {
 			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
 			Set<Department> deps = pm.getAllDepartments();
-			for(Department dep: deps){
+			for (Department dep : deps) {
 				dep.setCourses_offered(pm.getGivenCourses(dep.getId()));
 			}
 			return deps;
@@ -74,33 +74,17 @@ public class DepartmentService implements DepartmentMapper {
 		return null;
 	}
 
-	public Building getBuildingByPriority(int id, int priority) {
+	public Building[] getBuildingByPriority(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
-
 			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
-			Building building = pm.getBuildingByPriority(id, priority);
-			return building;
+			return pm.getBuildingByPriority(id);
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
 			sqlSession.close();
 		}
 		return null;
-	}
-
-	public int getPreferedBuildingsCount(int id) {
-		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
-				.openSession();
-		try {
-			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
-			return pm.getPreferedBuildingsCount(id);
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			sqlSession.close();
-		}
-		return 0;
 	}
 }

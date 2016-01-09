@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.grad.configuration;
 
+import lb.edu.aub.cmps.grad.classes.Building;
 import lb.edu.aub.cmps.grad.services.DepartmentService;
 
 public class Configuration {
@@ -26,11 +27,13 @@ public class Configuration {
 	 */
 	public int[] getBuildingsByPriorityForDepartment(int depId) {
 		DepartmentService ds = new DepartmentService();
-
-		int nbr = ds.getPreferedBuildingsCount(depId);
-		int[] buildingIds = new int[nbr];
-		for (int i = 1; i <= nbr; i++) {
-			buildingIds[i - 1] = ds.getBuildingByPriority(depId, i).getId();
+		Building[] bs= ds.getBuildingByPriority(depId);
+		
+		int size= bs.length;
+		int[] buildingIds= new int[size];
+		
+		for(int i=0; i<size; i++){
+			buildingIds[i]= bs[i].getId();
 		}
 		
 		return buildingIds;
