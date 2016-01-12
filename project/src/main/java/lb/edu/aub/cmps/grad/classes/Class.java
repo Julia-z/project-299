@@ -30,7 +30,7 @@ public class Class implements ClassVisitable {
 	private String givenStart;
 	private String givenEnd;
 
-	private Professor Professor;
+	private Set<Professor> Professors;
 	private String type;
 	private boolean isMet;
 	private Set<Integer> accessories_ids;
@@ -69,8 +69,8 @@ public class Class implements ClassVisitable {
 		this.section_numbers = (HashSet<Integer>) section_numbers2;
 	}
 
-	public Professor getProfessor() {
-		return Professor;
+	public Set<Professor> getProfessors() {
+		return Professors;
 	}
 
 	public String getType() {
@@ -82,8 +82,8 @@ public class Class implements ClassVisitable {
 				+ ", Type :" + type;
 	}
 
-	public void setProfessor(Professor Professor) {
-		this.Professor = Professor;
+	public void setProfessors(Set<Professor> Professors) {
+		this.Professors = Professors;
 	}
 
 	public void setTime(Time classTime) {

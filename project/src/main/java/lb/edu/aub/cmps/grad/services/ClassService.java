@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.grad.services;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import lb.edu.aub.cmps.grad.classes.Class;
@@ -39,7 +40,13 @@ public class ClassService implements ClassMapper {
 				Professor p = cm.getProfessor(id);
 				if (p != null)
 					p.initializeUnavailable();
-				c.setProfessor(p);
+				/***
+				 * TODO BILAL
+				 * get multi profs
+				 */
+				Set<Professor> ps = new HashSet<Professor>();
+				ps.add(p);
+				c.setProfessors(ps);
 				Room r = cm.getClassroom(id);
 				if (r != null)
 					r.initializeReserved();

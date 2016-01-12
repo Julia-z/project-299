@@ -330,11 +330,11 @@ public class ExportSectionsToExcel {
 								}
 							}
 
-							if (c.getProfessor() != null) {
+							/*if (c.getProfessor() != null) {
 								profCell.setCellValue(c.getProfessor()
 										.getName());
 								;
-							}
+							}*/
 							classCount = 5;
 						}
 
