@@ -68,18 +68,24 @@ public class AvailableRoomsByTime {
 		TimeSlot[] mwf = { mon, wed, fri };
 		findAvailable(mwf, availableRooms);
 
+		TimeSlot[] tr = { tue, thurs };
+		findAvailable(tr, availableRooms);
 	}
 
 	private void findAvailable(TimeSlot[] days,
 			TreeMap<TimeSlot, Set<Room>> availableRooms) {
 
 		int limit = 0;
-		if (days[0].getDay() == Day.M) // Case of MWF
+		int iter = 0;
+		if (days[0].getDay() == Day.M) { // Case of MWF
 			limit = 12;
-		else
-			limit = 7; // TODO Case of TR isn't working
+			iter = 3;
+		} else {
+			limit = 6; // TODO Case of TR isn't working
+			iter = 2;
+		}
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < iter; i++) {
 			int count = 0;
 			TimeSlot d = days[i];
 			System.out.println(d.getDay());
