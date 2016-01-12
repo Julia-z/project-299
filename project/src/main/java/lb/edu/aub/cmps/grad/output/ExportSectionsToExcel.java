@@ -26,9 +26,10 @@ import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Exports the results received from the scheduler to an excel file.
- * representing every department with the classes that were scheduled 
- * if a class was changed(room/time) it will be gighlighted with red
- * the second sheet in the workbook represents the not scheduled classes and the reason
+ * representing every department with the classes that were scheduled if a class
+ * was changed(room/time) it will be gighlighted with red the second sheet in
+ * the workbook represents the not scheduled classes and the reason
+ * 
  * @author Yasmin Kadah
  */
 @SuppressWarnings("deprecation")
@@ -168,7 +169,8 @@ public class ExportSectionsToExcel {
 	}
 
 	/**
-	 * @param map the map from dep to a set of given courses
+	 * @param map
+	 *            the map from dep to a set of given courses
 	 */
 	public void export(Map<Department, Set<Course>> map) {
 		// here you can refer to course.getSections() that returns a set of
@@ -180,11 +182,9 @@ public class ExportSectionsToExcel {
 				if (course.getSections() != null) {
 					for (Section s : course.getSections()) {
 
-						
 						Row row1 = departments.createRow(rowsCount);
 						rowsCount++;
 
-						
 						Cell dep = row1.createCell(0);
 						dep.setCellValue(d.getName());
 						Cell crs = row1.createCell(1);
@@ -205,14 +205,14 @@ public class ExportSectionsToExcel {
 						Cell sendTime = row1.createCell(14);
 						Cell room = row1.createCell(15);
 						Cell profCell = row1.createCell(16);
-						
+
 						int classCount = 0;
 						for (Class c : s.getClasses()) {
 
-							 if(classCount >0){
-							 row1 = departments.createRow(rowsCount);
-							 rowsCount++;
-							 dep = row1.createCell(0);
+							if (classCount > 0) {
+								row1 = departments.createRow(rowsCount);
+								rowsCount++;
+								dep = row1.createCell(0);
 								dep.setCellValue(d.getName());
 								crs = row1.createCell(1);
 								crs.setCellValue(course.getCourse_name());
@@ -233,11 +233,11 @@ public class ExportSectionsToExcel {
 								room = row1.createCell(15);
 								profCell = row1.createCell(16);
 							}
-							 for (int i = 0; i < row1.getLastCellNum(); i++) {
-									if (sectionsCount % 2 == 0) {
-										row1.getCell(i).setCellStyle(gray);
-									}
+							for (int i = 0; i < row1.getLastCellNum(); i++) {
+								if (sectionsCount % 2 == 0) {
+									row1.getCell(i).setCellStyle(gray);
 								}
+							}
 							boolean ismet = c.getIsMet();
 
 							if (c.getGivenTime() != null
@@ -335,7 +335,7 @@ public class ExportSectionsToExcel {
 										.getName());
 								;
 							}
-							classCount=5;
+							classCount = 5;
 						}
 
 						sectionsCount++;
@@ -390,6 +390,5 @@ public class ExportSectionsToExcel {
 			e.printStackTrace();
 		}
 	}
-
 
 }

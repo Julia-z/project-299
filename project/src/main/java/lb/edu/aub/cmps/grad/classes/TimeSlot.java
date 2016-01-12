@@ -187,8 +187,8 @@ public class TimeSlot {
 		t3.setDay(Day.R);
 		t3.setStart("1200");
 		t3.setEnd("1250");
-		System.out.println(t2);
-		System.out.println(t2.previousTimeSlot());
+		System.out.println(t);
+		System.out.println(t.nextTimeSlot());
 		//System.out.println(t.nextTimeSlot().nextTimeSlot());
 	}
 
