@@ -78,7 +78,6 @@ public class SetUp {
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Logger log = loggerWrapper.getLogger();
@@ -756,10 +755,36 @@ public class SetUp {
 		return id_dep;
 	}
 
-
-
 	public Map<Integer, Class> getId_class() {
 		return id_class;
 	}
+	
+	//Done for the enhanced scheduler
+	/**
+	 * TODO Bilal
+	 * @return
+	 */
+	public Map<Department, Set<Class>> getTime_fixed_classes_by_dep(){
+		return null;
+	}
+	public Map<Department, Set<Class>> getLoc_fixed_classes_by_dep(){
+		return null;
+	}
+	public Map<Department, Set<Class>> getGrad_classes_by_dep(){
+		return null;
+	}
+	public Map<Department, Set<Class>> getLower_Lec_by_dep(){
+		return null;
+	}
+	public Map<Department, Set<Class>> getUpper_Lec_by_dep(){
+		return null;
+	}
+	public Map<Department, Set<Class>> getLower_rec_by_dep(){
+		return null;
+	}
+	public Map<Department, Set<Class>> getUpper_rec_by_dep(){
+		return null;
+	}
+	
 
 }
