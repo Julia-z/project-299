@@ -299,6 +299,5 @@ public class ByTimeScheduler extends Scheduler {
 		return overallStat;
 	}
 
-
 	
 }

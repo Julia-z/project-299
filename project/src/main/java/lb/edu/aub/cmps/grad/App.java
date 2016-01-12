@@ -1,17 +1,14 @@
 package lb.edu.aub.cmps.grad;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
 import lb.edu.aub.cmps.grad.algorithm.Scheduler;
 import lb.edu.aub.cmps.grad.classes.Class;
-import lb.edu.aub.cmps.grad.classes.ClassVisitor;
 import lb.edu.aub.cmps.grad.classes.Course;
 import lb.edu.aub.cmps.grad.classes.Department;
-import lb.edu.aub.cmps.grad.classes.InsertClassToDBVisitor;
 import lb.edu.aub.cmps.grad.classes.PrintTimeClassInRoomVisitor;
 import lb.edu.aub.cmps.grad.classes.Room;
 import lb.edu.aub.cmps.grad.classes.RoomVisitor;

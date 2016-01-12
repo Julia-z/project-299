@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.grad.algorithm;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -93,6 +94,10 @@ public abstract class Scheduler implements IScheduler{
 			map.get(setup.getId_dep().get(c.getDepartment())).add(c);
 		}
 		return map;
+	}
+	
+	public Collection<Room> getRooms(){
+		return setup.getId_RoomMap().values();
 	}
 	
 	/**
