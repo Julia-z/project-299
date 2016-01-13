@@ -72,7 +72,7 @@ public class AvailableRoomsByTime {
 		findAvailable(tr, availableRooms);
 	}
 
-	private void findAvailable(TimeSlot[] days,
+	private TreeMap<TimeSlot, Set<Room>> findAvailable(TimeSlot[] days,
 			TreeMap<TimeSlot, Set<Room>> availableRooms) {
 
 		int limit = 0;
@@ -122,6 +122,8 @@ public class AvailableRoomsByTime {
 			}
 			System.out.println("}");
 		}
+		return availableRooms;
+
 	}
 
 	public static void main(String[] args) throws SecurityException,
