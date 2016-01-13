@@ -1,5 +1,6 @@
 package lb.edu.aub.cmps.grad.classes;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
@@ -84,8 +85,9 @@ public class Room implements RoomVisitable{
 			return available;
 		for (TimeSlot reservedTimeSlot : this.reserved.keySet()) {
 			for (int i = 0; i < slots.length; i++) {
-				if (reservedTimeSlot.conflicts(slots[i]))
+				if (reservedTimeSlot.conflicts(slots[i])){
 					available = false;
+				}
 			}
 		}
 		return available;

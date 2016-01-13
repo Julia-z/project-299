@@ -409,7 +409,9 @@ public class SetUp {
 					av_prof = false;
 		}
 
+		System.out.println(av_room +"    " + av_prof);
 		if (av_room && av_prof) {
+			
 			reserve(ps, r, t, c);
 			c.setIsMet(true);
 			return 1;
@@ -784,6 +786,7 @@ public class SetUp {
 				p.addUnavailable(c.getGivenTime());
 			}
 		}
+		System.out.println("reserveddddddddddddddddddd");
 		r.reserveRoom(t.getTimeSlots(), c);
 	}
 

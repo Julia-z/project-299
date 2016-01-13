@@ -42,7 +42,6 @@ public class ByTimeScheduler extends Scheduler {
 	@SuppressWarnings("unchecked")
 	public ByTimeScheduler() throws SecurityException, IOException {
 		super();
-		classes_by_dep = setup.getDeps_Classes_map();
 		
 		log.info("ByTimeScheduler created.");
 	}
@@ -54,6 +53,7 @@ public class ByTimeScheduler extends Scheduler {
 		log.info("BasicScheduler initiated.... Schedule method running");
 		Map<Class, String> notSched = new HashMap<Class, String>();
 
+		num_of_all_classes = setup.getNumOfClasses();
 		int remaining_classes = num_of_all_classes;
 
 		boolean floor_turn = false;
@@ -69,7 +69,6 @@ public class ByTimeScheduler extends Scheduler {
 				floor_turn = !floor_turn;
 				Iterator<Class> it = its[k];
 				k++;
-				
 				for (int i = 0; i < classes_to_sched + 1; i++) {
 					if (it.hasNext()) {
 						Class c_to_sched = it.next();

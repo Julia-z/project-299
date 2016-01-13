@@ -2,7 +2,6 @@ package lb.edu.aub.cmps.grad.output;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
@@ -66,7 +65,7 @@ public class AvailableRoomsByTime {
 		sat.setEnd("750");
 
 		TimeSlot[] mwf = { mon, wed, fri };
-		findAvailable(mwf, availableRooms);
+		availableRooms= findAvailable(mwf, availableRooms);
 
 		TimeSlot[] tr = { tue, thurs };
 		findAvailable(tr, availableRooms);
@@ -96,6 +95,9 @@ public class AvailableRoomsByTime {
 					TimeSlot[] ts = { d };
 					if (room.is_available(ts)) {
 						available.add(room);
+				//		System.out.println("helloooooooooooooooooo" + available.size());
+
+						
 					}
 				}
 				System.out.println("Putting " + available.size()
@@ -117,15 +119,73 @@ public class AvailableRoomsByTime {
 		System.out.println("Size: " + ts.size());
 		for (TimeSlot t : ts) {
 			System.out.print(t.toString() + ": {");
-			for (Room rm : availableRooms.get(t)) {
-				System.out.print(rm.getNumber() + ", ");
+			if(availableRooms.get(t) == null) System.out.println("No available rooms during this time slot " + t);
+			else{
+				System.out.println("availableeeeeeeeeeeeeee");
+				for (Room rm : availableRooms.get(t)) {
+					System.out.print(rm.getNumber() + ", ");
+				}
+				
 			}
 			System.out.println("}");
 		}
 		return availableRooms;
 
+		
 	}
 
+	public Set<TimeSlot> getAllTimeSlots(){
+
+		Set<TimeSlot> all = new HashSet<TimeSlot>();
+		//case of MWF classes
+		Day[] mwf = {Day.M, Day.W, Day.F};
+		for(Day d: mwf){
+			TimeSlot slot = new TimeSlot();
+			slot.setDay(d);
+			slot.setStart("700");
+			slot.setEnd("750");
+			all.add(slot);
+			int count = 1;
+			while(count <= 12){
+				slot = slot.nextTimeSlot();
+				all.add(slot);
+				count ++;
+			}
+		}
+		Day[] tr = {Day.T, Day.R};
+		for(Day d: tr){
+			TimeSlot slot = new TimeSlot();
+			slot.setDay(d);
+			slot.setStart("800");
+			slot.setEnd("930");
+			all.add(slot);
+			int count = 1;
+			while(count <= 6){
+				slot = slot.nextTimeSlot();
+				all.add(slot);
+				count ++;
+			}
+		}
+		return all;
+	}
+	public void getAllAvailableRooms(){
+		Set<TimeSlot> all = getAllTimeSlots();
+		for(TimeSlot t: all){
+			System.out.println(t);
+			int count = 0;
+
+			for(Room r: rooms){
+				TimeSlot[]arr = {t};
+				if(r.is_available(arr)){
+					count++;
+					System.out.println(r.getNumber());
+				}
+			}
+			System.out.println("count "+count);
+			System.out.println("__________________________________________________________");
+
+		}
+	}
 	public static void main(String[] args) throws SecurityException,
 			IOException {
 		System.out.println("starting...");
@@ -133,10 +193,13 @@ public class AvailableRoomsByTime {
 
 		System.out.println("scheduler created...");
 		s.schedule();
+		
+
 		System.out.println("all classes scheduled...");
 
 		AvailableRoomsByTime available_rooms = new AvailableRoomsByTime(
 				s.getRooms());
-		available_rooms.generate();
+		//available_rooms.generate();
+		available_rooms.getAllAvailableRooms();
 	}
 }

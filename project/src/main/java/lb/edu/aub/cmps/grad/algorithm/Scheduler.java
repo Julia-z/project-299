@@ -53,6 +53,8 @@ public abstract class Scheduler implements IScheduler{
 	 */
 	public Scheduler(){
 		setup = new SetUp();
+		classes_by_dep = setup.getDeps_Classes_map();
+
 		this.num_of_iterations = 10;
 		this.requests_by_dep = setup.getDeps_courses_map();
 
@@ -122,4 +124,5 @@ public abstract class Scheduler implements IScheduler{
 	 * abstract method where the scheduling should be done
 	 */
 	public abstract Map<Class, String> schedule();
+
 }
