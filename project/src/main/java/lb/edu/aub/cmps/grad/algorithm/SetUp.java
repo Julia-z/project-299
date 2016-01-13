@@ -851,31 +851,39 @@ public class SetUp {
 	public Map<Integer, Class> getId_class() {
 		return id_class;
 	}
+	public int getDep_id(Class cl){
+		Course c = id_course.get(cl.getCourse_id());
+		return c.getDepartment();
+	}
 	
 	//Done for the enhanced scheduler
 	/**
 	 * TODO Bilal
 	 * @return
 	 */
-	public Map<Department, Set<Class>> getTime_fixed_classes_by_dep(){
+	public Set<Class> getTime_fixed_classes(){
 		return null;
 	}
-	public Map<Department, Set<Class>> getLoc_fixed_classes_by_dep(){
+	public  Set<Class> getLoc_fixed_classes(){
 		return null;
 	}
-	public Map<Department, Set<Class>> getGrad_classes_by_dep(){
+	public Set<Class> getlabs(){
 		return null;
 	}
-	public Map<Department, Set<Class>> getLower_Lec_by_dep(){
+	
+	public Set<Class> getGrad_classes(){
 		return null;
 	}
-	public Map<Department, Set<Class>> getUpper_Lec_by_dep(){
+	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep(){
 		return null;
 	}
-	public Map<Department, Set<Class>> getLower_rec_by_dep(){
+	public TreeMap<Department, Set<Class>> getUpper_Lec_by_dep(){
 		return null;
 	}
-	public Map<Department, Set<Class>> getUpper_rec_by_dep(){
+	public TreeMap<Department, Set<Class>> getLower_rec_by_dep(){
+		return null;
+	}
+	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep(){
 		return null;
 	}
 	

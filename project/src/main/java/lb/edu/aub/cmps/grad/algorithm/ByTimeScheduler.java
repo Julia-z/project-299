@@ -26,10 +26,8 @@ import lb.edu.aub.cmps.grad.classes.MyLogger;
  */
 public class ByTimeScheduler extends Scheduler {
 
-	private TreeMap<Department, Set<Class>> classes_by_dep;
 	private int num_of_all_classes;
 
-	private Iterator<Class>[] its;
 	private double overallStat;
 	private Map<Department, Double> statByDep;
 	private MyLogger loggerWrapper = MyLogger.getInstance();
@@ -45,18 +43,7 @@ public class ByTimeScheduler extends Scheduler {
 	public ByTimeScheduler() throws SecurityException, IOException {
 		super();
 		classes_by_dep = setup.getDeps_Classes_map();
-		num_of_all_classes = setup.getNumOfClasses();
-		num_of_iterations = 10;
-		int size = classes_by_dep.keySet().size();
-		its = new Iterator[size];
-		int i = 0;
-		scheduled_map = new TreeMap<Department, Set<Class>>(
-				new DepartmentWeightComparator());
-		for (Department d : classes_by_dep.keySet()) {
-			its[i] = classes_by_dep.get(d).iterator();
-			i++;
-			scheduled_map.put(d, new TreeSet<Class>(new ClassTimeComparator()));
-		}
+		
 		log.info("ByTimeScheduler created.");
 	}
 

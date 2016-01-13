@@ -3,12 +3,14 @@ package lb.edu.aub.cmps.grad.algorithm;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 import lb.edu.aub.cmps.grad.classes.Class;
+import lb.edu.aub.cmps.grad.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.grad.classes.Course;
 import lb.edu.aub.cmps.grad.classes.Department;
 import lb.edu.aub.cmps.grad.classes.DepartmentWeightComparator;
@@ -27,12 +29,16 @@ public abstract class Scheduler implements IScheduler{
 	protected SetUp setup;
 	protected int num_of_iterations;
 	protected int count_all_courses;
+	protected int num_of_all_classes;
+	protected Iterator<Class>[] its;
 	protected TreeMap<Department, Set<Course>> requests_by_dep; // sorted by weight
 																// since it
 																// knows
 																// how to sort
 																// the
 																// departments
+
+	protected TreeMap<Department, Set<Class>> classes_by_dep;
 
 	protected TreeMap<Department, TreeSet<Class>> classes_req_by_dep;
 	protected Map<Department, Set<Class>> scheduled_map;
@@ -53,6 +59,18 @@ public abstract class Scheduler implements IScheduler{
 		
 		for (Department d : requests_by_dep.keySet()) {
 			count_all_courses += d.getCourses_offered().size();
+		}
+		num_of_all_classes = setup.getNumOfClasses();
+		num_of_iterations = 10;
+		int size = classes_by_dep.keySet().size();
+		its = new Iterator[size];
+		int i = 0;
+		scheduled_map = new TreeMap<Department, Set<Class>>(
+				new DepartmentWeightComparator());
+		for (Department d : classes_by_dep.keySet()) {
+			its[i] = classes_by_dep.get(d).iterator();
+			i++;
+			scheduled_map.put(d, new TreeSet<Class>(new ClassTimeComparator()));
 		}
 	}
 	
