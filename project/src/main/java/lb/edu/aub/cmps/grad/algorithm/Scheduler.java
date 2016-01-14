@@ -39,10 +39,8 @@ public abstract class Scheduler implements IScheduler{
 																// departments
 
 	protected TreeMap<Department, Set<Class>> classes_by_dep;
-
-	protected TreeMap<Department, TreeSet<Class>> classes_req_by_dep;
 	protected Map<Department, Set<Class>> scheduled_map;
-
+	protected Map<Class, String> not_scheduled;
 	
 	public TreeMap<Department, Set<Course>> getRequests(){
 		return requests_by_dep;
@@ -51,6 +49,7 @@ public abstract class Scheduler implements IScheduler{
 	 * constructor that class instantiate the setup to fetch data from database
 	 * @author Julia El Zini
 	 */
+	@SuppressWarnings("unchecked")
 	public Scheduler(){
 		setup = new SetUp();
 		classes_by_dep = setup.getDeps_Classes_map();
@@ -125,4 +124,7 @@ public abstract class Scheduler implements IScheduler{
 	 */
 	public abstract Map<Class, String> schedule();
 
+	public Map<Class, String> getNotScheduled(){
+		return not_scheduled;
+	}
 }

@@ -5,14 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import lb.edu.aub.cmps.grad.classes.Class;
-import lb.edu.aub.cmps.grad.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.grad.classes.Department;
-import lb.edu.aub.cmps.grad.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.grad.classes.MyLogger;
 
 /**
@@ -39,7 +35,6 @@ public class ByTimeScheduler extends Scheduler {
 	 * @throws SecurityException for the database connection
 	 * @throws IOException for the ouptput file
 	 */
-	@SuppressWarnings("unchecked")
 	public ByTimeScheduler() throws SecurityException, IOException {
 		super();
 		

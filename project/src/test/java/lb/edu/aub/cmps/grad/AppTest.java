@@ -76,6 +76,7 @@ public class AppTest
 		times3[0].setEnd("0950");
 		Time myTime = new Time(times3);
 		assertEquals(false, myProfessor.isAvailable(myTime));
+		//asser
 	}
     public void testProf2() {
 		//Test when time slot requested is equal to start time of slot of which professor is not available

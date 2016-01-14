@@ -386,6 +386,7 @@ public class SetUp {
 
 		Time t = c.getRequestedTime();
 		Set<Professor> ps = c.getProfessors();
+		if(r == null || t == null) return 1;
 		if (ps != null && !ps.isEmpty()){
 			Set<Professor> ps2 = new HashSet<Professor>();
 			for(Professor p: ps){
@@ -889,6 +890,49 @@ public class SetUp {
 	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep(){
 		return null;
 	}
-	
 
+	public Set<Class> getBig_lectures(){
+		return null;
+	}
+
+	public Department getDepartment(Class c){
+		Course co = id_course.get(c.getCourse_id());
+		return id_dep.get(co.getDepartment());
+	}
+	
+	/**
+	 * @author Bilal Abi Farraj
+	 * 
+	 * @param depId
+	 *            , the id of the department corresponding to the grad course
+	 * @return the id of the room in which the course should be given
+	 * 
+	 */
+	public Room getConferenceRoom(int depId) {
+		DepartmentService ds = new DepartmentService();
+		return ds.getGradClass(depId);
+	}
+
+	/**
+	 * @author Bilal Abi Farraj
+	 * 
+	 * @param depId
+	 *            , the id of the department
+	 * @return an array of buildings ids sorted by priority(descending order) in
+	 *         which we can schedule classes of a given dep
+	 */
+	public Building[] getBuildingsByPriorityForDepartment(int depId) {
+		DepartmentService ds = new DepartmentService();
+		return ds.getBuildingByPriority(depId);
+		
+		
+	}
+	public Set<Room> getRoomsInBuilding(Building b){
+		Set<Integer> ids = bldg_rooms.get(b);
+		Set<Room> rooms = new HashSet<Room>();
+		for(Integer id : ids){
+			rooms.add(id_room.get(id));
+		}
+		return rooms;
+	}
 }
