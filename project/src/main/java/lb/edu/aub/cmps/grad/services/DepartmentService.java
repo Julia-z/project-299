@@ -87,4 +87,18 @@ public class DepartmentService implements DepartmentMapper {
 		}
 		return null;
 	}
+
+	public Room[] getLectureRoomsByPriority(int id) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
+			return pm.getLectureRoomsByPriority(id);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			sqlSession.close();
+		}
+		return null;
+	}
 }

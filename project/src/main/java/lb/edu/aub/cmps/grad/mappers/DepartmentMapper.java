@@ -20,4 +20,6 @@ public interface DepartmentMapper {
 	public Room getGradClass(int id);
 	
 	public Building[] getBuildingByPriority(int id);
+	
+	public Room[] getLectureRoomsByPriority(int id);
 }
