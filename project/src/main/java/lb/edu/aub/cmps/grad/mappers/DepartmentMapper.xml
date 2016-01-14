@@ -27,7 +27,7 @@
 		where Department_ID = #{id}
 	</select>
 
-	<resultMap type='lb.edu.aub.cmps.grad.classes.Room' id='gradClassResult'>
+	<resultMap type='lb.edu.aub.cmps.grad.classes.Room' id='classResult'>
 		<id property='id' column='Classroom_ID'></id>
 		<result property='number' column='Classroom_Number'></result>
 		<result property='room_capacity' column='Classroom_Capacity'></result>
@@ -35,7 +35,7 @@
 	</resultMap>
 
 
-	<select id='getGradClass' parameterType="int" resultMap='gradClassResult'>
+	<select id='getGradClass' parameterType="int" resultMap='classResult'>
 		SELECT
 		c.Classroom_ID, c.Classroom_Number,
 		c.Classroom_Capacity, c.Building_ID
@@ -43,8 +43,13 @@
 		g.Classroom_ID and g.Department_ID= #{id}
 	</select>
 
-
-
+	<select id='getLectureRoomsByPriority' parameterType="int" resultMap='classResult'>
+		SELECT
+		c.Classroom_ID, c.Classroom_Number,
+		c.Classroom_Capacity, c.Building_ID
+		from classroom c join lecturerooms l where c.Classroom_ID=
+		l.Classroom_ID and l.Department_ID= #{id}
+	</select>
 
 	<resultMap type='lb.edu.aub.cmps.grad.classes.Building' id='buildingPriorityResult'>
 		<id property='id' column='Building_ID'></id>
