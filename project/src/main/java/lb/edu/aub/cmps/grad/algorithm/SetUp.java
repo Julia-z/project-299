@@ -865,19 +865,30 @@ public class SetUp {
 	 * TODO Bilal
 	 * @return
 	 */
+	//get all the fixed time classes as a sets
+	//should be ok 
 	public Set<Class> getTime_fixed_classes(){
 		return null;
 	}
+	//get all the location fixed classes as a sets
+		//should be ok 
 	public  Set<Class> getLoc_fixed_classes(){
 		return null;
 	}
+	
+	//get all the labs as a set
+	//should be ok
 	public Set<Class> getlabs(){
 		return null;
 	}
 	
+	//get all the grad classes also as a set 
 	public Set<Class> getGrad_classes(){
 		return null;
 	}
+	
+	//get them as sets inside the method and ill do the map thind
+	//please keep the return null not to make an error :) 
 	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep(){
 		return null;
 	}
@@ -891,6 +902,7 @@ public class SetUp {
 		return null;
 	}
 
+	//get all the lectures as set
 	public Set<Class> getBig_lectures(){
 		return null;
 	}
