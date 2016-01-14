@@ -114,9 +114,10 @@ public class Room implements RoomVisitable{
 
 
 	public String toString() {
-		return "id " + id + " ,number " + number + " ,accessories: "
-				+ accessories_ids +"type: "+type+" capacity: " + room_capacity
-				+ " building Id: " + building_id +" Reserved Times: "+reserved;
+		return "id " + id;
+//		+ " ,number " + number + " ,accessories: "
+//				+ accessories_ids +"type: "+type+" capacity: " + room_capacity
+//				+ " building Id: " + building_id +" Reserved Times: "+reserved;
 	}
 	public void initializeReserved(){
 		this.reserved = new TreeMap<TimeSlot, Class>(new RoomByTimeSlotComparator());

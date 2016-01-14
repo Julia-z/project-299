@@ -1,5 +1,7 @@
 package lb.edu.aub.cmps.grad.output;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,90 +14,24 @@ import lb.edu.aub.cmps.grad.classes.Day;
 import lb.edu.aub.cmps.grad.classes.Room;
 import lb.edu.aub.cmps.grad.classes.TimeSlot;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+
 public class AvailableRoomsByTime {
-	static Collection<Room> rooms;
+	private static Collection<Room> rooms;
+	private HashMap<TimeSlot, Set<Room>> availableRooms;
 
 	@SuppressWarnings("static-access")
 	public AvailableRoomsByTime(Collection<Room> rooms) {
 		this.rooms = rooms;
-
-		// u can add anything here
 	}
 
-	public void generate() {
-		// here u generate the excel file
-		/*
-		 * for(Room r: rooms){ System.out.println(r.getNumber());
-		 * System.out.println(r.getReserved()); }
-		 */
-		/*
-		 * TreeMap<TimeSlot, Set<Room>> availableRooms = new TreeMap<TimeSlot,
-		 * Set<Room>>( new TimeSlotComparator());
-		 * 
-		 * TimeSlot mon = new TimeSlot(); mon.setDay(Day.M); // I tried 700 750
-		 * mon.setStart("700"); mon.setEnd("800");
-		 * 
-		 * TimeSlot tue = new TimeSlot(); tue.setDay(Day.T);
-		 * tue.setStart("700"); tue.setEnd("815");
-		 * 
-		 * TimeSlot wed = new TimeSlot(); wed.setDay(Day.W);
-		 * wed.setStart("700"); wed.setEnd("800");
-		 * 
-		 * TimeSlot thurs = new TimeSlot(); thurs.setDay(Day.R);
-		 * thurs.setStart("700"); thurs.setEnd("815");
-		 * 
-		 * TimeSlot fri = new TimeSlot(); fri.setDay(Day.F);
-		 * fri.setStart("700"); fri.setEnd("800");
-		 * 
-		 * TimeSlot sat = new TimeSlot(); sat.setDay(Day.S);
-		 * sat.setStart("700"); sat.setEnd("750");
-		 * 
-		 * TimeSlot[] mwf = { mon, wed, fri }; availableRooms=
-		 * findAvailable(mwf, availableRooms);
-		 * 
-		 * TimeSlot[] tr = { tue, thurs }; findAvailable(tr, availableRooms);
-		 */
-	}
-
-	/*
-	 * private TreeMap<TimeSlot, Set<Room>> findAvailable(TimeSlot[] days,
-	 * TreeMap<TimeSlot, Set<Room>> availableRooms) {
-	 * 
-	 * int limit = 0; int iter = 0; if (days[0].getDay() == Day.M) { // Case of
-	 * MWF limit = 12; iter = 3; } else { limit = 6; // TODO Case of TR isn't
-	 * working iter = 2; }
-	 * 
-	 * for (int i = 0; i < iter; i++) { int count = 0; TimeSlot d = days[i];
-	 * System.out.println(d.getDay()); while (count < limit) { // 12 time slots
-	 * per day HashSet<Room> available = new HashSet<Room>();
-	 * 
-	 * for (Room room : rooms) { TimeSlot[] ts = { d }; if
-	 * (room.is_available(ts)) { available.add(room); //
-	 * System.out.println("helloooooooooooooooooo" + available.size());
-	 * 
-	 * 
-	 * } } System.out.println("Putting " + available.size() +
-	 * " available classes in " + d.toString());
-	 * 
-	 * // TODO Putting rooms in days different than Monday isn't // working
-	 * 
-	 * availableRooms.put(d, available);
-	 * 
-	 * System.out.println("Size :" + availableRooms.size()); d =
-	 * d.nextTimeSlot(); count++; } }
-	 * 
-	 * TreeSet<TimeSlot> ts = (TreeSet<TimeSlot>) availableRooms.keySet();
-	 * 
-	 * System.out.println("Size: " + ts.size()); for (TimeSlot t : ts) {
-	 * System.out.print(t.toString() + ": {"); //if(availableRooms.get(t) ==
-	 * null) System.out.println("No available rooms during this time slot " +
-	 * t); //else{ System.out.println("availableeeeeeeeeeeeeee"); for (Room rm :
-	 * availableRooms.get(t)) { System.out.print(rm.getNumber() + ", "); }
-	 * 
-	 * // } System.out.println("}"); } return availableRooms; }
-	 */
-
-	public TimeSlot[] getAllTimeSlots() {
+	
+	private TimeSlot[] getAllTimeSlots() {
 
 		TimeSlot[] all = new TimeSlot[55];
 		// case of MWF classes
@@ -136,13 +72,12 @@ public class AvailableRoomsByTime {
 		return all;
 	}
 
-	public void getAllAvailableRooms() {
+	public void exportAvailableRoomsByTime() throws IOException {
 		TimeSlot[] all = getAllTimeSlots();
-		HashMap<TimeSlot, Set<Room>> availableRooms = new HashMap<TimeSlot, Set<Room>>();
+		availableRooms = new HashMap<TimeSlot, Set<Room>>();
 
 		for (TimeSlot t : all) {
 			if (t != null) {
-				System.out.println("**" + t.toString() + "**");
 				Set<Room> availableRoomsOnTime = new HashSet<Room>();
 
 				for (Room r : rooms) {
@@ -155,12 +90,106 @@ public class AvailableRoomsByTime {
 			}
 		}
 
+
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFSheet rooms = wb.createSheet("Available Rooms By Time");
+
+		CellStyle gray = wb.createCellStyle();
+		gray.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		gray.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+		CellStyle light_green = wb.createCellStyle();
+		light_green.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+		light_green.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+		CellStyle blue = wb.createCellStyle();
+		blue.setFillForegroundColor(IndexedColors.LIGHT_TURQUOISE.getIndex());
+		blue.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+		rooms.setColumnWidth(0, 5000);
+		for (int i = 1; i <= 115; i++) {
+			rooms.setColumnWidth(i, 4000);
+		}
+
+		Row firstRow = rooms.createRow(0);
+		Cell daySlot = firstRow.createCell(0);
+		daySlot.setCellValue("Day");
+		Cell timeSlot = firstRow.createCell(1);
+		timeSlot.setCellValue("Time Slot");
+		Cell availableSlot = firstRow.createCell(2);
+		availableSlot.setCellValue("Rooms Available");
+
+		for (int j = 0; j < firstRow.getLastCellNum(); j++) {
+			firstRow.getCell(j).setCellStyle(blue);
+		}
+
+		int i = 2;
 		for (TimeSlot t : all) {
-			if (availableRooms.keySet().contains(t)) {
-				System.out.print(t.toString() + " -> ");
-				System.out.println("{" + availableRooms.get(t) + "}");
+			if (t != null) {
+				// Create Day cell
+				if (t.getStart().equals("0700")) {
+					Row dayRow = rooms.createRow(i);
+					Cell dayCell = dayRow.createCell(0);
+
+					if (t.getDay() == Day.M)
+						dayCell.setCellValue("Monday");
+					else if (t.getDay() == Day.W)
+						dayCell.setCellValue("Wednesday");
+					else if (t.getDay() == Day.F)
+						dayCell.setCellValue("Friday");
+
+					dayCell.setCellStyle(light_green);
+					i++;
+				}
+
+				else if (t.getStart().equals("0800")
+						&& (t.getDay() == Day.T || t.getDay() == Day.R)) {
+					Row dayRow = rooms.createRow(i);
+					Cell dayCell = dayRow.createCell(0);
+
+					if (t.getDay() == Day.T)
+						dayCell.setCellValue("Tuesday");
+					else if (t.getDay() == Day.R)
+						dayCell.setCellValue("Thursday");
+					dayCell.setCellStyle(light_green);
+					i++;
+				}
+				// Creating time slot cell
+				Row r = rooms.createRow(i);
+
+				Cell ts = r.createCell(1);
+				ts.setCellValue(t.toString().substring(3));
+
+				Cell av = r.createCell(2);
+				av.setCellValue(availableRooms.get(t).size() + " rooms");
+				i++;
+
+
+				// If any room is available on time we create a cell for it
+				if (availableRooms.keySet().contains(t)) {
+
+					int j = 3;
+					for (Room roomOnTime : availableRooms.get(t)) {
+						Cell roomCell = r.createCell(j);
+						roomCell.setCellValue(roomOnTime.getNumber() + " ("
+								+ roomOnTime.getRoom_capacity() + ")");
+						j++;
+					}
+				}
+
+				if (i % 2 == 0) {
+					for (int j = 1; j < r.getLastCellNum(); j++) {
+						r.getCell(j).setCellStyle(gray);
+					}
+				}
+
 			}
 		}
+
+		String excelFileName = "Outputs\\AvailableRoomsByTime.xls";
+		FileOutputStream output = new FileOutputStream(new File(excelFileName));
+		wb.write(output);
+		output.close();
 	}
 
 	public static void main(String[] args) throws SecurityException,
@@ -176,6 +205,6 @@ public class AvailableRoomsByTime {
 		AvailableRoomsByTime available_rooms = new AvailableRoomsByTime(
 				s.getRooms());
 		// available_rooms.generate();
-		available_rooms.getAllAvailableRooms();
+		available_rooms.exportAvailableRoomsByTime();
 	}
 }
