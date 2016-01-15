@@ -220,12 +220,67 @@ public class ClassService implements ClassMapper {
 		}
 	}
 
-	public Set<Class> getRecitations() {
+	public Set<Class> getLowerCampusRecitations() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getRecitations();
+			return cm.getLowerCampusRecitations();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public Set<Class> getUpperCampusRecitations() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getUpperCampusRecitations();
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public Set<Class> getTime_fixed_classes() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getTime_fixed_classes();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public Set<Class> getLoc_fixed_classes() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getLoc_fixed_classes();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public Set<Class> getGrad_classes() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getGrad_classes();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public Set<Class> getBig_lectures() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
+			return cm.getBig_lectures();
 		} finally {
 			sqlSession.close();
 		}

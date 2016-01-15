@@ -35,7 +35,7 @@
 	</resultMap>
 
 
-	<select id='getGradClass' parameterType="int" resultMap='classResult'>
+	<select id='getGradConferenceRoom' parameterType="int" resultMap='classResult'>
 		SELECT
 		c.Classroom_ID, c.Classroom_Number,
 		c.Classroom_Capacity, c.Building_ID

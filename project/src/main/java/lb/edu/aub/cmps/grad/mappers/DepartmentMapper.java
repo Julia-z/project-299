@@ -17,7 +17,7 @@ public interface DepartmentMapper {
 
 	public Set<Course> getGivenCourses(int id);
 
-	public Room getGradClass(int id);
+	public Room getGradConferenceRoom(int id);
 	
 	public Building[] getBuildingByPriority(int id);
 	

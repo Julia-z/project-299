@@ -22,22 +22,59 @@
 		t.Type_id
 	</select>
 
-	<select id='getLabs' resultMap='ClassResult'>
+	<select id='getBig_lectures' resultMap='ClassResult'>
 		SELECT c.LECTURE_ID,
 		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
 		c.Time_Fixed from lecture c join
+		type_enum t where c.Type_id =
+		t.Type_id and c.Class_capacity>100
+	</select>
+	
+	<select id='getLabs' resultMap='ClassResult'>
+		SELECT c.LECTURE_ID,
+		c.Course_ID,
+		c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
+		c.Time_Fixed from
+		lecture c join
 		type_enum t where c.type_id=2 and c.Type_id =
 		t.Type_id
 	</select>
-	
-	<select id='getRecitations' resultMap='ClassResult'>
-		SELECT c.LECTURE_ID,
-		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
-		c.Time_Fixed from lecture c join
-		type_enum t where c.type_id=3 and c.Type_id =
+
+	<select id='getLowerCampusRecitations' resultMap='ClassResult'>
+		SELECT
+		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
+		l.Classroom_Fixed,
+		l.Time_Fixed
+		FROM lecture l join classroom c join
+		building b join
+		type_enum t where l.Type_id=3 and
+		l.Type_id =
 		t.Type_id
+		and l.classroom_id=
+		c.classroom_id and
+		c.building_id=b.building_id and
+		(b.sector_id=3 or
+		b.sector_id=4)
 	</select>
-	
+
+	<select id='getUpperCampusRecitations' resultMap='ClassResult'>
+		SELECT
+		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
+		l.Classroom_Fixed,
+		l.Time_Fixed
+		FROM lecture l join classroom c join
+		building b join
+		type_enum t where l.Type_id=3 and
+		l.Type_id =
+		t.Type_id
+		and l.classroom_id=
+		c.classroom_id and
+		c.building_id=b.building_id and
+		(b.sector_id=1 or
+		b.sector_id=2 or
+		b.sector_id=5 or b.sector_id=6)
+	</select>
+
 	<select id='getLowerCampusLectures' resultMap='ClassResult'>
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
@@ -45,7 +82,8 @@
 		l.Time_Fixed
 		FROM lecture l join classroom c join
 		building b join
-		type_enum t where (l.Type_id=1 or l.Type_id=4) and l.Type_id =
+		type_enum t where (l.Type_id=1 or l.Type_id=4) and
+		l.Type_id =
 		t.Type_id and l.classroom_id=
 		c.classroom_id and
 		c.building_id=b.building_id and (b.sector_id=3 or
@@ -64,9 +102,10 @@
 		t.Type_id and l.classroom_id=
 		c.classroom_id and
 		c.building_id=b.building_id and (b.sector_id=1 or
-		b.sector_id=2 or b.sector_id=5 or b.sector_id=6)
+		b.sector_id=2 or
+		b.sector_id=5 or b.sector_id=6)
 	</select>
-	
+
 	<!-- write a method to get sections after creating a class section -->
 
 	<resultMap type='lb.edu.aub.cmps.grad.classes.TimeSlot' id='ClassTimeResult'>
@@ -152,4 +191,33 @@
 		where LECTURE_ID= #{class_id}
 		AND Day_Id=#{req_day}
 	</update>
+
+	<select id='getTime_fixed_classes' resultMap='ClassResult'>
+		SELECT
+		c.LECTURE_ID,
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type,
+		c.Classroom_Fixed,
+		c.Time_Fixed from lecture c join
+		type_enum t where
+		c.Type_id =
+		t.Type_id and time_fixed=1
+	</select>
+
+	<select id='getLoc_fixed_classes' resultMap='ClassResult'>
+		SELECT c.LECTURE_ID,
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
+		c.Time_Fixed from lecture c join
+		type_enum t where c.Type_id =
+		t.Type_id and Classroom_Fixed=1
+	</select>
+
+	<select id='getGrad_classes' resultMap='ClassResult'>
+		SELECT c.LECTURE_ID,
+		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
+		c.Time_Fixed from lecture c join
+		type_enum t join course r where
+		c.Type_id =
+		t.Type_id and c.course_id= r.course_id and r.level_id= 3
+	</select>
+
 </mapper>

@@ -14,7 +14,7 @@ public class Configuration {
 	 */
 	public int getConferenceRoomId(int depId) {
 		DepartmentService ds = new DepartmentService();
-		return ds.getGradClass(depId).getId();
+		return ds.getGradConferenceRoom(depId).getId();
 	}
 
 	/**

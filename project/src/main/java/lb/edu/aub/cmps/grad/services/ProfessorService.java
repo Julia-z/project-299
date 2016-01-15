@@ -58,4 +58,18 @@ public class ProfessorService implements ProfessorMapper {
 		return null;
 	}
 
+	public Set<Professor> getProfessorsByClass(int id) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
+				.openSession();
+		try {
+			ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
+			return  pm.getProfessorsByClass(id);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			sqlSession.close();
+		}
+		return null;
+	}
+
 }

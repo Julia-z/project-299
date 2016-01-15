@@ -40,9 +40,19 @@ public interface ClassMapper {
 
 	public Set<Class> getUpperCampusLectures();
 	
-	public Set<Class> getRecitations();
+	public Set<Class> getLowerCampusRecitations();
+	
+	public Set<Class> getUpperCampusRecitations();
 	
 	public void updateLecture_Classroom(Class c);
 
 	public void updateLecture_Time(Class c);
+	
+	public Set<Class> getTime_fixed_classes();
+	
+	public  Set<Class> getLoc_fixed_classes();
+
+	public  Set<Class> getGrad_classes();
+	
+	public Set<Class> getBig_lectures();
 }

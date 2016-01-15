@@ -14,6 +14,14 @@
 		Professor_Name from professor
 	</select>
 
+	<select id='getProfessorsByClass' parameterType="int"
+		resultMap='ProfessorResult'>
+		SELECT p.Professor_ID,
+		p.Professor_Name from professor p join
+		lecture_professor l where l.lecture_id= #{id} and p.professor_id=
+		l.professor_id
+	</select>
+
 	<resultMap type='lb.edu.aub.cmps.grad.classes.Class' id='classesResult'>
 		<id property='class_id' column='Lecture_ID'></id>
 		<result property='course_id' column='Course_ID'></result>
@@ -23,9 +31,11 @@
 
 
 	<select id='getClassesGiven' parameterType="int" resultMap='classesResult'>
-		SELECT c.Lecture_ID, c.Course_ID, c.Class_Capacity, t.Lecture_Type from
+		SELECT c.Lecture_ID, c.Course_ID, c.Class_Capacity, t.Lecture_Type
+		from
 		lecture c join lecture_professor p join
-		type_enum t where c.Type_id =
+		type_enum t where c.Type_id
+		=
 		t.Type_id and p.Professor_ID = #{id}
 	</select>
 </mapper>

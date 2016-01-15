@@ -13,4 +13,5 @@ public interface ProfessorMapper {
 
 	public Set<Professor> getAllProfessors();
 	public Set<Class> getClassesGiven(int id);
+	public Set<Professor> getProfessorsByClass(int id);
 }

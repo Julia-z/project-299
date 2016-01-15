@@ -58,13 +58,13 @@ public class DepartmentService implements DepartmentMapper {
 		return null;
 	}
 
-	public Room getGradClass(int id) {
+	public Room getGradConferenceRoom(int id) {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
 
 			DepartmentMapper pm = sqlSession.getMapper(DepartmentMapper.class);
-			Room gradClass = pm.getGradClass(id);
+			Room gradClass = pm.getGradConferenceRoom(id);
 			return gradClass;
 		} catch (Exception e) {
 			System.out.println(e);
