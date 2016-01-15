@@ -165,7 +165,6 @@ public class EnhancedScheduler extends Scheduler {
 		return not;
 	}
 
-	/**TODO**/
 	public void scheduleSecondSets(Set<Class> tosched, String msg){
 		for(Class c: tosched){
 			//try to get another room
@@ -187,8 +186,7 @@ public class EnhancedScheduler extends Scheduler {
 		}
 		
 	}
-	
-	/**TODO**/
+
 	public HashMap<Class, String> scheduleSecondMaps(TreeMap<Department, Set<Class>> tosched, String msg){
 		HashMap<Class, String> not = new HashMap<Class, String>();
 		// iterators
@@ -245,9 +243,25 @@ public class EnhancedScheduler extends Scheduler {
 		//try to sched all the recitations in the set not by changing the time
 		//make sure the time doesn't conflict other 
 		for(Class r: not){
-			Time t = r.getRequestedTime();
-			while(t != null){
-				boolean good = conflictsOtherLectureSameSection(r, t);
+			Time t = r.getRequestedTime().nextTime();
+			boolean done = false;
+			while(!done){
+				while(conflictsOtherLectureSameSection(r, t))
+					t = t.nextTime();
+				if(t == null)
+					not_scheduled.put(r, "all the next time slots conflict other lectures in the same section");
+
+				else{
+					//t not null and t doesn't conflict any other lecture for the same course
+					//get a room
+					Room room = setup.getAvailableRoomDuringTime(t, r.getClass_capacity());
+					if(room != null) {
+						setup.reserve(r.getProfessors(), room, t, r);
+						done = true;
+					}
+					else
+						t = t.nextTime();
+				}
 			}
 		}
 		

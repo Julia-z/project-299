@@ -892,28 +892,64 @@ public class SetUp {
 	// please keep the return null not to make an error :)
 	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep() {
 		Set<Class> lowerLectures = new ClassService().getLowerCampusLectures();
-		return null;
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Class c: lowerLectures){
+			int id = id_course.get(c.getCourse_id()).getDepartment();
+			Department d = id_dep.get(id);
+			Set<Class> set = map.get(d);
+			if(set == null) set = new HashSet<Class>();
+			set.add(c);
+			map.put(d, set);
+		}
+		return map;
 	}
 
 	public TreeMap<Department, Set<Class>> getUpper_Lec_by_dep() {
 		Set<Class> upperLectures = new ClassService().getUpperCampusLectures();
-		return null;
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Class c: upperLectures){
+			int id = id_course.get(c.getCourse_id()).getDepartment();
+			Department d = id_dep.get(id);
+			Set<Class> set = map.get(d);
+			if(set == null) set = new HashSet<Class>();
+			set.add(c);
+			map.put(d, set);
+		}
+		return map;
 	}
 
 	public TreeMap<Department, Set<Class>> getLower_rec_by_dep() {
 		Set<Class> lowerRec = new ClassService().getLowerCampusRecitations();
-		return null;
+		
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Class c: lowerRec){
+			int id = id_course.get(c.getCourse_id()).getDepartment();
+			Department d = id_dep.get(id);
+			Set<Class> set = map.get(d);
+			if(set == null) set = new HashSet<Class>();
+			set.add(c);
+			map.put(d, set);
+		}
+		return map;
 	}
 
 	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep() {
 		Set<Class> upperRec = new ClassService().getUpperCampusRecitations();
-		return null;
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Class c: upperRec){
+			int id = id_course.get(c.getCourse_id()).getDepartment();
+			Department d = id_dep.get(id);
+			Set<Class> set = map.get(d);
+			if(set == null) set = new HashSet<Class>();
+			set.add(c);
+			map.put(d, set);
+		}
+		return map;
 	}
 
 	// get all the lectures as set
 	public Set<Class> getBig_lectures() {
-		Set<Class> bigLectures= new ClassService().getBig_lectures();
-		return null;
+		return  new ClassService().getBig_lectures();
 	}
 
 	public Department getDepartment(Class c) {
@@ -955,5 +991,12 @@ public class SetUp {
 			rooms.add(id_room.get(id));
 		}
 		return rooms;
+	}
+	
+	public Room getAvailableRoomDuringTime(Time t, int capacity){
+		for(Room r: id_room.values()){
+			if(r.is_available(t.getTimeSlots()) && r.getRoom_capacity() >= capacity) return r;
+		}
+		return null;
 	}
 }
