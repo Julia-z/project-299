@@ -1,6 +1,7 @@
 package lb.edu.aub.cmps.grad.algorithm;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,9 +13,11 @@ import java.util.logging.Logger;
 import lb.edu.aub.cmps.grad.classes.Building;
 import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.ClassTimeComparator;
+import lb.edu.aub.cmps.grad.classes.Course;
 import lb.edu.aub.cmps.grad.classes.Department;
 import lb.edu.aub.cmps.grad.classes.MyLogger;
 import lb.edu.aub.cmps.grad.classes.Room;
+import lb.edu.aub.cmps.grad.classes.Time;
 
 public class EnhancedScheduler extends Scheduler {
 
@@ -163,7 +166,7 @@ public class EnhancedScheduler extends Scheduler {
 	}
 
 	/**TODO**/
-	public Set<Class> scheduleSecondSets(Set<Class> tosched){
+	public void scheduleSecondSets(Set<Class> tosched, String msg){
 		for(Class c: tosched){
 			//try to get another room
 			Building[] bldgs = setup.getBuildingsByPriorityForDepartment(setup.getDep_id(c));
@@ -180,19 +183,76 @@ public class EnhancedScheduler extends Scheduler {
 					}
 				}
 			}
+			if(!done) not_scheduled.put(c, msg + c.getRequestedTime().toString());
 		}
-		return null;
+		
 	}
 	
 	/**TODO**/
-	public TreeMap<Department, Set<Class>> scheduleSecondMaps(TreeMap<Department, Set<Class>> tosched){
-		return null;
+	public HashMap<Class, String> scheduleSecondMaps(TreeMap<Department, Set<Class>> tosched, String msg){
+		HashMap<Class, String> not = new HashMap<Class, String>();
+		// iterators
+		@SuppressWarnings("unchecked")
+		Iterator<Class>[] its = new Iterator[tosched.keySet().size()];
+		int i = 0;
+
+		for (Department d : tosched.keySet()) {
+			its[i] = tosched.get(d).iterator();
+			i++;
+		}
+		int k = 0;
+		for (Department d : tosched.keySet()) {
+
+			double classes_to_sched = (d.getNum_of_classes() / num_of_iterations);
+			classes_to_sched = Math.ceil(classes_to_sched);
+			Iterator<Class> it = its[k];
+			k++;
+			for (i = 0; i < classes_to_sched + 1; i++) {
+				if (it.hasNext()) {
+					Class c = it.next();
+					
+					//try to change the room
+					Building[] bldgs = setup.getBuildingsByPriorityForDepartment(setup.getDep_id(c));
+					boolean done = false;		
+					for(int j = 0; j< bldgs.length; j++){
+						if(done) break;
+						for(Room room2: setup.getRoomsInBuilding(bldgs[j])){
+							if(room2.is_available(c.getRequestedTime().getTimeSlots()) 
+									&& room2.hasAccessory(c.getAccessoriesIds())
+									&& room2.getRoom_capacity() >= c.getClass_capacity()){
+								setup.reserve(c.getProfessors(), room2, c.getRequestedTime(), c);
+								done = true;
+								break;
+							}
+						}
+					}
+					if(!done) not.put(c, msg + c.getRequestedTime().toString());
+
+				}// end if there are more classes
+			}// end for all classes for this iteration
+		}// end for department
+		return not;
 	}
 	
 	/**TODO**/
 	public void scheduleSecondGrad(){
 
 	}
+	
+	public void scheduleSecondRecitations(TreeMap<Department, Set<Class>> tosched){
+		Set<Class> not = scheduleSecondMaps(lower_rec_by_dep, "").keySet();
+		
+		//try to sched all the recitations in the set not by changing the time
+		//make sure the time doesn't conflict other 
+		for(Class r: not){
+			Time t = r.getRequestedTime();
+			while(t != null){
+				boolean good = conflictsOtherLectureSameSection(r, t);
+			}
+		}
+		
+	}
+	
 	
 	/**TODO**/
 	public void scheduleFirstBigLectures(){
@@ -207,31 +267,43 @@ public class EnhancedScheduler extends Scheduler {
 	@Override
 	public Map<Class, String> schedule() {
 
-		labs2 = scheduleFirstSets(labs);
 		//first run
+		scheduleFirstBigLectures();
+		scheduleFirstGrad();
+
+		labs2 = scheduleFirstSets(labs);
 		time_fixed_classes2 = scheduleFirstSets(time_fixed_classes);
 		loc_fixed_classes2 = scheduleFirstSets(loc_fixed_classes);
 		labs2 = scheduleFirstSets(labs);
-		scheduleFirstGrad();
-		scheduleFirstBigLectures();
+		
 		lower_lect_by_dep2 = scheduleFirstMaps(lower_lect_by_dep);
 		upper_lect_by_dep2 = scheduleFirstMaps(upper_lect_by_dep);
-
 		lower_rec_by_dep2 = scheduleFirstMaps(lower_rec_by_dep);
 		upper_rec_by_dep2 = scheduleFirstMaps(upper_rec_by_dep);
 		
 		//second run
-		scheduleSecondSets(time_fixed_classes2);
-		scheduleSecondSets(loc_fixed_classes2);
-		scheduleSecondSets(labs2);
 		scheduleSecondGrad();
 		scheduleSecondBigLectures();
-		scheduleSecondMaps(lower_lect_by_dep2);
-		scheduleSecondMaps(upper_lect_by_dep2);
-		scheduleSecondMaps(lower_rec_by_dep2);
-		scheduleSecondMaps(upper_rec_by_dep2);
+
+		scheduleSecondSets(time_fixed_classes2, "The class is marked not to change the time "
+				+"and there are no suitable rooms at the time ");
+
+		//the location fixed classes can't change the room => mark them as not scheduled
+		for(Class c: loc_fixed_classes2) not_scheduled.put(c, "the room can't be changed and it is occupied!");
+		for(Class c: labs2) not_scheduled.put(c, "lab conflict at the time " + c.getRequestedTime().toString());
+		scheduleSecondMaps(lower_lect_by_dep2, "No available suitable rooms for lower campus");
+		scheduleSecondMaps(upper_lect_by_dep2, "No available suitable rooms for upper campus");
+		scheduleSecondRecitations(lower_rec_by_dep2);
+		scheduleSecondRecitations(upper_rec_by_dep2);
 		
 		return not_scheduled;
 	}
 
+	public boolean conflictsOtherLectureSameSection(Class c, Time t){
+		Course course = setup.getId_course().get(c.getCourse_id());
+		for(Class c2: course.getClasses())
+			if( c2.getGivenTime() != null && t.conflicts(c2.getGivenTime())) 
+				return false;
+		return true;
+	}
 }
