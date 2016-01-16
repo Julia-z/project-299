@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
+import lb.edu.aub.cmps.grad.algorithm.EnhancedScheduler;
 import lb.edu.aub.cmps.grad.algorithm.Scheduler;
 import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.Course;
@@ -21,7 +22,7 @@ public class App {
 	public static void main(String[] args) throws SecurityException, IOException{
 
 		System.out.println("starting...");
-		Scheduler s = new ByTimeScheduler();
+		Scheduler s = new EnhancedScheduler();
 		System.out.println("scheduler created...");
 		Map<Class, String> not = s.schedule();
 		System.out.println("all classes scheduled...");
@@ -31,7 +32,7 @@ public class App {
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
 		e.export(scheduled);
 		System.out.println("exported to excel");
-		e.generateInfo(not);
+		//e.generateInfo(not);
 		
 		//update the database
 		/*

@@ -15,6 +15,7 @@ import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.ClassTimeComparator;
 import lb.edu.aub.cmps.grad.classes.Course;
 import lb.edu.aub.cmps.grad.classes.Department;
+import lb.edu.aub.cmps.grad.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.grad.classes.MyLogger;
 import lb.edu.aub.cmps.grad.classes.Room;
 import lb.edu.aub.cmps.grad.classes.Time;
@@ -33,6 +34,7 @@ public class EnhancedScheduler extends Scheduler {
 
 	private TreeMap<Department, Set<Class>> lower_rec_by_dep;
 	private TreeMap<Department, Set<Class>> upper_rec_by_dep;
+	private TreeMap<Department, Set<Class>> big_lectures;
 
 	// for the second run
 	private Set<Class> time_fixed_classes2;
@@ -43,6 +45,7 @@ public class EnhancedScheduler extends Scheduler {
 
 	private TreeMap<Department, Set<Class>> lower_lect_by_dep2;
 	private TreeMap<Department, Set<Class>> upper_lect_by_dep2;
+	private TreeMap<Department, Set<Class>> big_lectures2;
 
 	private TreeMap<Department, Set<Class>> lower_rec_by_dep2;
 	private TreeMap<Department, Set<Class>> upper_rec_by_dep2;
@@ -60,6 +63,7 @@ public class EnhancedScheduler extends Scheduler {
 		upper_lect_by_dep = setup.getUpper_Lec_by_dep();
 		lower_rec_by_dep = setup.getLower_rec_by_dep();
 		upper_rec_by_dep = setup.getUpper_rec_by_dep();
+		big_lectures = setup.getBig_lectures();
 
 		// second run
 		time_fixed_classes2 = new HashSet<Class>();
@@ -70,27 +74,19 @@ public class EnhancedScheduler extends Scheduler {
 		upper_lect_by_dep2 = new TreeMap<Department, Set<Class>>();
 		lower_rec_by_dep2 = new TreeMap<Department, Set<Class>>();
 		upper_rec_by_dep2 = new TreeMap<Department, Set<Class>>();
+		big_lectures2 = new TreeMap<Department, Set<Class>>();
 
 	}
-
-	public Map<Department, Double> getStatisticsByDepartment() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public double getOverallStatistics() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 
 	public Set<Class> scheduleFirstSets(Set<Class> tosched) {
 		Set<Class> not = new HashSet<Class>();
 		for (Class c : tosched) {
 			if (setup.bestScheduleClass(c) < 0)
 				not.add(c);
-			else
+			else{
 				scheduled_map.get(setup.getDepartment(c)).add(c);
+				c.setIsMet(true);
+			}
 		}
 		return not;
 
@@ -108,6 +104,7 @@ public class EnhancedScheduler extends Scheduler {
 				if(best > 0) {
 					c.setRoom(old);
 					c.setGiven_room(r);
+					c.setIsMet(true);
 					scheduled_map.get(setup.getDepartment(c)).add(c);
 				}
 				//the class can't be scheduled
@@ -131,7 +128,7 @@ public class EnhancedScheduler extends Scheduler {
 	}
 		
 	public TreeMap<Department, Set<Class>> scheduleFirstMaps(TreeMap<Department, Set<Class>> tosched) {
-		TreeMap<Department, Set<Class>> not = new TreeMap<Department, Set<Class>>();
+		TreeMap<Department, Set<Class>> not = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
 		// iterators
 		@SuppressWarnings("unchecked")
 		Iterator<Class>[] its = new Iterator[tosched.keySet().size()];
@@ -143,7 +140,7 @@ public class EnhancedScheduler extends Scheduler {
 			not.put(d, new TreeSet<Class>(new ClassTimeComparator()));
 		}
 		int k = 0;
-		for (Department d : lower_lect_by_dep.keySet()) {
+		for (Department d : tosched.keySet()) {
 
 			double classes_to_sched = (d.getNum_of_classes() / num_of_iterations);
 			classes_to_sched = Math.ceil(classes_to_sched);
@@ -155,9 +152,10 @@ public class EnhancedScheduler extends Scheduler {
 					int best = setup.bestScheduleClass(c);
 					if (best < 0) {
 						not.get(d).add(c);
-					} else
+					} else{
 						scheduled_map.get(d).add(c);
-
+						c.setIsMet(true);
+					}
 				}// end if there are more classes
 			}// end for all classes for this iteration
 		}// end for department
@@ -225,6 +223,9 @@ public class EnhancedScheduler extends Scheduler {
 						}
 					}
 					if(!done) not.put(c, msg + c.getRequestedTime().toString());
+					else
+						scheduled_map.get(d).add(c);
+
 
 				}// end if there are more classes
 			}// end for all classes for this iteration
@@ -232,9 +233,8 @@ public class EnhancedScheduler extends Scheduler {
 		return not;
 	}
 	
-	/**TODO**/
 	public void scheduleSecondGrad(){
-
+		scheduleSecondSets(grad_classes2, "No more rooms at time t ");
 	}
 	
 	public void scheduleSecondRecitations(TreeMap<Department, Set<Class>> tosched){
@@ -268,14 +268,50 @@ public class EnhancedScheduler extends Scheduler {
 	}
 	
 	
-	/**TODO**/
 	public void scheduleFirstBigLectures(){
-		
+		big_lectures2 = scheduleFirstMaps(big_lectures);
 	}
 	
-	/**TODO**/
 	public void scheduleSecondBigLectures(){
-		
+		HashMap<Class, String> not = new HashMap<Class, String>();
+		// iterators
+		@SuppressWarnings("unchecked")
+		Iterator<Class>[] its = new Iterator[big_lectures2.keySet().size()];
+		int i = 0;
+
+		for (Department d : big_lectures2.keySet()) {
+			its[i] = big_lectures2.get(d).iterator();
+			i++;
+		}
+		int k = 0;
+		for (Department d : big_lectures2.keySet()) {
+
+			double classes_to_sched = (d.getNum_of_classes() / num_of_iterations);
+			classes_to_sched = Math.ceil(classes_to_sched);
+			Iterator<Class> it = its[k];
+			k++;
+			for (i = 0; i < classes_to_sched + 1; i++) {
+				if (it.hasNext()) {
+					Class c = it.next();
+					
+					//try to change the room
+					Room[] rooms = setup.getLectureRoomsByPriority(d.getId());
+					boolean done = false;
+					for(Room r: rooms){
+						if(r.is_available(c.getRequestedTime().getTimeSlots()) && r.getRoom_capacity() >= c.getClass_capacity()&&r.hasAccessory(c.getAccessoriesIds())){
+							setup.reserve(c.getProfessors(), r, c.getRequestedTime(), c);
+							done = true;
+							break;
+						}
+					}
+					if(done) scheduled_map.get(d).add(c);
+					
+					else not.put(c, "No big lectures rooms available at " + c.getRequestedTime().toString());
+
+				}// end if there are more classes
+			}// end for all classes for this iteration
+		}// end for department
+
 	}
 	
 	@Override

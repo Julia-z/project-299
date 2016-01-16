@@ -394,47 +394,50 @@ public class SetUp {
 	 */
 	public int bestScheduleClass(Class c) {
 		Room r = c.getRequestedRoom();
-		r = id_room.get(r.getId());
-
 		Time t = c.getRequestedTime();
 		Set<Professor> ps = c.getProfessors();
-		if (r == null || t == null)
-			return 1;
-		if (ps != null && !ps.isEmpty()) {
-			Set<Professor> ps2 = new HashSet<Professor>();
-			for (Professor p : ps) {
-				if (p != null) {
-					System.out.println("ID: " + p.getId());
-					System.out.println("id_prof.get(p.getId()) --> "
-							+ id_prof.get(p.getId()));
 
-					ps2.add(id_prof.get(p.getId()));
+		if(t == null)return 1;
+		
+		if(r != null && ps != null && !ps.isEmpty()){
+			r = id_room.get(r.getId());
+			boolean av_room = r.is_available(t.getTimeSlots());
+			if(!av_room) return -2;
+
+			Set<Professor> ps2 = new HashSet<Professor>();
+			for (Professor p : ps) if (p != null)ps2.add(id_prof.get(p.getId()));
+			ps = ps2;
+			boolean av_prof = true;
+			for (Professor p : ps)	if (!p.isAvailable(t))av_prof = false;
+			if(!av_prof) return -1;
+			//both the room and the prof are available
+			reserve(ps, r, t, c);
+			return 1;
+		}
+		else if(r == null && ps == null) return 1;
+		else if(r == null && (ps!=null || !ps.isEmpty())){
+			Set<Professor> ps2 = new HashSet<Professor>();
+			for (Professor p : ps) if (p != null)ps2.add(id_prof.get(p.getId()));
+			ps = ps2;
+			boolean av_prof = true;
+			for (Professor p : ps)	if (!p.isAvailable(t))av_prof = false;
+			if(!av_prof) return -1;
+			else{
+				for(Professor p: ps){
+					p.addUnavailable(t);
+					return 1;
 				}
 			}
-
-			ps = ps2;
 		}
-
-		boolean av_room = r.is_available(t.getTimeSlots());
-		boolean av_prof = true;
-		if (ps == null)
-			av_prof = true;
-		else {
-			for (Professor p : ps)
-				if (!p.isAvailable(t))
-					av_prof = false;
+		else{//room not null and profs null
+			if(r.is_available(t.getTimeSlots())){
+				r.reserveRoom(t.getTimeSlots(), c);
+				return 1;
+			}
+			else 
+				return -2;
 		}
-
-		System.out.println(av_room + "    " + av_prof);
-		if (av_room && av_prof) {
-
-			reserve(ps, r, t, c);
-			c.setIsMet(true);
-			return 1;
-		} else if (!av_prof) {
-			return -1;
-		} else
-			return -2;
+		return -1;
 	}
 
 	/**
@@ -892,12 +895,14 @@ public class SetUp {
 	// please keep the return null not to make an error :)
 	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep() {
 		Set<Class> lowerLectures = new ClassService().getLowerCampusLectures();
-		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
-		for(Class c: lowerLectures){
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
+				new DepartmentWeightComparator());
+		for (Class c : lowerLectures) {
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
-			if(set == null) set = new HashSet<Class>();
+			if (set == null)
+				set = new HashSet<Class>();
 			set.add(c);
 			map.put(d, set);
 		}
@@ -906,12 +911,14 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getUpper_Lec_by_dep() {
 		Set<Class> upperLectures = new ClassService().getUpperCampusLectures();
-		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
-		for(Class c: upperLectures){
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
+				new DepartmentWeightComparator());
+		for (Class c : upperLectures) {
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
-			if(set == null) set = new HashSet<Class>();
+			if (set == null)
+				set = new HashSet<Class>();
 			set.add(c);
 			map.put(d, set);
 		}
@@ -920,13 +927,15 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getLower_rec_by_dep() {
 		Set<Class> lowerRec = new ClassService().getLowerCampusRecitations();
-		
-		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
-		for(Class c: lowerRec){
+
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
+				new DepartmentWeightComparator());
+		for (Class c : lowerRec) {
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
-			if(set == null) set = new HashSet<Class>();
+			if (set == null)
+				set = new HashSet<Class>();
 			set.add(c);
 			map.put(d, set);
 		}
@@ -935,12 +944,14 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep() {
 		Set<Class> upperRec = new ClassService().getUpperCampusRecitations();
-		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
-		for(Class c: upperRec){
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
+				new DepartmentWeightComparator());
+		for (Class c : upperRec) {
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
-			if(set == null) set = new HashSet<Class>();
+			if (set == null)
+				set = new HashSet<Class>();
 			set.add(c);
 			map.put(d, set);
 		}
@@ -948,8 +959,20 @@ public class SetUp {
 	}
 
 	// get all the lectures as set
-	public Set<Class> getBig_lectures() {
-		return  new ClassService().getBig_lectures();
+	public TreeMap<Department, Set<Class>> getBig_lectures() {
+		Set<Class> big = new ClassService().getBig_lectures();
+		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
+				new DepartmentWeightComparator());
+		for (Class c : big) {
+			int id = id_course.get(c.getCourse_id()).getDepartment();
+			Department d = id_dep.get(id);
+			Set<Class> set = map.get(d);
+			if (set == null)
+				set = new HashSet<Class>();
+			set.add(c);
+			map.put(d, set);
+		}
+		return map;
 	}
 
 	public Department getDepartment(Class c) {
@@ -992,11 +1015,31 @@ public class SetUp {
 		}
 		return rooms;
 	}
-	
-	public Room getAvailableRoomDuringTime(Time t, int capacity){
-		for(Room r: id_room.values()){
-			if(r.is_available(t.getTimeSlots()) && r.getRoom_capacity() >= capacity) return r;
+
+	public Room getAvailableRoomDuringTime(Time t, int capacity) {
+		for (Room r : id_room.values()) {
+			if (r.is_available(t.getTimeSlots())
+					&& r.getRoom_capacity() >= capacity)
+				return r;
 		}
 		return null;
+	}
+
+	public Room[] getLectureRoomsByPriority(int id) {
+		return new DepartmentService().getLectureRoomsByPriority(id);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args){
+		SetUp setup = new SetUp();
+		//System.out.println(setup.get);
 	}
 }

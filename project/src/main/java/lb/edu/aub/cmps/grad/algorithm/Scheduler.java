@@ -2,6 +2,7 @@ package lb.edu.aub.cmps.grad.algorithm;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,6 +42,9 @@ public abstract class Scheduler implements IScheduler{
 	protected TreeMap<Department, Set<Class>> classes_by_dep;
 	protected Map<Department, Set<Class>> scheduled_map;
 	protected Map<Class, String> not_scheduled;
+	
+	protected double overallStat;
+	protected Map<Department, Double> statByDep;
 	
 	public TreeMap<Department, Set<Course>> getRequests(){
 		return requests_by_dep;
@@ -126,5 +130,35 @@ public abstract class Scheduler implements IScheduler{
 
 	public Map<Class, String> getNotScheduled(){
 		return not_scheduled;
+	}
+	
+	/**
+	 * @author Julia
+	 * @return a map from a department to a double denoting the percentage of requests that were satisfied
+	 */
+	public Map<Department, Double> getStatisticsByDepartment() {
+		
+		statByDep = new HashMap<Department, Double>();
+		for(Department d: scheduled_map.keySet()){
+			if(d.getNum_of_classes() != 0){ //only for the departments that actually have classes
+				double met = 0;
+				for(Class c: scheduled_map.get(d)){
+					if(c.getIsMet()) met++;
+				}
+				statByDep.put(d, met / d.getNum_of_classes());
+				overallStat += met;
+			}
+		}
+		overallStat = overallStat*1.0 / num_of_all_classes;
+		return statByDep;
+	}
+	
+	/**
+	 * @return a double denoting the overall percentage of requests that were satisfied
+	 * @author Julia
+	 */
+
+	public double getOverallStatistics() {
+		return overallStat;
 	}
 }
