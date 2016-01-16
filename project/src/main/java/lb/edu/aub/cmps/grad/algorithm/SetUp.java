@@ -905,6 +905,7 @@ public class SetUp {
 			c.setProfessors(new ProfessorService().getProfessorsByClass(c
 					.getClass_id()));
 		}
+		
 		return locFixed;
 	}
 
