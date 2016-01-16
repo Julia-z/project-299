@@ -398,44 +398,54 @@ public class SetUp {
 		Time t = c.getRequestedTime();
 		Set<Professor> ps = c.getProfessors();
 
-		if(t == null)return 1;
-		
-		if(r != null && ps != null && !ps.isEmpty()){
+		if (t == null)
+			return 1;
+
+		if (r != null && ps != null && !ps.isEmpty()) {
 			r = id_room.get(r.getId());
 			boolean av_room = r.is_available(t.getTimeSlots());
-			if(!av_room) return -2;
+			if (!av_room)
+				return -2;
 
 			Set<Professor> ps2 = new HashSet<Professor>();
-			for (Professor p : ps) if (p != null)ps2.add(id_prof.get(p.getId()));
+			for (Professor p : ps)
+				if (p != null)
+					ps2.add(id_prof.get(p.getId()));
 			ps = ps2;
 			boolean av_prof = true;
-			for (Professor p : ps)	if (!p.isAvailable(t))av_prof = false;
-			if(!av_prof) return -1;
-			//both the room and the prof are available
+			for (Professor p : ps)
+				if (!p.isAvailable(t))
+					av_prof = false;
+			if (!av_prof)
+				return -1;
+			// both the room and the prof are available
 			reserve(ps, r, t, c);
 			return 1;
-		}
-		else if(r == null && ps == null) return 1;
-		else if(r == null && (ps!=null || !ps.isEmpty())){
+		} else if (r == null && ps == null)
+			return 1;
+		else if (r == null && (ps != null || !ps.isEmpty())) {
 			Set<Professor> ps2 = new HashSet<Professor>();
-			for (Professor p : ps) if (p != null)ps2.add(id_prof.get(p.getId()));
+			for (Professor p : ps)
+				if (p != null)
+					ps2.add(id_prof.get(p.getId()));
 			ps = ps2;
 			boolean av_prof = true;
-			for (Professor p : ps)	if (!p.isAvailable(t))av_prof = false;
-			if(!av_prof) return -1;
-			else{
-				for(Professor p: ps){
+			for (Professor p : ps)
+				if (!p.isAvailable(t))
+					av_prof = false;
+			if (!av_prof)
+				return -1;
+			else {
+				for (Professor p : ps) {
 					p.addUnavailable(t);
 					return 1;
 				}
 			}
-		}
-		else{//room not null and profs null
-			if(r.is_available(t.getTimeSlots())){
+		} else {// room not null and profs null
+			if (r.is_available(t.getTimeSlots())) {
 				r.reserveRoom(t.getTimeSlots(), c);
 				return 1;
-			}
-			else 
+			} else
 				return -2;
 		}
 		return -1;
@@ -872,24 +882,44 @@ public class SetUp {
 	// get all the fixed time classes as a sets
 	// should be ok
 	public Set<Class> getTime_fixed_classes() {
-		return new ClassService().getTime_fixed_classes();
+		Set<Class> timeFixed = new ClassService().getTime_fixed_classes();
+		for (Class c : timeFixed) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
+		}
+		return timeFixed;
 	}
 
 	// get all the location fixed classes as a sets
 	// should be ok
 	public Set<Class> getLoc_fixed_classes() {
-		return new ClassService().getLoc_fixed_classes();
+		Set<Class> locFixed = new ClassService().getLabs();
+		for (Class c : locFixed) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
+		}
+		return locFixed;
 	}
 
 	// get all the labs as a set
 	// should be ok
 	public Set<Class> getlabs() {
-		return new ClassService().getLabs();
+		Set<Class> labs = new ClassService().getLabs();
+		for (Class c : labs) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
+		}
+		return labs;
 	}
 
 	// get all the grad classes also as a set
 	public Set<Class> getGrad_classes() {
-		return new ClassService().getGrad_classes();
+		Set<Class> grad = new ClassService().getGrad_classes();
+		for (Class c : grad) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
+		}
+		return grad;
 	}
 
 	// get them as sets inside the method and ill do the map thind
@@ -899,6 +929,8 @@ public class SetUp {
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerLectures) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
@@ -915,6 +947,8 @@ public class SetUp {
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperLectures) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
@@ -932,6 +966,8 @@ public class SetUp {
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerRec) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
@@ -948,6 +984,8 @@ public class SetUp {
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperRec) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
@@ -962,6 +1000,10 @@ public class SetUp {
 	// get all the lectures as set
 	public TreeMap<Department, Set<Class>> getBig_lectures() {
 		Set<Class> big = new ClassService().getBig_lectures();
+		for (Class c : big) {
+			c.setProfessors(new ProfessorService().getProfessorsByClass(c
+					.getClass_id()));
+		}
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : big) {
@@ -1029,18 +1071,9 @@ public class SetUp {
 	public Room[] getLectureRoomsByPriority(int id) {
 		return new DepartmentService().getLectureRoomsByPriority(id);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args){
-	//	SetUp setup = new SetUp();
-		//System.out.println(setup.get);
+
+	public static void main(String[] args) {
+		// SetUp setup = new SetUp();
+		// System.out.println(setup.get);
 	}
 }
