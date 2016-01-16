@@ -402,51 +402,58 @@ public class SetUp {
 			return 1;
 
 		if (r != null && ps != null && !ps.isEmpty()) {
-			r = id_room.get(r.getId());
-			boolean av_room = r.is_available(t.getTimeSlots());
-			if (!av_room)
-				return -2;
-
-			Set<Professor> ps2 = new HashSet<Professor>();
-			for (Professor p : ps)
-				if (p != null)
-					ps2.add(id_prof.get(p.getId()));
-			ps = ps2;
-			boolean av_prof = true;
-			for (Professor p : ps)
-				if (!p.isAvailable(t))
-					av_prof = false;
-			if (!av_prof)
-				return -1;
-			// both the room and the prof are available
-			reserve(ps, r, t, c);
-			return 1;
-		} else if (r == null && ps == null)
-			return 1;
-		else if (r == null && (ps != null || !ps.isEmpty())) {
-			Set<Professor> ps2 = new HashSet<Professor>();
-			for (Professor p : ps)
-				if (p != null)
-					ps2.add(id_prof.get(p.getId()));
-			ps = ps2;
-			boolean av_prof = true;
-			for (Professor p : ps)
-				if (!p.isAvailable(t))
-					av_prof = false;
-			if (!av_prof)
-				return -1;
-			else {
-				for (Professor p : ps) {
-					p.addUnavailable(t);
-					return 1;
-				}
-			}
-		} else {// room not null and profs null
-			if (r.is_available(t.getTimeSlots())) {
-				r.reserveRoom(t.getTimeSlots(), c);
+			if (t == null) {
+				c.setGiven_room(r);
 				return 1;
-			} else
-				return -2;
+			}
+
+			if (r != null && ps != null && !ps.isEmpty()) {
+				r = id_room.get(r.getId());
+				boolean av_room = r.is_available(t.getTimeSlots());
+				if (!av_room)
+					return -2;
+
+				Set<Professor> ps2 = new HashSet<Professor>();
+				for (Professor p : ps)
+					if (p != null)
+						ps2.add(id_prof.get(p.getId()));
+				ps = ps2;
+				boolean av_prof = true;
+				for (Professor p : ps)
+					if (!p.isAvailable(t))
+						av_prof = false;
+				if (!av_prof)
+					return -1;
+				// both the room and the prof are available
+				reserve(ps, r, t, c);
+				return 1;
+			} else if (r == null && ps == null)
+				return 1;
+			else if (r == null && (ps != null || !ps.isEmpty())) {
+				Set<Professor> ps2 = new HashSet<Professor>();
+				for (Professor p : ps)
+					if (p != null)
+						ps2.add(id_prof.get(p.getId()));
+				ps = ps2;
+				boolean av_prof = true;
+				for (Professor p : ps)
+					if (!p.isAvailable(t))
+						av_prof = false;
+				if (!av_prof)
+					return -1;
+				else {
+					for (Professor p : ps) {
+						p.addUnavailable(t);
+						return 1;
+					}
+				}
+			} else {// room not null and profs null
+				if (r.is_available(t.getTimeSlots())) {
+					r.reserveRoom(t.getTimeSlots(), c);
+					return 1;
+				} else
+					return -2;
+			}
 		}
 		return -1;
 	}

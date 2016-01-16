@@ -53,6 +53,7 @@ public class EnhancedScheduler extends Scheduler {
 	private MyLogger loggerWrapper = MyLogger.getInstance();
 	Logger log = loggerWrapper.getLogger();
 
+	/**constructor**/
 	public EnhancedScheduler() throws SecurityException, IOException {
 		super();
 		time_fixed_classes = setup.getTime_fixed_classes();
@@ -85,6 +86,8 @@ public class EnhancedScheduler extends Scheduler {
 				not.add(c);
 			else{
 				scheduled_map.get(setup.getDepartment(c)).add(c);
+				c.setGiven_room(c.getRequestedRoom());
+				c.setGiven_time(c.getRequestedTime());
 				c.setIsMet(true);
 			}
 		}
@@ -101,9 +104,11 @@ public class EnhancedScheduler extends Scheduler {
 				c.setRoom(r);
 				int best = setup.bestScheduleClass(c);
 				//if scheduled
+
 				if(best > 0) {
 					c.setRoom(old);
 					c.setGiven_room(r);
+					c.setGiven_time(c.getRequestedTime());
 					c.setIsMet(true);
 					scheduled_map.get(setup.getDepartment(c)).add(c);
 				}
@@ -122,7 +127,10 @@ public class EnhancedScheduler extends Scheduler {
 					else grad_classes2.add(c);
 					
 				}
+				System.out.printf("%5d %2d %10s\n", c.getClass_id(), best, c.getGivenRoom().getNumber());
+
 			}
+			
 		}
 		
 	}
@@ -150,10 +158,14 @@ public class EnhancedScheduler extends Scheduler {
 				if (it.hasNext()) {
 					Class c = it.next();
 					int best = setup.bestScheduleClass(c);
+					System.out.println(c.getClass_id() + "-->" + best);
+
 					if (best < 0) {
 						not.get(d).add(c);
 					} else{
 						scheduled_map.get(d).add(c);
+						c.setGiven_room(c.getRequestedRoom());
+						c.setGiven_time(c.getRequestedTime());
 						c.setIsMet(true);
 					}
 				}// end if there are more classes
@@ -163,6 +175,7 @@ public class EnhancedScheduler extends Scheduler {
 		return not;
 	}
 
+	
 	public void scheduleSecondSets(Set<Class> tosched, String msg){
 		for(Class c: tosched){
 			//try to get another room
@@ -314,24 +327,19 @@ public class EnhancedScheduler extends Scheduler {
 
 	}
 	
-	@Override
-	public Map<Class, String> schedule() {
-
-		//first run
-		scheduleFirstBigLectures();
-		scheduleFirstGrad();
-
+	private void firstRun(){
+		scheduleFirstBigLectures();	
 		labs2 = scheduleFirstSets(labs);
 		time_fixed_classes2 = scheduleFirstSets(time_fixed_classes);
 		loc_fixed_classes2 = scheduleFirstSets(loc_fixed_classes);
-		labs2 = scheduleFirstSets(labs);
-		
+		scheduleFirstGrad();	
 		lower_lect_by_dep2 = scheduleFirstMaps(lower_lect_by_dep);
 		upper_lect_by_dep2 = scheduleFirstMaps(upper_lect_by_dep);
 		lower_rec_by_dep2 = scheduleFirstMaps(lower_rec_by_dep);
 		upper_rec_by_dep2 = scheduleFirstMaps(upper_rec_by_dep);
 		
-		//second run
+	}
+	private void secondRun(){
 		scheduleSecondGrad();
 		scheduleSecondBigLectures();
 
@@ -345,15 +353,53 @@ public class EnhancedScheduler extends Scheduler {
 		scheduleSecondMaps(upper_lect_by_dep2, "No available suitable rooms for upper campus");
 		scheduleSecondRecitations(lower_rec_by_dep2);
 		scheduleSecondRecitations(upper_rec_by_dep2);
-		
+	}
+	@Override
+	public Map<Class, String> schedule() {
+
+		//first run
+		firstRun();
+		//second run
+		secondRun();
 		return not_scheduled;
 	}
 
-	public boolean conflictsOtherLectureSameSection(Class c, Time t){
+	private boolean conflictsOtherLectureSameSection(Class c, Time t){
 		Course course = setup.getId_course().get(c.getCourse_id());
 		for(Class c2: course.getClasses())
 			if( c2.getGivenTime() != null && t.conflicts(c2.getGivenTime())) 
 				return false;
 		return true;
+	}
+	
+	public static void main(String[] args) throws SecurityException, IOException{
+		Scheduler s = new EnhancedScheduler();
+		s.schedule();
+		for(Department d: s.getSetup().getLower_Lec_by_dep().keySet()){
+			Set<Class> set  = s.getSetup().getLower_Lec_by_dep().get(d);
+			if(set != null)
+				for(Class c: set)
+					System.out.printf("%-3d %-10s -- %-20s\n", c.getClass_id(), c.getRequestedRoom(), c.getRequestedTime());
+
+		}
+		//s.getSetup().getLower_Lec_by_dep()
+				//	System.out.printf("%-3d %-10s -- %-20s", c.getClass_id(), c.getRequestedRoom(), c.getRequestedTime());
+		/*for(Department d: s.classes_by_dep.keySet()){
+			System.out.println(d.getName()+"\n_________________");
+			for(Class c: s.classes_by_dep.get(d)){
+				System.out.printf("%5d  --- %30s --- %20s\n", c.getClass_id() ,c.getRequestedTime(), c.getRequestedRoom().getNumber());
+			}
+		}*/
+		
+		/*
+		Map<Department, Set<Class>> map = s.getScheduled();
+		for(Department d: map.keySet()){
+			System.out.println(d.getName()+"\n_________________");
+			for(Class c: map.get(d)){
+				System.out.printf("%5d  --- %30s --- %20s\n", c.getClass_id() ,c.getGivenTime(), c.getGivenRoom());
+			}
+		}
+		System.out.println(s.classes_by_dep.values());*/
+		//System.out.println("hello");
 	}
 }
