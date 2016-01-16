@@ -10,6 +10,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
+import javax.swing.text.html.CSS;
+
 import lb.edu.aub.cmps.grad.classes.Building;
 import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.ClassTimeComparator;
@@ -137,8 +139,6 @@ public class SetUp {
 		classes = (HashSet<Class>) new ClassService().getAllClasses();
 		id_class = new HashMap<Integer, Class>();
 		for (Class c : classes) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
 			id_class.put(c.getClass_id(), c);
 		}
 		log.info("Classes retrieved");
@@ -890,10 +890,6 @@ public class SetUp {
 	// should be ok
 	public Set<Class> getTime_fixed_classes() {
 		Set<Class> timeFixed = new ClassService().getTime_fixed_classes();
-		for (Class c : timeFixed) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
-		}
 		return timeFixed;
 	}
 
@@ -901,11 +897,6 @@ public class SetUp {
 	// should be ok
 	public Set<Class> getLoc_fixed_classes() {
 		Set<Class> locFixed = new ClassService().getLabs();
-		for (Class c : locFixed) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
-		}
-		
 		return locFixed;
 	}
 
@@ -913,20 +904,12 @@ public class SetUp {
 	// should be ok
 	public Set<Class> getlabs() {
 		Set<Class> labs = new ClassService().getLabs();
-		for (Class c : labs) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
-		}
 		return labs;
 	}
 
 	// get all the grad classes also as a set
 	public Set<Class> getGrad_classes() {
 		Set<Class> grad = new ClassService().getGrad_classes();
-		for (Class c : grad) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
-		}
 		return grad;
 	}
 
@@ -937,8 +920,6 @@ public class SetUp {
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerLectures) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
@@ -955,8 +936,6 @@ public class SetUp {
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperLectures) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
@@ -974,8 +953,6 @@ public class SetUp {
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerRec) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
@@ -992,8 +969,6 @@ public class SetUp {
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperRec) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
 			int id = id_course.get(c.getCourse_id()).getDepartment();
 			Department d = id_dep.get(id);
 			Set<Class> set = map.get(d);
@@ -1008,10 +983,6 @@ public class SetUp {
 	// get all the lectures as set
 	public TreeMap<Department, Set<Class>> getBig_lectures() {
 		Set<Class> big = new ClassService().getBig_lectures();
-		for (Class c : big) {
-			c.setProfessors(new ProfessorService().getProfessorsByClass(c
-					.getClass_id()));
-		}
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : big) {

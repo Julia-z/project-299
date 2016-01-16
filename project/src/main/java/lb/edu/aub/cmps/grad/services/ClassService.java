@@ -29,47 +29,9 @@ public class ClassService implements ClassMapper {
 
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			Set<Class> allClasses = cm.getAllClasses();
-			for (Class c : allClasses) {
-				int id = c.getClass_id();
-				c.setCanChangeRoom(!c.canChangeRoom());
-				c.setCanChangeTime(!c.canChangeTime());
-				TimeSlot[] times = cm.getClassTimes(id);
-				c.setTime(new Time(times));
-
-				Professor p = cm.getProfessor(id);
-				if (p != null)
-					p.initializeUnavailable();
-				/***
-				 * TODO BILAL
-				 * get multi profs
-				 */
-				Set<Professor> ps = new HashSet<Professor>();
-				ps.add(p);
-				c.setProfessors(ps);
-				Room r = cm.getClassroom(id);
-				if (r != null)
-					r.initializeReserved();
-				c.setRoom(r);
-
-				Set<Integer> acc = cm.getAccessoriesInClass(id);
-				c.setAccessoriesIds(acc);
-
-				Set<Integer> section_numbers = cm.getSectionsInClass(id);
-				c.setSection_number(section_numbers);
-
-			}
-
-			/**
-			 * In case we wanna loop over all professors and such
-			 * ProfessorMapper pm = sqlSession.getMapper(ProfessorMapper.class);
-			 * Set<Professor> allProfessors= pm.getAllProfessors(); RoomMapper
-			 * rm = sqlSession.getMapper(RoomMapper.class); Set<Room> allRooms=
-			 * rm.getAllRooms();
-			 * 
-			 * for(Professor p: allProfessors){ if(p.getC) }
-			 **/
-			return allClasses;
+			Set<Class> classes = cm.getAllClasses();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
@@ -192,7 +154,9 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getLowerCampusLectures();
+			Set<Class> classes = cm.getLowerCampusLectures();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
@@ -203,7 +167,9 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getLabs();
+			Set<Class> classes = cm.getLabs();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
@@ -214,7 +180,9 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getUpperCampusLectures();
+			Set<Class> classes = cm.getUpperCampusLectures();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
@@ -225,7 +193,9 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getLowerCampusRecitations();
+			Set<Class> classes = cm.getUpperCampusLectures();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
@@ -236,18 +206,22 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getUpperCampusRecitations();
+			Set<Class> classes = cm.getUpperCampusLectures();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
 	}
-	
+
 	public Set<Class> getTime_fixed_classes() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory()
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getTime_fixed_classes();
+			Set<Class> classes = cm.getUpperCampusLectures();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
@@ -258,7 +232,9 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getLoc_fixed_classes();
+			Set<Class> classes = cm.getUpperCampusLectures();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
@@ -269,7 +245,9 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getGrad_classes();
+			Set<Class> classes = cm.getUpperCampusLectures();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
@@ -280,10 +258,38 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			return cm.getBig_lectures();
+			Set<Class> classes = cm.getUpperCampusLectures();
+			classes = fillClasses(classes, cm);
+			return classes;
 		} finally {
 			sqlSession.close();
 		}
 	}
 
+	private Set<Class> fillClasses(Set<Class> classes, ClassMapper cm) {
+
+		for (Class c : classes) {
+			int id = c.getClass_id();
+			c.setCanChangeRoom(!c.canChangeRoom());
+			c.setCanChangeTime(!c.canChangeTime());
+			TimeSlot[] times = cm.getClassTimes(id);
+			c.setTime(new Time(times));
+
+			Set<Professor> ps = new ProfessorService().getProfessorsByClass(id);
+			c.setProfessors(ps);
+
+			Room r = cm.getClassroom(id);
+			if (r != null)
+				r.initializeReserved();
+			c.setRoom(r);
+
+			Set<Integer> acc = cm.getAccessoriesInClass(id);
+			c.setAccessoriesIds(acc);
+
+			Set<Integer> section_numbers = cm.getSectionsInClass(id);
+			c.setSection_number(section_numbers);
+
+		}
+		return classes;
+	}
 }
