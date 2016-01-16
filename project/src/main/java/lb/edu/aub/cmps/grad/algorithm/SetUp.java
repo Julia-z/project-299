@@ -398,7 +398,10 @@ public class SetUp {
 		Time t = c.getRequestedTime();
 		Set<Professor> ps = c.getProfessors();
 
-		if(t == null)return 1;
+		if(t == null){
+			c.setGiven_room(r);
+			return 1;
+		}
 		
 		if(r != null && ps != null && !ps.isEmpty()){
 			r = id_room.get(r.getId());
@@ -433,6 +436,7 @@ public class SetUp {
 		else{//room not null and profs null
 			if(r.is_available(t.getTimeSlots())){
 				r.reserveRoom(t.getTimeSlots(), c);
+				c.setGiven_room(r);
 				return 1;
 			}
 			else 
