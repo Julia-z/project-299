@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
 import lb.edu.aub.cmps.grad.algorithm.EnhancedScheduler;
 import lb.edu.aub.cmps.grad.algorithm.Scheduler;
 import lb.edu.aub.cmps.grad.classes.Day;

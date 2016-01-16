@@ -392,6 +392,7 @@ public class SetUp {
 	 * @return 1 in case of success -1 in case of unavailable prof -2 in case of
 	 *         unavailable room
 	 */
+	@SuppressWarnings("null")
 	public int bestScheduleClass(Class c) {
 		Room r = c.getRequestedRoom();
 		Time t = c.getRequestedTime();
@@ -1039,7 +1040,7 @@ public class SetUp {
 	
 	
 	public static void main(String[] args){
-		SetUp setup = new SetUp();
+	//	SetUp setup = new SetUp();
 		//System.out.println(setup.get);
 	}
 }
