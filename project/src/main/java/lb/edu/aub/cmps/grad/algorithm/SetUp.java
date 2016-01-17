@@ -398,10 +398,11 @@ public class SetUp {
 		Time t = c.getRequestedTime();
 		Set<Professor> ps = c.getProfessors();
 
-		if(t == null){
+		if(t == null || t.getTimeSlots().length==0){
 			c.setGiven_room(r);
 			return 1;
 		}
+		//t is not null for sure
 		
 		if(r != null && ps != null && !ps.isEmpty()){
 			r = id_room.get(r.getId());
@@ -799,7 +800,6 @@ public class SetUp {
 				p.addUnavailable(c.getGivenTime());
 			}
 		}
-		System.out.println("reserveddddddddddddddddddd");
 		r.reserveRoom(t.getTimeSlots(), c);
 	}
 
@@ -876,23 +876,27 @@ public class SetUp {
 	// get all the fixed time classes as a sets
 	// should be ok
 	public Set<Class> getTime_fixed_classes() {
+		System.out.println("TIME FIXED " +new ClassService().getTime_fixed_classes().size());
 		return new ClassService().getTime_fixed_classes();
 	}
 
 	// get all the location fixed classes as a sets
 	// should be ok
 	public Set<Class> getLoc_fixed_classes() {
+		System.out.println("LOC FIXED" + new ClassService().getLoc_fixed_classes().size());
 		return new ClassService().getLoc_fixed_classes();
 	}
 
 	// get all the labs as a set
 	// should be ok
 	public Set<Class> getlabs() {
+		System.out.println("LABS " + new ClassService().getLabs().size());
 		return new ClassService().getLabs();
 	}
 
 	// get all the grad classes also as a set
 	public Set<Class> getGrad_classes() {
+		System.out.println("GRAD " + new ClassService().getGrad_classes().size());
 		return new ClassService().getGrad_classes();
 	}
 
@@ -900,6 +904,7 @@ public class SetUp {
 	// please keep the return null not to make an error :)
 	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep() {
 		Set<Class> lowerLectures = new ClassService().getLowerCampusLectures();
+		System.out.println("LOWER LECTURES" + new ClassService().getLowerCampusLectures().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerLectures) {
@@ -916,6 +921,7 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getUpper_Lec_by_dep() {
 		Set<Class> upperLectures = new ClassService().getUpperCampusLectures();
+		System.out.println("UPPER LECTURES "+ new ClassService().getUpperCampusLectures().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperLectures) {
@@ -932,7 +938,7 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getLower_rec_by_dep() {
 		Set<Class> lowerRec = new ClassService().getLowerCampusRecitations();
-
+		System.out.println("LOWER LEC "+ new ClassService().getLowerCampusRecitations().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerRec) {
@@ -949,6 +955,7 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep() {
 		Set<Class> upperRec = new ClassService().getUpperCampusRecitations();
+		System.out.println("UPPER LECS " + new ClassService().getUpperCampusRecitations().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperRec) {
@@ -966,6 +973,7 @@ public class SetUp {
 	// get all the lectures as set
 	public TreeMap<Department, Set<Class>> getBig_lectures() {
 		Set<Class> big = new ClassService().getBig_lectures();
+		System.out.println("BIG LEC " + new ClassService().getBig_lectures().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : big) {
@@ -1015,9 +1023,10 @@ public class SetUp {
 	public Set<Room> getRoomsInBuilding(Building b) {
 		Set<Integer> ids = bldg_rooms.get(b);
 		Set<Room> rooms = new HashSet<Room>();
-		for (Integer id : ids) {
-			rooms.add(id_room.get(id));
-		}
+		if(ids != null)
+			for (Integer id : ids) {
+				rooms.add(id_room.get(id));
+			}
 		return rooms;
 	}
 
@@ -1032,19 +1041,5 @@ public class SetUp {
 
 	public Room[] getLectureRoomsByPriority(int id) {
 		return new DepartmentService().getLectureRoomsByPriority(id);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args){
-	//	SetUp setup = new SetUp();
-		//System.out.println(setup.get);
 	}
 }

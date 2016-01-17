@@ -1,15 +1,21 @@
 package lb.edu.aub.cmps.grad.algorithm;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import lb.edu.aub.cmps.grad.classes.Class;
+import lb.edu.aub.cmps.grad.classes.Course;
 import lb.edu.aub.cmps.grad.classes.Department;
+import lb.edu.aub.cmps.grad.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.grad.classes.MyLogger;
+import lb.edu.aub.cmps.grad.classes.Section;
 
 /**
  * This class is the first implemetation of the ISchedler
@@ -250,8 +256,35 @@ public class ByTimeScheduler extends Scheduler {
 		return scheduled_map;
 	}
 
-	
-
+	@Override
+	public Map<Department, Set<Course>> getDepCoursesMap(){
+		
+		Map<Department, Set<Course>> map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
+		for(Integer dep_id: setup.getId_dep().keySet()){
+			map.put(setup.getId_dep().get(dep_id), new HashSet<Course>());
+		}
+		for(Integer course_id: setup.getId_course().keySet()){
+			Course c = setup.getId_course().get(course_id);
+			//System.out.println(c.getSectionNbrs());
+			for(Integer i: c.getSectionNbrs()){
+				Section s = new Section(c.getDepartment(), setup.getId_dep().get(c.getDepartment()).getName(), i, c.getCourse_name(), c.getCourse_id());
+				if(c.getClasses()!=null){
+					System.out.println(i+ "  -->  "+ c.getClasses().size());
+					for(Class cl : c.getClasses()){
+						
+						if(cl.getSection_number().contains(i)){
+							s.addClass(cl);
+							System.out.println(cl.getGivenRoom());
+						}
+					}
+					c.addSection(s);
+				}
+			}
+			map.get(setup.getId_dep().get(c.getDepartment())).add(c);
+		}
+		
+		return map;
+	}
 
 	
 }

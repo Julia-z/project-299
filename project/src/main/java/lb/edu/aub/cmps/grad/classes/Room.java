@@ -101,6 +101,7 @@ public class Room implements RoomVisitable{
 	 * @return if available returns true, if not available returns false
 	 */
 	public boolean reserveRoom(TimeSlot[] slots, Class cl) {
+		if(reserved == null) initializeReserved();
 		for (int i = 0; i < slots.length; i++) {
 			this.reserved.put(slots[i], cl);
 		}

@@ -1,6 +1,7 @@
 package lb.edu.aub.cmps.grad.algorithm;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import lb.edu.aub.cmps.grad.classes.Department;
 import lb.edu.aub.cmps.grad.classes.DepartmentWeightComparator;
 import lb.edu.aub.cmps.grad.classes.MyLogger;
 import lb.edu.aub.cmps.grad.classes.Room;
+import lb.edu.aub.cmps.grad.classes.Section;
 import lb.edu.aub.cmps.grad.classes.Time;
 
 public class EnhancedScheduler extends Scheduler {
@@ -56,6 +58,8 @@ public class EnhancedScheduler extends Scheduler {
 	/**constructor**/
 	public EnhancedScheduler() throws SecurityException, IOException {
 		super();
+		System.out.println("Constructor");
+
 		time_fixed_classes = setup.getTime_fixed_classes();
 		loc_fixed_classes = setup.getLoc_fixed_classes();
 		grad_classes = setup.getGrad_classes();
@@ -77,12 +81,15 @@ public class EnhancedScheduler extends Scheduler {
 		upper_rec_by_dep2 = new TreeMap<Department, Set<Class>>();
 		big_lectures2 = new TreeMap<Department, Set<Class>>();
 
+		not_scheduled = new HashMap<Class, String>();
 	}
 
 	public Set<Class> scheduleFirstSets(Set<Class> tosched) {
 		Set<Class> not = new HashSet<Class>();
 		for (Class c : tosched) {
-			if (setup.bestScheduleClass(c) < 0)
+			int best = setup.bestScheduleClass(c);
+			System.out.printf("%-5d %-3d\n", c.getClass_id(), best);
+			if (best < 0)
 				not.add(c);
 			else{
 				scheduled_map.get(setup.getDepartment(c)).add(c);
@@ -127,8 +134,6 @@ public class EnhancedScheduler extends Scheduler {
 					else grad_classes2.add(c);
 					
 				}
-				System.out.printf("%5d %2d %10s\n", c.getClass_id(), best, c.getGivenRoom().getNumber());
-
 			}
 			
 		}
@@ -158,8 +163,6 @@ public class EnhancedScheduler extends Scheduler {
 				if (it.hasNext()) {
 					Class c = it.next();
 					int best = setup.bestScheduleClass(c);
-					System.out.println(c.getClass_id() + "-->" + best);
-
 					if (best < 0) {
 						not.get(d).add(c);
 					} else{
@@ -193,7 +196,10 @@ public class EnhancedScheduler extends Scheduler {
 					}
 				}
 			}
-			if(!done) not_scheduled.put(c, msg + c.getRequestedTime().toString());
+			
+			if(!done) {
+				not_scheduled.put(c, msg + c.getRequestedTime());
+			}
 		}
 		
 	}
@@ -328,14 +334,31 @@ public class EnhancedScheduler extends Scheduler {
 	}
 	
 	private void firstRun(){
+		System.out.println("Scheduling big lectures....");
 		scheduleFirstBigLectures();	
+		
+		System.out.println("Scheduling labs....");
 		labs2 = scheduleFirstSets(labs);
+		
+		System.out.println("Scheduling time fixed classes....");
 		time_fixed_classes2 = scheduleFirstSets(time_fixed_classes);
+		
+		System.out.println("Scheduling location fixed classes....");
 		loc_fixed_classes2 = scheduleFirstSets(loc_fixed_classes);
+		
+		System.out.println("Scheduling grad....");
 		scheduleFirstGrad();	
+		
+		System.out.println("Scheduling lower lectures....");
 		lower_lect_by_dep2 = scheduleFirstMaps(lower_lect_by_dep);
+		
+		System.out.println("Scheduling upper lectures....");
 		upper_lect_by_dep2 = scheduleFirstMaps(upper_lect_by_dep);
+		
+		System.out.println("Scheduling lower rec....");
 		lower_rec_by_dep2 = scheduleFirstMaps(lower_rec_by_dep);
+		
+		System.out.println("Scheduling upper rec....");
 		upper_rec_by_dep2 = scheduleFirstMaps(upper_rec_by_dep);
 		
 	}
@@ -358,8 +381,10 @@ public class EnhancedScheduler extends Scheduler {
 	public Map<Class, String> schedule() {
 
 		//first run
+		System.out.println("First Run....");
 		firstRun();
 		//second run
+		System.out.println("Second Run...");
 		secondRun();
 		return not_scheduled;
 	}
@@ -375,31 +400,44 @@ public class EnhancedScheduler extends Scheduler {
 	public static void main(String[] args) throws SecurityException, IOException{
 		Scheduler s = new EnhancedScheduler();
 		s.schedule();
-		for(Department d: s.getSetup().getLower_Lec_by_dep().keySet()){
-			Set<Class> set  = s.getSetup().getLower_Lec_by_dep().get(d);
-			if(set != null)
-				for(Class c: set)
-					System.out.printf("%-3d %-10s -- %-20s\n", c.getClass_id(), c.getRequestedRoom(), c.getRequestedTime());
+	}
 
-		}
-		//s.getSetup().getLower_Lec_by_dep()
-				//	System.out.printf("%-3d %-10s -- %-20s", c.getClass_id(), c.getRequestedRoom(), c.getRequestedTime());
-		/*for(Department d: s.classes_by_dep.keySet()){
-			System.out.println(d.getName()+"\n_________________");
-			for(Class c: s.classes_by_dep.get(d)){
-				System.out.printf("%5d  --- %30s --- %20s\n", c.getClass_id() ,c.getRequestedTime(), c.getRequestedRoom().getNumber());
-			}
-		}*/
+	@Override
+	public Map<Department, Set<Course>> getDepCoursesMap() {
+		Set<Class> classes = new HashSet<Class>();
+		for(Set<Class> set: scheduled_map.values())
+			for(Class c: set)
+				classes.add(c);
+		for(Class c: not_scheduled.keySet())
+			classes.add(c);
 		
-		/*
-		Map<Department, Set<Class>> map = s.getScheduled();
-		for(Department d: map.keySet()){
-			System.out.println(d.getName()+"\n_________________");
-			for(Class c: map.get(d)){
-				System.out.printf("%5d  --- %30s --- %20s\n", c.getClass_id() ,c.getGivenTime(), c.getGivenRoom());
-			}
+		for (Class c : classes) {
+			int course_id = c.getCourse_id();
+			c.setCourse_name(setup.getId_course().get(course_id).getCourse_name());
+			Course course = setup.getId_course().get(course_id);
+			course.addClass(c);
 		}
-		System.out.println(s.classes_by_dep.values());*/
-		//System.out.println("hello");
+		Map<Department, Set<Course>> map = new TreeMap<Department, Set<Course>>(Collections.reverseOrder(new DepartmentWeightComparator()));
+		for(Integer dep_id: setup.getId_dep().keySet()){
+			map.put(setup.getId_dep().get(dep_id), new HashSet<Course>());
+		}
+		for(Integer course_id: setup.getId_course().keySet()){
+			Course c = setup.getId_course().get(course_id);
+			for(Integer i: c.getSectionNbrs()){
+				Section s = new Section(c.getDepartment(), setup.getId_dep().get(c.getDepartment()).getName(), i, c.getCourse_name(), c.getCourse_id());
+				if(c.getClasses()!=null){
+					for(Class cl : c.getClasses()){
+						
+						if(cl.getSection_number().contains(i)){
+							s.addClass(cl);
+						}
+					}
+					c.addSection(s);
+				}
+			}
+			map.get(setup.getId_dep().get(c.getDepartment())).add(c);
+		}
+		
+		return map;
 	}
 }

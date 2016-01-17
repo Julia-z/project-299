@@ -23,15 +23,15 @@ public class App {
 		System.out.println("starting...");
 		Scheduler s = new EnhancedScheduler();
 		System.out.println("scheduler created...");
-		// Map<Class, String> not = s.schedule();
+		Map<lb.edu.aub.cmps.grad.classes.Class, String> not = s.schedule();
 		System.out.println("all classes scheduled...");
-		Map<Department, Set<Course>> scheduled = s.getDepCoursesMap();
+	//	Map<Department, Set<Class>> classes = s.getScheduled();
 
-		System.out.println("the map is got");
+		Map<Department, Set<Course>> scheduled = s.getDepCoursesMap();
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
 		e.export(scheduled);
 		System.out.println("exported to excel");
-		// e.generateInfo(not);
+		e.generateInfo(not);
 
 		// update the database
 		/*
