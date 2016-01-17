@@ -3,15 +3,18 @@ package lb.edu.aub.cmps.grad.output;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
 import lb.edu.aub.cmps.grad.algorithm.EnhancedScheduler;
 import lb.edu.aub.cmps.grad.algorithm.Scheduler;
 import lb.edu.aub.cmps.grad.classes.Day;
 import lb.edu.aub.cmps.grad.classes.Room;
+import lb.edu.aub.cmps.grad.classes.RoomVisitor;
 import lb.edu.aub.cmps.grad.classes.TimeSlot;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -30,7 +33,6 @@ public class AvailableRoomsByTime {
 		this.rooms = rooms;
 	}
 
-	
 	private TimeSlot[] getAllTimeSlots() {
 
 		TimeSlot[] all = new TimeSlot[55];
@@ -90,7 +92,6 @@ public class AvailableRoomsByTime {
 			}
 		}
 
-
 		HSSFWorkbook wb = new HSSFWorkbook();
 		HSSFSheet rooms = wb.createSheet("Available Rooms By Time");
 
@@ -99,7 +100,8 @@ public class AvailableRoomsByTime {
 		gray.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
 		CellStyle light_green = wb.createCellStyle();
-		light_green.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+		light_green
+				.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
 		light_green.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
 		CellStyle blue = wb.createCellStyle();
@@ -164,15 +166,24 @@ public class AvailableRoomsByTime {
 				av.setCellValue(availableRooms.get(t).size() + " rooms");
 				i++;
 
-
 				// If any room is available on time we create a cell for it
 				if (availableRooms.keySet().contains(t)) {
 
 					int j = 3;
+
+					String[] roomStrs = new String[availableRooms.get(t).size()];
+					int k = 0;
 					for (Room roomOnTime : availableRooms.get(t)) {
+						roomStrs[k] = roomOnTime.getNumber() + " ("
+								+ roomOnTime.getRoom_capacity() + ")";
+						k++;
+					}
+
+					Arrays.sort(roomStrs);
+					
+					for (int l = 0; l < k; l++) {
 						Cell roomCell = r.createCell(j);
-						roomCell.setCellValue(roomOnTime.getNumber() + " ("
-								+ roomOnTime.getRoom_capacity() + ")");
+						roomCell.setCellValue(roomStrs[l]);
 						j++;
 					}
 				}
@@ -195,7 +206,7 @@ public class AvailableRoomsByTime {
 	public static void main(String[] args) throws SecurityException,
 			IOException {
 		System.out.println("starting...");
-		Scheduler s = new EnhancedScheduler();
+		Scheduler s = new ByTimeScheduler();
 
 		System.out.println("scheduler created...");
 		s.schedule();
