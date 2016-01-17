@@ -193,7 +193,7 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			Set<Class> classes = cm.getUpperCampusLectures();
+			Set<Class> classes = cm.getLowerCampusRecitations();
 			classes = fillClasses(classes, cm);
 			return classes;
 		} finally {
@@ -206,7 +206,7 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			Set<Class> classes = cm.getUpperCampusLectures();
+			Set<Class> classes = cm.getUpperCampusRecitations();
 			classes = fillClasses(classes, cm);
 			return classes;
 		} finally {
@@ -219,7 +219,7 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			Set<Class> classes = cm.getUpperCampusLectures();
+			Set<Class> classes = cm.getTime_fixed_classes();
 			classes = fillClasses(classes, cm);
 			return classes;
 		} finally {
@@ -232,7 +232,7 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			Set<Class> classes = cm.getUpperCampusLectures();
+			Set<Class> classes = cm.getLoc_fixed_classes();
 			classes = fillClasses(classes, cm);
 			return classes;
 		} finally {
@@ -245,7 +245,7 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			Set<Class> classes = cm.getUpperCampusLectures();
+			Set<Class> classes = cm.getGrad_classes();
 			classes = fillClasses(classes, cm);
 			return classes;
 		} finally {
@@ -258,7 +258,7 @@ public class ClassService implements ClassMapper {
 				.openSession();
 		try {
 			ClassMapper cm = sqlSession.getMapper(ClassMapper.class);
-			Set<Class> classes = cm.getUpperCampusLectures();
+			Set<Class> classes = cm.getBig_lectures();
 			classes = fillClasses(classes, cm);
 			return classes;
 		} finally {

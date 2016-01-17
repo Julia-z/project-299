@@ -79,7 +79,9 @@ public class Class implements ClassVisitable {
 
 	public String toString() {
 		return "Class id: " + class_id + ", Course id: " + course_id
-				+ ", Type :" + type;
+				+ ", Type :" + type + ", Professor(s) :"
+				+ Professors.toString() + ", Requested Room: " + req_room
+				+ ", Requested Time: " + req_time.toString();
 	}
 
 	public void setProfessors(Set<Professor> Professors) {
