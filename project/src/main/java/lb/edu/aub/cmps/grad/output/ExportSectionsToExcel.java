@@ -11,6 +11,7 @@ import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.Course;
 import lb.edu.aub.cmps.grad.classes.Day;
 import lb.edu.aub.cmps.grad.classes.Department;
+import lb.edu.aub.cmps.grad.classes.Professor;
 import lb.edu.aub.cmps.grad.classes.Section;
 import lb.edu.aub.cmps.grad.classes.TimeSlot;
 
@@ -88,7 +89,7 @@ public class ExportSectionsToExcel {
 		departments.setColumnWidth(13, 1300);
 		departments.setColumnWidth(14, 1300);
 		departments.setColumnWidth(15, 3000);
-		departments.setColumnWidth(16, 5000);
+		departments.setColumnWidth(16, 10000);
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 5, 6));
 		departments.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
@@ -204,7 +205,7 @@ public class ExportSectionsToExcel {
 						Cell sstartTime = row1.createCell(13);
 						Cell sendTime = row1.createCell(14);
 						Cell room = row1.createCell(15);
-						/**TODO for all professors**/
+						/** TODO for all professors **/
 						Cell profCell = row1.createCell(16);
 
 						int classCount = 0;
@@ -325,17 +326,27 @@ public class ExportSectionsToExcel {
 								room.setCellValue(c.getGivenRoom().getNumber());
 
 							}
+
+							Set<Professor> profs= c.getProfessors();
+							if (!c.getProfessors().isEmpty()) {
+								String profStr= "";
+								for(Professor p: profs){
+									profStr+=p.getName()+", ";
+								}
+								profCell.setCellValue(profStr.substring(0, profStr.length()-2));
+							}
+
 							if (!ismet) {
 								for (int i = 3; i < 16; i++) {
 									row1.getCell(i).setCellStyle(red);
 								}
 							}
 
-							/*if (c.getProfessor() != null) {
-								profCell.setCellValue(c.getProfessor()
-										.getName());
-								;
-							}*/
+							/*
+							 * if (c.getProfessor() != null) {
+							 * profCell.setCellValue(c.getProfessor()
+							 * .getName()); ; }
+							 */
 							classCount = 5;
 						}
 
