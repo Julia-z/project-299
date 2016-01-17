@@ -10,11 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
-import lb.edu.aub.cmps.grad.algorithm.EnhancedScheduler;
 import lb.edu.aub.cmps.grad.algorithm.Scheduler;
 import lb.edu.aub.cmps.grad.classes.Day;
 import lb.edu.aub.cmps.grad.classes.Room;
-import lb.edu.aub.cmps.grad.classes.RoomVisitor;
 import lb.edu.aub.cmps.grad.classes.TimeSlot;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -99,6 +97,31 @@ public class AvailableRoomsByTime {
 		gray.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
 		gray.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
+
+		CellStyle red_gray = wb.createCellStyle();
+		red_gray.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		red_gray.setBorderTop(CellStyle.BORDER_MEDIUM);
+		red_gray.setBorderBottom(CellStyle.BORDER_MEDIUM);
+		red_gray.setBorderLeft(CellStyle.BORDER_MEDIUM);
+		red_gray.setBorderRight(CellStyle.BORDER_MEDIUM);
+		red_gray.setTopBorderColor(IndexedColors.RED.getIndex());
+		red_gray.setBottomBorderColor(IndexedColors.RED.getIndex());
+		red_gray.setRightBorderColor(IndexedColors.RED.getIndex());
+		red_gray.setLeftBorderColor(IndexedColors.RED.getIndex());
+		red_gray.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
+		CellStyle red_white = wb.createCellStyle();
+		red_white.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+		red_white.setBorderTop(CellStyle.BORDER_MEDIUM);
+		red_white.setBorderBottom(CellStyle.BORDER_MEDIUM);
+		red_white.setBorderLeft(CellStyle.BORDER_MEDIUM);
+		red_white.setBorderRight(CellStyle.BORDER_MEDIUM);
+		red_white.setTopBorderColor(IndexedColors.RED.getIndex());
+		red_white.setBottomBorderColor(IndexedColors.RED.getIndex());
+		red_white.setRightBorderColor(IndexedColors.RED.getIndex());
+		red_white.setLeftBorderColor(IndexedColors.RED.getIndex());
+		red_white.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
 		CellStyle light_green = wb.createCellStyle();
 		light_green
 				.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
@@ -190,10 +213,15 @@ public class AvailableRoomsByTime {
 
 				if (i % 2 == 0) {
 					for (int j = 1; j < r.getLastCellNum(); j++) {
-						r.getCell(j).setCellStyle(gray);
+						if(j!=2)
+							r.getCell(j).setCellStyle(gray);
+						else
+							r.getCell(j).setCellStyle(red_gray);
 					}
 				}
-
+				else{
+					r.getCell(2).setCellStyle(red_white);
+				}
 			}
 		}
 
