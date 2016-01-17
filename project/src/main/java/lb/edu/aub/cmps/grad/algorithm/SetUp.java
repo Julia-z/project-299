@@ -10,8 +10,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
-import javax.swing.text.html.CSS;
-
 import lb.edu.aub.cmps.grad.classes.Building;
 import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.ClassTimeComparator;
