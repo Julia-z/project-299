@@ -1054,5 +1054,5 @@ public class SetUp {
 
 	public Room[] getLectureRoomsByPriority(int id) {
 		return new DepartmentService().getLectureRoomsByPriority(id);
-	}	
+	}
 }

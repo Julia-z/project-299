@@ -470,4 +470,8 @@ public class EnhancedScheduler extends Scheduler {
 		
 		return map;
 	}
+	
+	public static void main(String[] args) throws SecurityException, IOException{
+		Scheduler s = new EnhancedScheduler();
+	}
 }
