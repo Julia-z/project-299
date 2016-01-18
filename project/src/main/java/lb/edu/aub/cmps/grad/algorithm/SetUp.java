@@ -398,13 +398,17 @@ public class SetUp {
 		Time t = c.getRequestedTime();
 		Set<Professor> ps = c.getProfessors();
 
+		System.out.printf("%-5d - %-10s- %-10s- %-5d\n", c.getClass_id(), c.getRequestedRoom().getNumber(), c.getRequestedTime(), c.getProfessors().size());
 		if(t == null || t.getTimeSlots().length==0){
+			System.out.println("the time is null");
 			c.setGiven_room(r);
+			c.setGiven_time(t);
 			return 1;
 		}
 		//t is not null for sure
-		
-		if(r != null && ps != null && !ps.isEmpty()){
+		System.out.println("the time is not null");
+		if(r != null && ps != null && !(ps.size() == 0)){
+			System.out.println("the room not null but profs are not null");
 			r = id_room.get(r.getId());
 			boolean av_room = r.is_available(t.getTimeSlots());
 			if(!av_room) return -2;
@@ -419,7 +423,10 @@ public class SetUp {
 			reserve(ps, r, t, c);
 			return 1;
 		}
-		else if(r == null && ps == null) return 1;
+		else if(r == null && (ps == null || ps.size() == 0)){
+			c.setGiven_time(t);
+			return 1;
+		}
 		else if(r == null && (ps!=null || !ps.isEmpty())){
 			Set<Professor> ps2 = new HashSet<Professor>();
 			for (Professor p : ps) if (p != null)ps2.add(id_prof.get(p.getId()));
@@ -428,6 +435,7 @@ public class SetUp {
 			for (Professor p : ps)	if (!p.isAvailable(t))av_prof = false;
 			if(!av_prof) return -1;
 			else{
+				c.setGiven_time(t);
 				for(Professor p: ps){
 					p.addUnavailable(t);
 					return 1;
@@ -435,9 +443,13 @@ public class SetUp {
 			}
 		}
 		else{//room not null and profs null
+			System.out.println("room not null but profs are empty");
+			r = id_room.get(r.getId());
 			if(r.is_available(t.getTimeSlots())){
 				r.reserveRoom(t.getTimeSlots(), c);
+				System.out.println("....................." +r.getReserved().keySet().size());
 				c.setGiven_room(r);
+				c.setGiven_time(t);
 				return 1;
 			}
 			else 

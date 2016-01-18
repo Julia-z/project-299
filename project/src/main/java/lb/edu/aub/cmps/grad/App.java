@@ -43,12 +43,16 @@ public class App {
 		 */
 		// generate room info
 		RoomVisitor roomvisitor = new PrintTimeClassInRoomVisitor();
+		System.out.println("here....................................................");
 		Map<Integer, Room> id_room = s.getIdRoomMap();
 		for (Integer i : id_room.keySet()) {
 			Room r = id_room.get(i);
+			System.out.println(r.getNumber()+"\n________________");
+			//for( TimeSlot t:r.getReserved().keySet())
+			//	System.out.printf("%-20s --> %-10s\n", t, r.getReserved().get(t).getCourse_name());
 			r.accept(roomvisitor);
 		}
-
+System.out.println("end...............................");
 		// statistics
 		Map<Department, Double> statByDep = s.getStatisticsByDepartment();
 		double stat = s.getOverallStatistics();
