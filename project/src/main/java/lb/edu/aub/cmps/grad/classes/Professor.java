@@ -33,6 +33,8 @@ public class Professor {
 	}
 
 	public void addClass(Class c) {
+		if(classes == null) classes = new HashSet<Class>();
+		if(unavailable == null) unavailable = new HashSet<TimeSlot>();
 		classes.add(c);
 		for (int i = 0; i < c.getGivenTime().getTimeSlots().length; i++) {
 			unavailable.add(c.getGivenTime().getTimeSlots()[i]);
@@ -74,6 +76,6 @@ public class Professor {
 	}
 
 	public String toString() {
-		return "id: " + id + ", name: " + name + ", classes: " + classes + "UNAVAILABLE: "+unavailable;
+		return name;
 	}
 }

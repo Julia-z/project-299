@@ -25,7 +25,7 @@ public class App {
 		System.out.println("scheduler created...");
 		Map<lb.edu.aub.cmps.grad.classes.Class, String> not = s.schedule();
 		System.out.println("all classes scheduled...");
-	//	Map<Department, Set<Class>> classes = s.getScheduled();
+		// Map<Department, Set<Class>> classes = s.getScheduled();
 
 		Map<Department, Set<Course>> scheduled = s.getDepCoursesMap();
 		ExportSectionsToExcel e = new ExportSectionsToExcel();
@@ -43,16 +43,17 @@ public class App {
 		 */
 		// generate room info
 		RoomVisitor roomvisitor = new PrintTimeClassInRoomVisitor();
-		System.out.println("here....................................................");
+		// System.out.println("here....................................................");
 		Map<Integer, Room> id_room = s.getIdRoomMap();
 		for (Integer i : id_room.keySet()) {
 			Room r = id_room.get(i);
-			System.out.println(r.getNumber()+"\n________________");
-			//for( TimeSlot t:r.getReserved().keySet())
-			//	System.out.printf("%-20s --> %-10s\n", t, r.getReserved().get(t).getCourse_name());
+			// System.out.println(r.getNumber()+"\n________________");
+			// for( TimeSlot t:r.getReserved().keySet())
+			// System.out.printf("%-20s --> %-10s\n", t,
+			// r.getReserved().get(t).getCourse_name());
 			r.accept(roomvisitor);
 		}
-System.out.println("end...............................");
+		// System.out.println("end...............................");
 		// statistics
 		Map<Department, Double> statByDep = s.getStatisticsByDepartment();
 		double stat = s.getOverallStatistics();
