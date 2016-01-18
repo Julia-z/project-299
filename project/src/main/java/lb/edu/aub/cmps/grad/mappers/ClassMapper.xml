@@ -27,9 +27,10 @@
 		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
 		c.Time_Fixed from lecture c join
 		type_enum t where c.Type_id =
-		t.Type_id and c.Class_capacity>100
+		t.Type_id and c.Class_capacity>100 and c.time_fixed= 0 and
+		c.Classroom_Fixed=0
 	</select>
-	
+
 	<select id='getLabs' resultMap='ClassResult'>
 		SELECT c.LECTURE_ID,
 		c.Course_ID,
@@ -38,6 +39,7 @@
 		lecture c join
 		type_enum t where c.type_id=2 and c.Type_id =
 		t.Type_id
+		and c.time_fixed= 0 and c.Classroom_Fixed=0
 	</select>
 
 	<select id='getLowerCampusRecitations' resultMap='ClassResult'>
@@ -54,7 +56,8 @@
 		c.classroom_id and
 		c.building_id=b.building_id and
 		(b.sector_id=3 or
-		b.sector_id=4)
+		b.sector_id=4) and l.time_fixed= 0 and
+		l.Classroom_Fixed=0
 	</select>
 
 	<select id='getUpperCampusRecitations' resultMap='ClassResult'>
@@ -72,7 +75,8 @@
 		c.building_id=b.building_id and
 		(b.sector_id=1 or
 		b.sector_id=2 or
-		b.sector_id=5 or b.sector_id=6)
+		b.sector_id=5 or b.sector_id=6) and
+		l.time_fixed= 0 and l.Classroom_Fixed=0
 	</select>
 
 	<select id='getLowerCampusLectures' resultMap='ClassResult'>
@@ -87,7 +91,8 @@
 		t.Type_id and l.classroom_id=
 		c.classroom_id and
 		c.building_id=b.building_id and (b.sector_id=3 or
-		b.sector_id=4)
+		b.sector_id=4) and
+		l.time_fixed= 0 and l.Classroom_Fixed=0
 	</select>
 
 	<select id='getUpperCampusLectures' resultMap='ClassResult'>
@@ -103,7 +108,8 @@
 		c.classroom_id and
 		c.building_id=b.building_id and (b.sector_id=1 or
 		b.sector_id=2 or
-		b.sector_id=5 or b.sector_id=6)
+		b.sector_id=5 or b.sector_id=6) and l.time_fixed= 0 and
+		l.Classroom_Fixed=0
 	</select>
 
 	<!-- write a method to get sections after creating a class section -->
@@ -200,7 +206,7 @@
 		c.Time_Fixed from lecture c join
 		type_enum t where
 		c.Type_id =
-		t.Type_id and time_fixed=1
+		t.Type_id and time_fixed=1 and c.Classroom_Fixed=0
 	</select>
 
 	<select id='getLoc_fixed_classes' resultMap='ClassResult'>
@@ -208,7 +214,7 @@
 		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
 		c.Time_Fixed from lecture c join
 		type_enum t where c.Type_id =
-		t.Type_id and Classroom_Fixed=1
+		t.Type_id and c.time_fixed=0 and c.Classroom_Fixed=1
 	</select>
 
 	<select id='getGrad_classes' resultMap='ClassResult'>
@@ -218,6 +224,8 @@
 		type_enum t join course r where
 		c.Type_id =
 		t.Type_id and c.course_id= r.course_id and r.level_id= 3
+		and c.time_fixed=0 and
+		c.Classroom_Fixed=0
 	</select>
 
 </mapper>
