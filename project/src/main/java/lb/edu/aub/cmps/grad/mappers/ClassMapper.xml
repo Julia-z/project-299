@@ -224,8 +224,7 @@
 		type_enum t join course r where
 		c.Type_id =
 		t.Type_id and c.course_id= r.course_id and r.level_id= 3
-		and c.time_fixed=0 and
-		c.Classroom_Fixed=0
+		
 	</select>
 
 </mapper>
