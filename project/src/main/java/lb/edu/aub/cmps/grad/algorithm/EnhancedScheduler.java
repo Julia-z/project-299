@@ -57,7 +57,6 @@ public class EnhancedScheduler extends Scheduler {
 	/** constructor **/
 	public EnhancedScheduler() throws SecurityException, IOException {
 		super();
-		System.out.println("Constructor");
 
 		time_fixed_classes = setup.getTime_fixed_classes();
 		loc_fixed_classes = setup.getLoc_fixed_classes();
@@ -88,7 +87,6 @@ public class EnhancedScheduler extends Scheduler {
 		for (Class c : tosched) {
 			enter1++;
 			int best = setup.bestScheduleClass(c);
-			// System.out.printf("%-5d %-3d\n", c.getClass_id(), best);
 			if (best < 0)
 				not.add(c);
 			else {
@@ -234,7 +232,6 @@ public class EnhancedScheduler extends Scheduler {
 				if (done)
 					break;
 				for (Room room2 : setup.getRoomsInBuilding(bldgs[i])) {
-					System.out.println(room2);
 					if (room2.is_available(c.getRequestedTime().getTimeSlots())
 							&& room2.hasAccessory(c.getAccessoriesIds())
 							&& room2.getRoom_capacity() >= c
@@ -434,81 +431,37 @@ public class EnhancedScheduler extends Scheduler {
 
 	private void firstRun() {
 
-		System.out.println("Scheduling big lectures....");
-		System.out.println("size before: " + big_lectures.size());
 		scheduleFirstBigLectures();
-		System.out.println("size after: " + big_lectures2);
-
-		System.out.println("Scheduling labs....");
-		System.out.println("size before: " + labs.size());
-
 		labs2 = scheduleFirstSets(labs);
-		System.out.println("size after: " + labs2.size());
-
-		System.out.println("Scheduling time fixed classes....");
-		System.out.println("size before: " + time_fixed_classes.size());
-
 		time_fixed_classes2 = scheduleFirstSets(time_fixed_classes);
-		System.out.println("size after: " + time_fixed_classes2.size());
-
-		System.out.println("Scheduling location fixed classes....");
-		System.out.println("size before: " + loc_fixed_classes.size());
 		loc_fixed_classes2 = scheduleFirstSets(loc_fixed_classes);
-		System.out.println("size after: " + loc_fixed_classes2.size());
-
-		System.out.println("Scheduling grad....");
-		System.out.println("size before: " + grad_classes.size());
 
 		scheduleFirstGrad();
-		System.out.println("size after: " + +grad_classes2.size());
-
-		System.out.println("Scheduling lower lectures....");
-		System.out.println("size before: ");
 
 		lower_lect_by_dep2 = scheduleFirstMaps(lower_lect_by_dep);
-		System.out.println("size after: ");
-
-		System.out.println("Scheduling upper lectures....");
-		System.out.println("size before: ");
-
 		upper_lect_by_dep2 = scheduleFirstMaps(upper_lect_by_dep);
-		System.out.println("size after: ");
-
-		System.out.println("Scheduling lower rec....");
-		System.out.println("size before: ");
-
+		
 		lower_rec_by_dep2 = scheduleFirstMaps(lower_rec_by_dep);
-		System.out.println("size after: ");
-
-		System.out.println("Scheduling upper rec....");
-		System.out.println("size before: ");
-
 		upper_rec_by_dep2 = scheduleFirstMaps(upper_rec_by_dep);
-		System.out.println("size after: ");
 
 	}
 
 	private void secondRun() {
 
-		System.out.println("2-- grad");
 		scheduleSecondGrad();
-
 		scheduleSecondBigLectures();
-
 		scheduleSecondSets(time_fixed_classes2,
 				"The class is marked not to change the time "
 						+ "and there are no suitable rooms at the time ");
 
 		// the location fixed classes can't change the room => mark them as not
 		// scheduled
-		System.out.println("2-- loc fixed ");
 		for (Class c : loc_fixed_classes2)
 			not_scheduled.put(c,
 					"the room can't be changed and it is occupied!");
 		for (Class c : labs2)
 			not_scheduled.put(c, "lab conflict at the time "
 					+ c.getRequestedTime().toString());
-		System.out.println("2-- lower lec");
 		scheduleSecondMaps(lower_lect_by_dep2,
 				"No available suitable rooms for lower campus");
 		scheduleSecondMaps(upper_lect_by_dep2,
@@ -520,35 +473,9 @@ public class EnhancedScheduler extends Scheduler {
 
 	@Override
 	public Map<Class, String> schedule() {
-		Set<Class> math = scheduled_map.get(setup.getDepartment(2));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-				+ math.size());
-		// first run
-		System.out.println("First Run....");
+
 		firstRun();
-		math = scheduled_map.get(setup.getDepartment(2));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-				+ math.size());
-		// second run
-		System.out.println("Second Run...");
 		secondRun();
-		System.out.println("not scheduled ______  "
-				+ not_scheduled.keySet().size() + " _____" + not_scheduled);
-
-		System.out
-				.println("____________________________________________________________");
-		math = scheduled_map.get(setup.getDepartment(2));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-				+ math.size());
-		System.out.println("Count " + count);
-		System.out.println("enter1: " + enter1);
-		System.out.println("enter2: " + enter2);
-		System.out.println();
-		System.out.println("s1: " + s1);
-		System.out.println("s2: " + s2);
-		System.out.println();
-
-		System.out.println(grad_classes2);
 		return not_scheduled;
 	}
 
@@ -569,6 +496,9 @@ public class EnhancedScheduler extends Scheduler {
 		for (Class c : not_scheduled.keySet())
 			classes.add(c);
 
+		for(Course course: setup.getId_course().values() ){
+			course.setClasses(null);
+		}
 		for (Class c : classes) {
 			int course_id = c.getCourse_id();
 			c.setCourse_name(setup.getId_course().get(course_id)

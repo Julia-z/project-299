@@ -65,7 +65,9 @@ public class Course {
 
 	public void setClasses(Set<Class> classes) {
 		this.classes = classes;
-		num_of_classes = classes.size();
+		if(classes!= null)	num_of_classes = classes.size();
+		else
+			num_of_classes = 0;
 	}
 	public void addClass(Class cl){
 		if(classes == null) classes = new HashSet<Class>();

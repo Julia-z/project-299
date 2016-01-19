@@ -398,17 +398,13 @@ public class SetUp {
 		Time t = c.getRequestedTime();
 		Set<Professor> ps = c.getProfessors();
 
-	//	System.out.printf("%-5d - %-10s- %-10s- %-5d\n", c.getClass_id(), c.getRequestedRoom().getNumber(), c.getRequestedTime(), c.getProfessors().size());
 		if(t == null || t.getTimeSlots().length==0){
-			//System.out.println("the time is null");
 			c.setGiven_room(r);
 			c.setGiven_time(t);
 			return 1;
 		}
 		//t is not null for sure
-		//System.out.println("the time is not null");
 		if(r != null && ps != null && !(ps.size() == 0)){
-			//System.out.println("the room not null but profs are not null");
 			r = id_room.get(r.getId());
 			boolean av_room = r.is_available(t.getTimeSlots());
 			if(!av_room) return -2;
@@ -443,11 +439,9 @@ public class SetUp {
 			}
 		}
 		else{//room not null and profs null
-			//System.out.println("room not null but profs are empty");
 			r = id_room.get(r.getId());
 			if(r.is_available(t.getTimeSlots())){
 				r.reserveRoom(t.getTimeSlots(), c);
-				//System.out.println("....................." +r.getReserved().keySet().size());
 				c.setGiven_room(r);
 				c.setGiven_time(t);
 				return 1;
@@ -889,27 +883,23 @@ public class SetUp {
 	// get all the fixed time classes as a sets
 	// should be ok
 	public Set<Class> getTime_fixed_classes() {
-		System.out.println("TIME FIXED " +new ClassService().getTime_fixed_classes().size());
 		return new ClassService().getTime_fixed_classes();
 	}
 
 	// get all the location fixed classes as a sets
 	// should be ok
 	public Set<Class> getLoc_fixed_classes() {
-		System.out.println("LOC FIXED" + new ClassService().getLoc_fixed_classes().size());
 		return new ClassService().getLoc_fixed_classes();
 	}
 
 	// get all the labs as a set
 	// should be ok
 	public Set<Class> getlabs() {
-		System.out.println("LABS " + new ClassService().getLabs().size());
 		return new ClassService().getLabs();
 	}
 
 	// get all the grad classes also as a set
 	public Set<Class> getGrad_classes() {
-		System.out.println("GRAD " + new ClassService().getGrad_classes().size());
 		return new ClassService().getGrad_classes();
 	}
 
@@ -917,7 +907,6 @@ public class SetUp {
 	// please keep the return null not to make an error :)
 	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep() {
 		Set<Class> lowerLectures = new ClassService().getLowerCampusLectures();
-		System.out.println("LOWER LECTURES" + new ClassService().getLowerCampusLectures().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerLectures) {
@@ -934,7 +923,6 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getUpper_Lec_by_dep() {
 		Set<Class> upperLectures = new ClassService().getUpperCampusLectures();
-		System.out.println("UPPER LECTURES "+ new ClassService().getUpperCampusLectures().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperLectures) {
@@ -951,7 +939,6 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getLower_rec_by_dep() {
 		Set<Class> lowerRec = new ClassService().getLowerCampusRecitations();
-		System.out.println("LOWER LEC "+ new ClassService().getLowerCampusRecitations().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerRec) {
@@ -968,7 +955,6 @@ public class SetUp {
 
 	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep() {
 		Set<Class> upperRec = new ClassService().getUpperCampusRecitations();
-		System.out.println("UPPER LECS " + new ClassService().getUpperCampusRecitations().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperRec) {
@@ -986,7 +972,6 @@ public class SetUp {
 	// get all the lectures as set
 	public TreeMap<Department, Set<Class>> getBig_lectures() {
 		Set<Class> big = new ClassService().getBig_lectures();
-		System.out.println("BIG LEC " + new ClassService().getBig_lectures().size());
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : big) {
@@ -1059,5 +1044,20 @@ public class SetUp {
 	
 	public Department getDepartment(int id){
 		return id_dep.get(id);
+	}
+	
+	public static void main(String [] args) throws SecurityException, IOException{
+		Scheduler s = new EnhancedScheduler();
+		s.schedule();
+		Map<Department, Set<Class>> map = s.scheduled_map;
+		for(Department d: map.keySet()){
+			System.out.println(d.getName() +"\n____________________________________");
+			if(map.get(d) != null){
+				for(Class c: map.get(d)){
+					System.out.printf("%-5d -> %-10s, %-10s -> %-20s, %-20s\n", 
+							c.getClass_id(), c.getRequestedRoom().getNumber(), c.getGivenRoom().getNumber(),c.getRequestedTime(), c.getGivenTime() );
+				}
+			}
+		}
 	}
 }
