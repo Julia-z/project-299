@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
+import lb.edu.aub.cmps.grad.algorithm.EnhancedScheduler;
 import lb.edu.aub.cmps.grad.algorithm.Scheduler;
 import lb.edu.aub.cmps.grad.classes.Day;
 import lb.edu.aub.cmps.grad.classes.Room;
@@ -234,7 +234,7 @@ public class AvailableRoomsByTime {
 	public static void main(String[] args) throws SecurityException,
 			IOException {
 		System.out.println("starting...");
-		Scheduler s = new ByTimeScheduler();
+		Scheduler s = new EnhancedScheduler();
 
 		System.out.println("scheduler created...");
 		s.schedule();

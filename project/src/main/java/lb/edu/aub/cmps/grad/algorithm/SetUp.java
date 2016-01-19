@@ -804,6 +804,7 @@ public class SetUp {
 	 * @author Julia El Zini
 	 */
 	public void reserve(Set<Professor> ps, Room r, Time t, Class c) {
+		if(r!=null) r = id_room.get(r.getId());
 		c.setGiven_time(t);
 		c.setGiven_room(r);
 		if (ps != null) {
@@ -912,7 +913,7 @@ public class SetUp {
 		return new ClassService().getGrad_classes();
 	}
 
-	// get them as sets inside the method and ill do the map thind
+	// get them as sets inside the method and ill do the map thing
 	// please keep the return null not to make an error :)
 	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep() {
 		Set<Class> lowerLectures = new ClassService().getLowerCampusLectures();
@@ -1054,5 +1055,9 @@ public class SetUp {
 
 	public Room[] getLectureRoomsByPriority(int id) {
 		return new DepartmentService().getLectureRoomsByPriority(id);
+	}
+	
+	public Department getDepartment(int id){
+		return id_dep.get(id);
 	}
 }
