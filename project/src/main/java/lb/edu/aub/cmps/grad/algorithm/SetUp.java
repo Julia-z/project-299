@@ -888,24 +888,26 @@ public class SetUp {
 	// get all the fixed time classes as a sets
 	// should be ok
 	public Set<Class> getTime_fixed_classes() {
-		return new ClassService().getTime_fixed_classes();
+		Set<Class> set =  new ClassService().getTime_fixed_classes();
+		return updateClasses(set);
 	}
 
 	// get all the location fixed classes as a sets
 	// should be ok
 	public Set<Class> getLoc_fixed_classes() {
-		return new ClassService().getLoc_fixed_classes();
+		Set<Class> set =  new ClassService().getLoc_fixed_classes();
+		return updateClasses(set);
 	}
 
 	// get all the labs as a set
 	// should be ok
 	public Set<Class> getlabs() {
-		return new ClassService().getLabs();
+		return updateClasses(new ClassService().getLabs());
 	}
 
 	// get all the grad classes also as a set
 	public Set<Class> getGrad_classes() {
-		return new ClassService().getGrad_classes();
+		return updateClasses(new ClassService().getGrad_classes());
 	}
 
 	// get them as sets inside the method and ill do the map thing
@@ -923,7 +925,10 @@ public class SetUp {
 			set.add(c);
 			map.put(d, set);
 		}
-		return map;
+		TreeMap<Department, Set<Class>> updated = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Department d: map.keySet())
+			updated.put(d, updateClasses(map.get(d)));
+		return updated;
 	}
 
 	public TreeMap<Department, Set<Class>> getUpper_Lec_by_dep() {
@@ -939,7 +944,10 @@ public class SetUp {
 			set.add(c);
 			map.put(d, set);
 		}
-		return map;
+		TreeMap<Department, Set<Class>> updated = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Department d: map.keySet())
+			updated.put(d, updateClasses(map.get(d)));
+		return updated;
 	}
 
 	public TreeMap<Department, Set<Class>> getLower_rec_by_dep() {
@@ -955,7 +963,10 @@ public class SetUp {
 			set.add(c);
 			map.put(d, set);
 		}
-		return map;
+		TreeMap<Department, Set<Class>> updated = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Department d: map.keySet())
+			updated.put(d, updateClasses(map.get(d)));
+		return updated;
 	}
 
 	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep() {
@@ -971,7 +982,10 @@ public class SetUp {
 			set.add(c);
 			map.put(d, set);
 		}
-		return map;
+		TreeMap<Department, Set<Class>> updated = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Department d: map.keySet())
+			updated.put(d, updateClasses(map.get(d)));
+		return updated;
 	}
 
 	// get all the lectures as set
@@ -988,7 +1002,10 @@ public class SetUp {
 			set.add(c);
 			map.put(d, set);
 		}
-		return map;
+		TreeMap<Department, Set<Class>> updated = new TreeMap<Department, Set<Class>>(new DepartmentWeightComparator());
+		for(Department d: map.keySet())
+			updated.put(d, updateClasses(map.get(d)));
+		return updated;
 	}
 
 	public Department getDepartment(Class c) {
@@ -1065,5 +1082,10 @@ public class SetUp {
 			}
 		}
 	}
-	
+	public Set<Class> updateClasses(Set<Class> classes){
+		for(Class c: classes){
+			c.setCourse_name(id_course.get(c.getCourse_id()).getCourse_name());
+		}
+		return classes;
+	}
 }
