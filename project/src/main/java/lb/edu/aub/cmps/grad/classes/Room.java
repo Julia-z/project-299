@@ -144,4 +144,17 @@ public class Room implements RoomVisitable{
 		this.accessories_ids = accessories_ids;
 		
 	}
+	
+	/**
+	 * 
+	 * @param t, the time slot 
+	 * @return null if the room is not reserved
+	 * 			the class c that is reserving the room during t
+	 */
+	public Class getClassDuringTimeSlot(TimeSlot t){
+		for(TimeSlot slot: reserved.keySet()){
+			if(t.conflicts(slot))return reserved.get(slot);
+		}
+		return null;
+	}
 }

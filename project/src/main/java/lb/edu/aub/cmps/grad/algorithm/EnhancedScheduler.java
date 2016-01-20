@@ -94,6 +94,7 @@ public class EnhancedScheduler extends Scheduler {
 				scheduled_map.get(setup.getDepartment(c)).add(c);
 				count++;
 				c.setGiven_room(c.getRequestedRoom());
+				setup.getId_RoomMap().get(c.getRequestedRoom().getId()).reserveRoom(c.getRequestedTime().getTimeSlots(), c);
 				c.setGiven_time(c.getRequestedTime());
 				c.setIsMet(true);
 			}
@@ -143,6 +144,8 @@ public class EnhancedScheduler extends Scheduler {
 							count++;
 
 							c.setGiven_room(c.getRequestedRoom());
+							setup.getId_RoomMap().get(c.getRequestedRoom().getId()).reserveRoom(c.getRequestedTime().getTimeSlots(), c);
+
 							c.setGiven_time(c.getRequestedTime());
 							c.setIsMet(true);
 						}
@@ -180,6 +183,8 @@ public class EnhancedScheduler extends Scheduler {
 					s1++;
 					c.setRoom(old);
 					c.setGiven_room(r);
+					setup.getId_RoomMap().get(r.getId()).reserveRoom(c.getRequestedTime().getTimeSlots(), c);
+
 					c.setGiven_time(c.getRequestedTime());
 					c.setIsMet(true);
 					scheduled_map.get(setup.getDepartment(c)).add(c);

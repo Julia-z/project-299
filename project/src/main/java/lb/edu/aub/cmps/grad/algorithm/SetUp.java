@@ -400,6 +400,10 @@ public class SetUp {
 
 		if(t == null || t.getTimeSlots().length==0){
 			c.setGiven_room(r);
+			if(r != null) {
+				r = id_room.get(r.getId());
+				r.reserveRoom(t.getTimeSlots(), c);
+			}
 			c.setGiven_time(t);
 			return 1;
 		}
@@ -607,6 +611,7 @@ public class SetUp {
 			if (rooms != null) {
 				for (Room room2 : rooms) {
 					if (room2.hasAccessory(cl.getAccessoriesIds())) {
+						room2 = id_room.get(room2.getId());
 						reserve(ps, room2, t, cl);
 						cl.setGiven_room(room2);
 						cl.setGiven_time(t);
@@ -1060,4 +1065,5 @@ public class SetUp {
 			}
 		}
 	}
+	
 }
