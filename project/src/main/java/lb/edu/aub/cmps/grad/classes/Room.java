@@ -1,5 +1,7 @@
 package lb.edu.aub.cmps.grad.classes;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
@@ -130,8 +132,10 @@ public class Room implements RoomVisitable{
 	/**
 	 * prints the time and the course or class given during that time in the room
 	 * time should be sorted
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public void accept(RoomVisitor visitor) {
+	public void accept(RoomVisitor visitor) throws FileNotFoundException, IOException {
 		visitor.visit(this);
 		
 	}

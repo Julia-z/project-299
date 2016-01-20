@@ -27,7 +27,7 @@ public class GetTimeSlots {
 	}
 	public static TimeSlot[] GetTR(){
 		Day[] tr = { Day.T, Day.R};
-		TimeSlot[] slots = new TimeSlot[16];
+		TimeSlot[] slots = new TimeSlot[14];
 		int i = 0;
 		for (Day d : tr) {
 			TimeSlot slot = new TimeSlot();
@@ -37,7 +37,7 @@ public class GetTimeSlots {
 			slots[i] = slot;
 			i++;
 			int count = 1;
-			while (count <= 7) {
+			while (count < 7) {
 				slot = slot.nextTimeSlot();
 				slots[i] = slot;
 				i++;
