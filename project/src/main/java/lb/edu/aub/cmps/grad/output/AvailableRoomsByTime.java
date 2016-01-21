@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import lb.edu.aub.cmps.grad.algorithm.EnhancedScheduler;
-import lb.edu.aub.cmps.grad.algorithm.Scheduler;
 import lb.edu.aub.cmps.grad.classes.Day;
 import lb.edu.aub.cmps.grad.classes.Room;
 import lb.edu.aub.cmps.grad.classes.TimeSlot;
@@ -229,21 +227,5 @@ public class AvailableRoomsByTime {
 		FileOutputStream output = new FileOutputStream(new File(excelFileName));
 		wb.write(output);
 		output.close();
-	}
-
-	public static void main(String[] args) throws SecurityException,
-			IOException {
-		System.out.println("starting...");
-		Scheduler s = new EnhancedScheduler();
-
-		System.out.println("scheduler created...");
-		s.schedule();
-
-		System.out.println("all classes scheduled...");
-
-		AvailableRoomsByTime available_rooms = new AvailableRoomsByTime(
-				s.getRooms());
-		// available_rooms.generate();
-		available_rooms.exportAvailableRoomsByTime();
 	}
 }

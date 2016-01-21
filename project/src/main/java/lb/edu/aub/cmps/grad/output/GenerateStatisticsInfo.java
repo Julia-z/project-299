@@ -120,13 +120,4 @@ public class GenerateStatisticsInfo {
 		}
 	}
 
-	public static void main(String[] args) throws SecurityException,
-			IOException {
-		Scheduler s = new ByTimeScheduler();
-		s.schedule();
-		Map<Department, Double> map = s.getStatisticsByDepartment();
-		GenerateStatisticsInfo g = new GenerateStatisticsInfo();
-		double stat = s.getOverallStatistics();
-		g.generate(map, stat);
-	}
 }

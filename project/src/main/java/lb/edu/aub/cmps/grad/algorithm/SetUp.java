@@ -1068,20 +1068,6 @@ public class SetUp {
 		return id_dep.get(id);
 	}
 	
-	public static void main(String [] args) throws SecurityException, IOException{
-		Scheduler s = new EnhancedScheduler();
-		s.schedule();
-		Map<Department, Set<Class>> map = s.scheduled_map;
-		for(Department d: map.keySet()){
-			System.out.println(d.getName() +"\n____________________________________");
-			if(map.get(d) != null){
-				for(Class c: map.get(d)){
-					System.out.printf("%-5d -> %-10s, %-10s -> %-20s, %-20s\n", 
-							c.getClass_id(), c.getRequestedRoom().getNumber(), c.getGivenRoom().getNumber(),c.getRequestedTime(), c.getGivenTime() );
-				}
-			}
-		}
-	}
 	public Set<Class> updateClasses(Set<Class> classes){
 		for(Class c: classes){
 			c.setCourse_name(id_course.get(c.getCourse_id()).getCourse_name());
