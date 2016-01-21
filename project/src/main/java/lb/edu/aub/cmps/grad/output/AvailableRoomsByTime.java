@@ -104,10 +104,10 @@ public class AvailableRoomsByTime {
 		red_gray.setBorderBottom(CellStyle.BORDER_MEDIUM);
 		red_gray.setBorderLeft(CellStyle.BORDER_MEDIUM);
 		red_gray.setBorderRight(CellStyle.BORDER_MEDIUM);
-		red_gray.setTopBorderColor(IndexedColors.RED.getIndex());
-		red_gray.setBottomBorderColor(IndexedColors.RED.getIndex());
-		red_gray.setRightBorderColor(IndexedColors.RED.getIndex());
-		red_gray.setLeftBorderColor(IndexedColors.RED.getIndex());
+		red_gray.setTopBorderColor(IndexedColors.BLACK.getIndex());
+		red_gray.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+		red_gray.setRightBorderColor(IndexedColors.BLACK.getIndex());
+		red_gray.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 		red_gray.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		
 		CellStyle red_white = wb.createCellStyle();
@@ -116,10 +116,10 @@ public class AvailableRoomsByTime {
 		red_white.setBorderBottom(CellStyle.BORDER_MEDIUM);
 		red_white.setBorderLeft(CellStyle.BORDER_MEDIUM);
 		red_white.setBorderRight(CellStyle.BORDER_MEDIUM);
-		red_white.setTopBorderColor(IndexedColors.RED.getIndex());
-		red_white.setBottomBorderColor(IndexedColors.RED.getIndex());
-		red_white.setRightBorderColor(IndexedColors.RED.getIndex());
-		red_white.setLeftBorderColor(IndexedColors.RED.getIndex());
+		red_white.setTopBorderColor(IndexedColors.BLACK.getIndex());
+		red_white.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+		red_white.setRightBorderColor(IndexedColors.BLACK.getIndex());
+		red_white.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 		red_white.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		
 		CellStyle light_green = wb.createCellStyle();
