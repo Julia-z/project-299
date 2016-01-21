@@ -71,10 +71,10 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 		red_gray.setBorderBottom(CellStyle.BORDER_MEDIUM);
 		red_gray.setBorderLeft(CellStyle.BORDER_MEDIUM);
 		red_gray.setBorderRight(CellStyle.BORDER_MEDIUM);
-		red_gray.setTopBorderColor(IndexedColors.RED.getIndex());
-		red_gray.setBottomBorderColor(IndexedColors.RED.getIndex());
-		red_gray.setRightBorderColor(IndexedColors.RED.getIndex());
-		red_gray.setLeftBorderColor(IndexedColors.RED.getIndex());
+		red_gray.setTopBorderColor(IndexedColors.BLUE_GREY.getIndex());
+		red_gray.setBottomBorderColor(IndexedColors.BLUE_GREY.getIndex());
+		red_gray.setRightBorderColor(IndexedColors.BLUE_GREY.getIndex());
+		red_gray.setLeftBorderColor(IndexedColors.BLUE_GREY.getIndex());
 		red_gray.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
 		
@@ -92,18 +92,21 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 		Cell nameSlot = firstRow.createCell(0);
 		nameSlot.setCellValue("Room name");
 		Cell timeSlot = firstRow.createCell(1);
-		timeSlot.setCellValue("Time Slot");
+		timeSlot.setCellValue("MWF-Time Slot");
 		Cell monSlot = firstRow.createCell(2);
 		monSlot.setCellValue("Monday");
 		Cell wedSlot = firstRow.createCell(3);
 		wedSlot.setCellValue("Wednesday");
 		Cell friSlot = firstRow.createCell(4);
 		friSlot.setCellValue("Friday");
-		Cell tueSlot = firstRow.createCell(5);
+		Cell timeSlot2 = firstRow.createCell(5);
+		timeSlot2.setCellValue("TR-Time Slot");
+		Cell tueSlot = firstRow.createCell(6);
 		tueSlot.setCellValue("Tuesday");
-		Cell thurSlot = firstRow.createCell(6);
+		Cell thurSlot = firstRow.createCell(7);
 		thurSlot.setCellValue("Thursday");
 
+		rooms.createFreezePane(0, 1);
 		for (int j = 0; j < firstRow.getLastCellNum(); j++) {
 			firstRow.getCell(j).setCellStyle(blue);
 		}
@@ -167,15 +170,15 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 				counter -= 13;
 			}
 		}
-		counter += 13;
+	//	counter += 13;
 
 		TimeSlot time2 = new TimeSlot();
 		time2.setDay(Day.T);
 		time2.setStart("700");
 		time2.setEnd("750");
 		for (int i = 0; i < 7; i++) {
-			Row timeRow = rooms.createRow(counter);
-			Cell timeSlot = timeRow.createCell(1);
+			Row timeRow = rooms.getRow(counter);
+			Cell timeSlot = timeRow.createCell(5);
 			timeSlot.setCellValue(time2.toString().substring(3));
 			timeSlot.setCellStyle(blue);
 			time2 = time2.nextTimeSlot();
@@ -190,9 +193,9 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 				String course = c.getCourse_name();
 				int index = 0;
 				if (t.getDay() == Day.T)
-					index = 5;
-				else
 					index = 6;
+				else
+					index = 7;
 				Row row = rooms.getRow(counter);
 				Cell courseSlot = row.createCell(index);
 				courseSlot.setCellStyle(gray);
@@ -200,9 +203,9 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 			} else {
 				int index = 0;
 				if (t.getDay() == Day.T)
-					index = 5;
-				else
 					index = 6;
+				else
+					index = 7;
 				Row row = rooms.getRow(counter);
 				Cell courseSlot = row.createCell(index);
 				courseSlot.setCellStyle(light_green);
@@ -214,7 +217,7 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 				counter -= 7;
 			}
 		}
-		counter += 7;
+		counter += 13;
 
 		output = new FileOutputStream(new File(excelFileName));
 		wb.write(output);
