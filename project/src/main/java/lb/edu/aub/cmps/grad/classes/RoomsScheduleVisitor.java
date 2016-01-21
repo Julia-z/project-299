@@ -174,8 +174,8 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 
 		TimeSlot time2 = new TimeSlot();
 		time2.setDay(Day.T);
-		time2.setStart("700");
-		time2.setEnd("750");
+		time2.setStart("800");
+		time2.setEnd("915");
 		for (int i = 0; i < 7; i++) {
 			Row timeRow = rooms.getRow(counter);
 			Cell timeSlot = timeRow.createCell(5);
@@ -229,6 +229,7 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 		TimeSlot[] mwf = GetTimeSlots.GetMWF();
 		TimeSlot[] tr = GetTimeSlots.GetTR();
 
+		System.out.println(Arrays.toString(tr));
 		Scheduler s = new EnhancedScheduler();
 		s.schedule();
 
