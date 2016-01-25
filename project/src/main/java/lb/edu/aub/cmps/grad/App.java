@@ -23,8 +23,9 @@ public class App {
 	public static void main(String[] args) throws SecurityException,
 			IOException {
 
+		String term = args[0];
 		System.out.println("starting...");
-		Scheduler s = new EnhancedScheduler();
+		Scheduler s = new EnhancedScheduler(term);
 		System.out.println("scheduler created...");
 		Map<lb.edu.aub.cmps.grad.classes.Class, String> not = s.schedule();
 		System.out.println("all classes scheduled...");

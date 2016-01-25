@@ -4,11 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Map;
-
-import lb.edu.aub.cmps.grad.algorithm.EnhancedScheduler;
-import lb.edu.aub.cmps.grad.algorithm.Scheduler;
-import lb.edu.aub.cmps.grad.output.GetTimeSlots;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
@@ -66,7 +61,8 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 		palette3.setColorAtIndex(HSSFColor.GREY_25_PERCENT.index, (byte) 220,
 				(byte) 220, (byte) 220);
 		red_gray = wb.createCellStyle();
-		red_gray.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		red_gray.setFillForegroundColor(IndexedColors.GREY_25_PERCENT
+				.getIndex());
 		red_gray.setBorderTop(CellStyle.BORDER_MEDIUM);
 		red_gray.setBorderBottom(CellStyle.BORDER_MEDIUM);
 		red_gray.setBorderLeft(CellStyle.BORDER_MEDIUM);
@@ -77,9 +73,6 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 		red_gray.setLeftBorderColor(IndexedColors.BLUE_GREY.getIndex());
 		red_gray.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
-		
-		
-		
 		rooms = wb.createSheet("Rooms");
 		excelFileName = "Outputs\\Rooms_fixed_slots.xls";
 
@@ -170,7 +163,7 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 				counter -= 13;
 			}
 		}
-	//	counter += 13;
+		// counter += 13;
 
 		TimeSlot time2 = new TimeSlot();
 		time2.setDay(Day.T);
@@ -224,20 +217,4 @@ public class RoomsScheduleVisitor implements RoomVisitor {
 		output.close();
 	}
 
-	public static void main(String[] args) throws SecurityException,
-			IOException {
-		TimeSlot[] mwf = GetTimeSlots.GetMWF();
-		TimeSlot[] tr = GetTimeSlots.GetTR();
-
-		System.out.println(Arrays.toString(tr));
-		Scheduler s = new EnhancedScheduler();
-		s.schedule();
-
-		RoomVisitor visitor = new RoomsScheduleVisitor(mwf, tr);
-		Map<Integer, Room> id_room = s.getIdRoomMap();
-		for (Integer i : id_room.keySet()) {
-			Room r = id_room.get(i);
-			r.accept(visitor);
-		}
-	}
 }

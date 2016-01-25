@@ -40,8 +40,8 @@ public class ByTimeScheduler extends Scheduler {
 	 * @throws SecurityException for the database connection
 	 * @throws IOException for the ouptput file
 	 */
-	public ByTimeScheduler() throws SecurityException, IOException {
-		super();
+	public ByTimeScheduler(String term) throws SecurityException, IOException {
+		super(term);
 		
 		log.info("ByTimeScheduler created.");
 	}

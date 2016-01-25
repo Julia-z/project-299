@@ -53,7 +53,7 @@ public abstract class Scheduler implements IScheduler {
 	 * @author Julia El Zini
 	 */
 	@SuppressWarnings("unchecked")
-	public Scheduler() {
+	public Scheduler(String term) {
 		setup = new SetUp();
 		classes_by_dep = setup.getDeps_Classes_map();
 

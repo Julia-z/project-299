@@ -6,8 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
-import lb.edu.aub.cmps.grad.algorithm.ByTimeScheduler;
-import lb.edu.aub.cmps.grad.algorithm.Scheduler;
 import lb.edu.aub.cmps.grad.classes.Department;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -22,8 +20,8 @@ import org.apache.poi.ss.usermodel.Row;
 
 /**
  * 
- * @author Yasmin Kadah
- * generates an excel file showing statistics info by department and overall percentage
+ * @author Yasmin Kadah generates an excel file showing statistics info by
+ *         department and overall percentage
  */
 public class GenerateStatisticsInfo {
 	HSSFWorkbook wb;
@@ -48,7 +46,8 @@ public class GenerateStatisticsInfo {
 		green.setFillForegroundColor(IndexedColors.BLUE.getIndex());
 		green.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		dark_green = wb.createCellStyle();
-		dark_green.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+		dark_green.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE
+				.getIndex());
 		dark_green.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		light_green = wb.createCellStyle();
 		light_green.setFillForegroundColor(IndexedColors.GREEN.getIndex());
@@ -63,12 +62,12 @@ public class GenerateStatisticsInfo {
 		palette3.setColorAtIndex(HSSFColor.GREY_25_PERCENT.index, (byte) 220,
 				(byte) 220, (byte) 220);
 		HSSFPalette palette4 = wb.getCustomPalette();
-		palette4.setColorAtIndex(HSSFColor.LIGHT_CORNFLOWER_BLUE.index, (byte) 98,
-				(byte) 138, (byte) 108);
+		palette4.setColorAtIndex(HSSFColor.LIGHT_CORNFLOWER_BLUE.index,
+				(byte) 98, (byte) 138, (byte) 108);
 		HSSFFont font = wb.createFont();
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-        font.setColor(HSSFColor.WHITE.index);
-        dark_green.setFont(font);
+		font.setColor(HSSFColor.WHITE.index);
+		dark_green.setFont(font);
 		statistics = wb.createSheet("Statistics");
 		statistics.setColumnWidth(0, 5000);
 		statistics.setColumnWidth(1, 3000);
@@ -87,17 +86,17 @@ public class GenerateStatisticsInfo {
 		percent.setCellValue("Percentage");
 		percent.setCellStyle(green);
 		statistics.createFreezePane(0, 1);
-		
+
 		for (Department d : map.keySet()) {
 			Row row1 = statistics.createRow(rowsCount);
 			rowsCount++;
 			Cell dept = row1.createCell(0);
 			dept.setCellValue(d.getName());
-			
+
 			Cell statistic = row1.createCell(1);
 			double rounded = Math.round(map.get(d) * 100.0) / 100.0;
 			statistic.setCellValue(rounded * 100 + "%");
-			if(rowsCount%2 == 0){
+			if (rowsCount % 2 == 0) {
 				dept.setCellStyle(light_green);
 				statistic.setCellStyle(light_green);
 			}

@@ -55,8 +55,8 @@ public class EnhancedScheduler extends Scheduler {
 	int count = 0;
 
 	/** constructor **/
-	public EnhancedScheduler() throws SecurityException, IOException {
-		super();
+	public EnhancedScheduler(String term) throws SecurityException, IOException {
+		super(term);
 
 		time_fixed_classes = setup.getTime_fixed_classes();
 		loc_fixed_classes = setup.getLoc_fixed_classes();
