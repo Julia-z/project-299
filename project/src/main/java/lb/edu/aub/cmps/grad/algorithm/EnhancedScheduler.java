@@ -535,6 +535,10 @@ public class EnhancedScheduler extends Scheduler {
 			map.get(setup.getId_dep().get(c.getDepartment())).add(c);
 		}
 
+		System.out.println("____________________________");
+		for(Class c: classes) System.out.println(c.getNote());
+		System.out.println("____________________________");
+
 		return map;
 	}
 

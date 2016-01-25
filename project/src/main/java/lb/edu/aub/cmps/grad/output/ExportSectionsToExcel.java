@@ -129,13 +129,16 @@ public class ExportSectionsToExcel {
 		room.setCellValue("Room");
 		Cell prof = firstRow.createCell(16);
 		prof.setCellValue("Prof");
-
+		
+		Cell note = firstRow.createCell(17);
+		note.setCellValue("Comments");
 		Row secondRow = departments.createRow(1);
 		secondRow.createCell(0);
 		secondRow.createCell(1);
 		secondRow.createCell(2);
 		secondRow.createCell(15);
 		secondRow.createCell(16);
+		secondRow.createCell(17);
 		Cell mS = secondRow.createCell(3);
 		mS.setCellValue("Start");
 		Cell mE = secondRow.createCell(4);
@@ -207,7 +210,7 @@ public class ExportSectionsToExcel {
 						Cell room = row1.createCell(15);
 						/** TODO for all professors **/
 						Cell profCell = row1.createCell(16);
-
+						Cell noteCell = row1.createCell(17);
 						int classCount = 0;
 						for (Class c : s.getClasses()) {
 
@@ -234,6 +237,7 @@ public class ExportSectionsToExcel {
 								sendTime = row1.createCell(14);
 								room = row1.createCell(15);
 								profCell = row1.createCell(16);
+								noteCell = row1.createCell(17);
 							}
 							for (int i = 0; i < row1.getLastCellNum(); i++) {
 								if (sectionsCount % 2 == 0) {
@@ -335,7 +339,7 @@ public class ExportSectionsToExcel {
 								}
 								profCell.setCellValue(profStr.substring(0, profStr.length()-2));
 							}
-
+							noteCell.setCellValue(c.getNote());
 							if (!ismet) {
 								for (int i = 3; i < 16; i++) {
 									row1.getCell(i).setCellStyle(red);

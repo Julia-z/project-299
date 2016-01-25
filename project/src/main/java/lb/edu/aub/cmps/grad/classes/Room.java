@@ -141,6 +141,7 @@ public class Room implements RoomVisitable{
 	}
 	
 	public boolean hasAccessory(Set<Integer> a){
+		if(accessories_ids == null) return (a == null || a.size() == 0);
 		return accessories_ids.containsAll(a);
 	}
 

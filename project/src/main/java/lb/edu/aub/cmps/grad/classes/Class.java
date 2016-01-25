@@ -36,6 +36,8 @@ public class Class implements ClassVisitable {
 	private Set<Integer> accessories_ids;
 	private boolean canChangeTime;
 	private boolean canChangeRoom;
+	
+	private String note;
 
 	public int getClass_id() {
 		return class_id;
@@ -209,6 +211,14 @@ public class Class implements ClassVisitable {
 
 	public void setGivenEnd(String givenEnd) {
 		this.givenEnd = givenEnd;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 }

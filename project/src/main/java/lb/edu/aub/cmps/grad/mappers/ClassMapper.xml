@@ -11,13 +11,14 @@
 		<result property='type' column='Lecture_Type'></result>
 		<result property='canChangeTime' column='Time_Fixed'></result>
 		<result property='canChangeRoom' column='Classroom_Fixed'></result>
+		<result property='note' column='Comments'></result>
 	</resultMap>
 
 
 	<select id='getAllClasses' resultMap='ClassResult'>
 		SELECT c.LECTURE_ID,
 		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
-		c.Time_Fixed from lecture c join
+		c.Time_Fixed, c.Comments from lecture c join
 		type_enum t where c.Type_id =
 		t.Type_id
 	</select>
@@ -34,7 +35,7 @@
 		SELECT c.LECTURE_ID,
 		c.Course_ID,
 		c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
-		c.Time_Fixed 
+		c.Time_Fixed, c.Comments
 		from lecture c join course r join type_enum t
 		where c.type_id=2 and c.time_fixed= 0 and c.Classroom_Fixed=0 and t.type_id = c.type_id
 		and c.course_id = r.course_id and r.level_id != 3
@@ -44,7 +45,7 @@
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
 		l.Classroom_Fixed,
-		l.Time_Fixed
+		l.Time_Fixed, l.Comments
 		FROM lecture l join classroom c join building b join course r join type_enum t
 		where l.Type_id=3 
 		and l.classroom_id=	c.classroom_id 
@@ -61,7 +62,7 @@
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
 		l.Classroom_Fixed,
-		l.Time_Fixed
+		l.Time_Fixed, l.comments
 		FROM lecture l join classroom c join
 		building b join
 		type_enum t join course r
@@ -82,7 +83,7 @@
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
 		l.Classroom_Fixed,
-		l.Time_Fixed
+		l.Time_Fixed, l.comments
 		FROM lecture l join classroom c join
 		building b join
 		type_enum t join course r 
@@ -101,7 +102,7 @@
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
 		l.Classroom_Fixed,
-		l.Time_Fixed
+		l.Time_Fixed, l.comments
 		FROM lecture l join classroom c join
 		building b,
 		type_enum t, course r where (l.Type_id=1 or l.Type_id=4)
