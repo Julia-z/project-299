@@ -72,7 +72,7 @@ public class SetUp {
 	 * 
 	 * @author Julia El Zini
 	 */
-	public SetUp() {
+	public SetUp(int term) {
 		try {
 			loggerWrapper = MyLogger.getInstance();
 		} catch (SecurityException e) {
@@ -134,7 +134,7 @@ public class SetUp {
 
 		// classes
 		log.info("Fetching Classes...");
-		classes = (HashSet<Class>) new ClassService().getAllClasses();
+		classes = (HashSet<Class>) new ClassService().getAllClasses(term);
 		id_class = new HashMap<Integer, Class>();
 		for (Class c : classes) {
 			c.setProfessors(new ProfessorService().getProfessorsByClass(c
@@ -887,33 +887,33 @@ public class SetUp {
 
 	// get all the fixed time classes as a sets
 	// should be ok
-	public Set<Class> getTime_fixed_classes() {
-		Set<Class> set =  new ClassService().getTime_fixed_classes();
+	public Set<Class> getTime_fixed_classes(int term) {
+		Set<Class> set =  new ClassService().getTime_fixed_classes(term);
 		return updateClasses(set);
 	}
 
 	// get all the location fixed classes as a sets
 	// should be ok
-	public Set<Class> getLoc_fixed_classes() {
-		Set<Class> set =  new ClassService().getLoc_fixed_classes();
+	public Set<Class> getLoc_fixed_classes(int term) {
+		Set<Class> set =  new ClassService().getLoc_fixed_classes(term);
 		return updateClasses(set);
 	}
 
 	// get all the labs as a set
 	// should be ok
-	public Set<Class> getlabs() {
-		return updateClasses(new ClassService().getLabs());
+	public Set<Class> getlabs(int term) {
+		return updateClasses(new ClassService().getLabs(term));
 	}
 
 	// get all the grad classes also as a set
-	public Set<Class> getGrad_classes() {
-		return updateClasses(new ClassService().getGrad_classes());
+	public Set<Class> getGrad_classes(int term) {
+		return updateClasses(new ClassService().getGrad_classes(term));
 	}
 
 	// get them as sets inside the method and ill do the map thing
 	// please keep the return null not to make an error :)
-	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep() {
-		Set<Class> lowerLectures = new ClassService().getLowerCampusLectures();
+	public TreeMap<Department, Set<Class>> getLower_Lec_by_dep(int term) {
+		Set<Class> lowerLectures = new ClassService().getLowerCampusLectures(term);
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerLectures) {
@@ -931,8 +931,8 @@ public class SetUp {
 		return updated;
 	}
 
-	public TreeMap<Department, Set<Class>> getUpper_Lec_by_dep() {
-		Set<Class> upperLectures = new ClassService().getUpperCampusLectures();
+	public TreeMap<Department, Set<Class>> getUpper_Lec_by_dep(int term) {
+		Set<Class> upperLectures = new ClassService().getUpperCampusLectures(term);
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperLectures) {
@@ -950,8 +950,8 @@ public class SetUp {
 		return updated;
 	}
 
-	public TreeMap<Department, Set<Class>> getLower_rec_by_dep() {
-		Set<Class> lowerRec = new ClassService().getLowerCampusRecitations();
+	public TreeMap<Department, Set<Class>> getLower_rec_by_dep(int term) {
+		Set<Class> lowerRec = new ClassService().getLowerCampusRecitations(term);
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : lowerRec) {
@@ -969,8 +969,8 @@ public class SetUp {
 		return updated;
 	}
 
-	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep() {
-		Set<Class> upperRec = new ClassService().getUpperCampusRecitations();
+	public TreeMap<Department, Set<Class>> getUpper_rec_by_dep(int term) {
+		Set<Class> upperRec = new ClassService().getUpperCampusRecitations(term);
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : upperRec) {
@@ -989,8 +989,8 @@ public class SetUp {
 	}
 
 	// get all the lectures as set
-	public TreeMap<Department, Set<Class>> getBig_lectures() {
-		Set<Class> big = new ClassService().getBig_lectures();
+	public TreeMap<Department, Set<Class>> getBig_lectures(int term) {
+		Set<Class> big = new ClassService().getBig_lectures(term);
 		TreeMap<Department, Set<Class>> map = new TreeMap<Department, Set<Class>>(
 				new DepartmentWeightComparator());
 		for (Class c : big) {

@@ -57,16 +57,17 @@ public class EnhancedScheduler extends Scheduler {
 	/** constructor **/
 	public EnhancedScheduler(String term) throws SecurityException, IOException {
 		super(term);
-
-		time_fixed_classes = setup.getTime_fixed_classes();
-		loc_fixed_classes = setup.getLoc_fixed_classes();
-		grad_classes = setup.getGrad_classes();
-		labs = setup.getlabs();
-		lower_lect_by_dep = setup.getLower_Lec_by_dep();
-		upper_lect_by_dep = setup.getUpper_Lec_by_dep();
-		lower_rec_by_dep = setup.getLower_rec_by_dep();
-		upper_rec_by_dep = setup.getUpper_rec_by_dep();
-		big_lectures = setup.getBig_lectures();
+		
+		int iTerm= Integer.parseInt(term);
+		time_fixed_classes = setup.getTime_fixed_classes(iTerm);
+		loc_fixed_classes = setup.getLoc_fixed_classes(iTerm);
+		grad_classes = setup.getGrad_classes(iTerm);
+		labs = setup.getlabs(iTerm);
+		lower_lect_by_dep = setup.getLower_Lec_by_dep(iTerm);
+		upper_lect_by_dep = setup.getUpper_Lec_by_dep(iTerm);
+		lower_rec_by_dep = setup.getLower_rec_by_dep(iTerm);
+		upper_rec_by_dep = setup.getUpper_rec_by_dep(iTerm);
+		big_lectures = setup.getBig_lectures(iTerm);
 
 		// second run
 		time_fixed_classes2 = new HashSet<Class>();

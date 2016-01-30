@@ -2,6 +2,8 @@ package lb.edu.aub.cmps.grad.mappers;
 
 import java.util.Set;
 
+import org.apache.ibatis.annotations.Param;
+
 import lb.edu.aub.cmps.grad.classes.Class;
 import lb.edu.aub.cmps.grad.classes.Professor;
 import lb.edu.aub.cmps.grad.classes.Room;
@@ -13,7 +15,7 @@ import lb.edu.aub.cmps.grad.classes.TimeSlot;
 
 public interface ClassMapper {
 
-	public Set<Class> getAllClasses();
+	public Set<Class> getAllClasses(int term);
 
 	/**
 	 * 
@@ -22,37 +24,39 @@ public interface ClassMapper {
 	 * @return a set of integer denoting the section numbers for sections in a
 	 *         class whose id is given
 	 */
-	public Set<Integer> getSectionsInClass(int id);
+	public Set<Integer> getSectionsInClass(@Param("id") int id,
+			@Param("term") int term);
 
-	public TimeSlot[] getClassTimes(int id);
+	public TimeSlot[] getClassTimes(@Param("id") int id, @Param("term") int term);
 
-	public Professor getProfessor(int id);
+	public Professor getProfessor(@Param("id") int id, @Param("term") int term);
 
-	public Set<Integer> getAccessoriesInClass(int id);
+	public Set<Integer> getAccessoriesInClass(@Param("id") int id,
+			@Param("term") int term);
 
-	public Room getClassroom(int id);
+	public Room getClassroom(@Param("id") int id, @Param("term") int term);
 
-	public String getType(int id);
+	public String getType(@Param("id") int id, @Param("term") int term);
 
-	public Set<Class> getLabs();
+	public Set<Class> getLabs(int term);
 
-	public Set<Class> getLowerCampusLectures();
+	public Set<Class> getLowerCampusLectures(int term);
 
-	public Set<Class> getUpperCampusLectures();
-	
-	public Set<Class> getLowerCampusRecitations();
-	
-	public Set<Class> getUpperCampusRecitations();
-	
+	public Set<Class> getUpperCampusLectures(int term);
+
+	public Set<Class> getLowerCampusRecitations(int term);
+
+	public Set<Class> getUpperCampusRecitations(int term);
+
 	public void updateLecture_Classroom(Class c);
 
 	public void updateLecture_Time(Class c);
-	
-	public Set<Class> getTime_fixed_classes();
-	
-	public  Set<Class> getLoc_fixed_classes();
 
-	public  Set<Class> getGrad_classes();
-	
-	public Set<Class> getBig_lectures();
+	public Set<Class> getTime_fixed_classes(int term);
+
+	public Set<Class> getLoc_fixed_classes(int term);
+
+	public Set<Class> getGrad_classes(int term);
+
+	public Set<Class> getBig_lectures(int term);
 }

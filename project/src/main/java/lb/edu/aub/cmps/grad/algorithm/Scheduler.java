@@ -54,7 +54,7 @@ public abstract class Scheduler implements IScheduler {
 	 */
 	@SuppressWarnings("unchecked")
 	public Scheduler(String term) {
-		setup = new SetUp();
+		setup = new SetUp(Integer.parseInt(term));
 		classes_by_dep = setup.getDeps_Classes_map();
 
 		this.num_of_iterations = 10;
