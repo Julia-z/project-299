@@ -19,22 +19,26 @@
 	<select id='getAllClasses' resultMap='ClassResult'>
 		SELECT c.LECTURE_ID,
 		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
-		c.Time_Fixed, c.Comments from lecture c join
+		c.Time_Fixed, c.Comments, c.term_id from lecture c join
 		type_enum t where
 		c.Type_id =
-		t.Type_id
+		t.Type_id and c.term_id=#{term}
 	</select>
 
 	<select id='getBig_lectures' resultMap='ClassResult'>
 		SELECT c.LECTURE_ID,
 		c.Course_ID, c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
-		c.Time_Fixed
+		c.Time_Fixed, c.term_id
 		from lecture c join type_enum t join course r
 		where
 		t.type_id = c.type_id
-		and c.Class_capacity>=100 and c.time_fixed= 0 and
+		and c.Class_capacity>=100 and c.time_fixed=
+		0 and
 		c.Classroom_Fixed=0
-		and r.course_id = c.course_id and r.level_id != 3
+		and r.course_id = c.course_id and r.level_id
+		!= 3
+		and
+		c.term_id=#{term}
 	</select>
 
 	<select id='getLabs' resultMap='ClassResult'>
@@ -42,19 +46,20 @@
 		c.Course_ID,
 		c.Class_Capacity, t.Lecture_Type, c.Classroom_Fixed,
 		c.Time_Fixed,
-		c.Comments
+		c.Comments, c.term_id
 		from lecture c join course r join type_enum t
 		where
 		c.type_id=2 and c.time_fixed= 0 and c.Classroom_Fixed=0 and t.type_id
 		= c.type_id
-		and c.course_id = r.course_id and r.level_id != 3
+		and c.course_id = r.course_id and r.level_id != 3 and
+		c.term_id=#{term}
 	</select>
 
 	<select id='getLowerCampusRecitations' resultMap='ClassResult'>
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
 		l.Classroom_Fixed,
-		l.Time_Fixed, l.Comments
+		l.Time_Fixed, l.Comments, l.term_id
 		FROM lecture l join
 		classroom c join building b join course r join type_enum t
 		where
@@ -66,14 +71,14 @@
 		and l.time_fixed= 0
 		and l.Classroom_Fixed=0
 		and l.course_id= r.course_id
-		and r.level_id!= 3
+		and r.level_id!= 3 and l.term_id=#{term}
 	</select>
 
 	<select id='getUpperCampusRecitations' resultMap='ClassResult'>
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
 		l.Classroom_Fixed,
-		l.Time_Fixed, l.comments
+		l.Time_Fixed, l.comments, l.term_id
 		FROM lecture l join
 		classroom c join
 		building b join
@@ -91,13 +96,14 @@
 		b.sector_id=5 or b.sector_id=6) and
 		l.time_fixed= 0 and
 		l.Classroom_Fixed=0 and l.course_id= r.course_id and r.level_id!= 3
+		and l.term_id=#{term}
 	</select>
 
 	<select id='getLowerCampusLectures' resultMap='ClassResult'>
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
 		l.Classroom_Fixed,
-		l.Time_Fixed, l.comments
+		l.Time_Fixed, l.comments, l.term_id
 		FROM lecture l join
 		classroom c join
 		building b join
@@ -114,14 +120,15 @@
 		b.sector_id=4) and
 		l.time_fixed= 0 and
 		l.Classroom_Fixed=0 and
-		l.course_id= r.course_id and r.level_id!= 3
+		l.course_id= r.course_id and r.level_id!= 3 and
+		l.term_id=#{term}
 	</select>
 
 	<select id='getUpperCampusLectures' resultMap='ClassResult'>
 		SELECT
 		l.lecture_id, l.Course_ID, l.Class_Capacity, t.Lecture_Type,
 		l.Classroom_Fixed,
-		l.Time_Fixed, l.comments
+		l.Time_Fixed, l.comments, l.term_id
 		FROM lecture l join
 		classroom c join
 		building b,
@@ -137,6 +144,7 @@
 		b.sector_id=2 or
 		b.sector_id=5 or b.sector_id=6) and l.time_fixed= 0 and
 		l.Classroom_Fixed=0 and l.course_id= r.course_id and r.level_id!= 3
+		and l.term_id=#{term}
 	</select>
 
 	<!-- write a method to get sections after creating a class section -->
@@ -150,7 +158,9 @@
 
 	<select id='getClassTimes' parameterType="int" resultMap='ClassTimeResult'>
 		SELECT
-		Day_ID, Start, End from lecture_time where Lecture_ID= #{id}
+		Day_ID, Start, End from lecture_time t join lecture l where
+		t.Lecture_ID= #{id} and t.lecture_id= l.lecture_id and l.term_id=
+		#{term}
 	</select>
 
 	<resultMap type='lb.edu.aub.cmps.grad.classes.Professor' id='ProfessorsResult'>
@@ -240,7 +250,7 @@
 		c.Course_ID, c.Class_Capacity,
 		t.Lecture_Type,
 		c.Classroom_Fixed,
-		c.Time_Fixed
+		c.Time_Fixed, c.term_id
 		from lecture c join
 		course r join
 		type_enum t
@@ -258,7 +268,7 @@
 		SELECT c.LECTURE_ID,
 		c.Course_ID, c.Class_Capacity,
 		t.Lecture_Type, c.Classroom_Fixed,
-		c.Time_Fixed
+		c.Time_Fixed, c.term_id
 		from lecture c join
 		course r join type_enum t
 		where
@@ -273,7 +283,7 @@
 		SELECT c.LECTURE_ID,
 		c.Course_ID, c.Class_Capacity,
 		t.Lecture_Type, c.Classroom_Fixed,
-		c.Time_Fixed
+		c.Time_Fixed, c.term_id
 		from lecture c join
 		course r join type_enum t
 		where
@@ -287,4 +297,9 @@
 
 	</select>
 
+	<select id="getType" resultType="String" parameterType="int">
+		Select
+		t.Lecture_type from type_enum t join lecture l where l.type_id=
+		t.type_id and l.lecture_id=#{id} and l.term_id=#{term}
+	</select>
 </mapper>

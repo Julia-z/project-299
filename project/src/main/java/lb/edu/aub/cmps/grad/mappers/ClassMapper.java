@@ -17,13 +17,6 @@ public interface ClassMapper {
 
 	public Set<Class> getAllClasses(int term);
 
-	/**
-	 * 
-	 * @param id
-	 *            the id of the class we want to search for its sections
-	 * @return a set of integer denoting the section numbers for sections in a
-	 *         class whose id is given
-	 */
 	public Set<Integer> getSectionsInClass(@Param("id") int id,
 			@Param("term") int term);
 
